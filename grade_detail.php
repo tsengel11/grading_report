@@ -22,13 +22,14 @@ $PAGE->set_title('Grade Details');
 
 echo $OUTPUT->header();
 
-$users = get_userlist(82) ;
+$users = get_userlist(82);
 
-print_r($users);
+//print_object($users);
 
 
 $templatecontext = (object)[
-    'texttodisplay'=>'here is some text'
+    'texttodisplay'=>'here is some text',
+    'users'=>array_values($users)
 ];
 
 echo $OUTPUT->render_from_template('block_grading_report/report',$templatecontext);
