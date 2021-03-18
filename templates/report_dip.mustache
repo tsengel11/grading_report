@@ -47,6 +47,7 @@
     <th style = "display: block; border:1px solid black; height:50px "><b>Student name<b></th>
     <th style = "display: block; border:1px solid black ">Start Date</th>
     <th style = "display: block; border:1px solid black ">End Date</th>
+    <th style = "display: block; border:1px solid black ">Student ID</th>
     <th style = "display: block; border:1px solid black ">Schedule</th>
     <th style = "display: block; border:1px solid black ">Term 1</th>
     <th style = "display: block; border:1px solid black ">CPCCWHS1001</th>
@@ -74,9 +75,10 @@
   <tbody style = "display: flex;">
 {{#users}}
     <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    <td style = "display: block;border:1px solid black;height:50px" class="text-center " ><b>{{firstname}}<b><br>{{lastname}}</td>
+    <td style = "display: block;border:1px solid black;height:50px" class="text-center " ><a href="http://localhost/moodle/user/view.php?id="{{id}}"&course=668"> <b>{{firstname}}<b><br>{{lastname}}</a></td>
     <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
     <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>
     <td style = "display: block;border:1px solid black">&nbsp</td>
     <td style = "display: block;border:1px solid black">&nbsp</td>
     {{{cpccwhs1001}}}

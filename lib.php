@@ -110,6 +110,7 @@ function get_userlist_dip($cohortid)
         
         i1.data AS `startdate`,
         i2.data AS `enddate`,
+        i3.data AS `studentid`,
         ROUND(SUM(IF(i.itemname = 'CPCCWHS1001:Prepare to work safely in the construction industry',
         g.finalgrade/ g.rawgrademax * 100,
                     NULL)),
@@ -192,6 +193,8 @@ function get_userlist_dip($cohortid)
         {user_info_data} AS i1 ON g.userid = i1.userid
             LEFT JOIN
         {user_info_data} AS i2 ON g.userid = i2.userid
+        LEFT JOIN
+    mdl_user_info_data AS i3 ON g.userid = i3.userid
     WHERE
         i.courseid = 668 AND i.itemtype = 'mod'
             AND g.userid IN (SELECT 
@@ -202,6 +205,7 @@ function get_userlist_dip($cohortid)
                 cohortid = :cohort_id)
             AND i1.fieldid = 4
             AND i2.fieldid = 5
+            AND i3.fieldid = 3
     GROUP BY g.userid
     ORDER BY i2.data
     ";
