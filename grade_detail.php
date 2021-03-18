@@ -22,17 +22,40 @@ $PAGE->set_title('Grade Details');
 
 echo $OUTPUT->header();
 
-$users = get_userlist(82);
+$users = get_userlist(103);
 
-//print_object($users);
 
+
+foreach($users as $user){
+    $user->startdate = gmdate( "d/m/Y",$user->startdate);
+    $user->enddate = gmdate( "d/m/Y",$user->enddate);
+    $user->cpccwhs1001=combine_letter($user->cpccwhs1001);
+    $user->cpccbc4001a=combine_letter($user->cpccbc4001a);
+    $user->cpccbc4003a=combine_letter($user->cpccbc4003a);
+    $user->cpccbc4004a=combine_letter($user->cpccbc4004a);
+    $user->cpccbc4010b=combine_letter($user->cpccbc4010b);
+    $user->cpccbc4013a=combine_letter($user->cpccbc4013a);
+    $user->cpccbc4005a=combine_letter($user->cpccbc4005a);
+    $user->cpccbc5001b=combine_letter($user->cpccbc5001b);
+    $user->cpccbc5010b=combine_letter($user->cpccbc5010b);
+    $user->cpccbc5003a=combine_letter($user->cpccbc5003a);
+    $user->cpccbc5002a=combine_letter($user->cpccbc5002a);
+    $user->cpccbc5011a=combine_letter($user->cpccbc5011a);
+    $user->cpccbc5018a=combine_letter($user->cpccbc5018a);
+    $user->cpccbc5005a=combine_letter($user->cpccbc5005a);
+    $user->cpccbc5004a=combine_letter($user->cpccbc5004a);
+    $user->bsbpmg508a=combine_letter($user->bsbpmg508a);
+    $user->bsbpmg505a=combine_letter($user->bsbpmg505a);
+    $user->bsbohs504b=combine_letter($user->bsbohs504b);
+    //$user->cpccbc4005a = get_grade_letter($user->cpccbc4005a);
+}
 
 $templatecontext = (object)[
-    'texttodisplay'=>'here is some text',
+    'texttodisplay'=>'Diploma of Building and Construction (Building)',
     'users'=>array_values($users)
 ];
 
-echo $OUTPUT->render_from_template('block_grading_report/report',$templatecontext);
+echo $OUTPUT->render_from_template('block_grading_report/report_dip',$templatecontext);
 
 
 
