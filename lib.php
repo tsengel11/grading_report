@@ -93,7 +93,14 @@ function get_grade_letter2($grade)
      return $result;
 
 }
-function get_userlist($cohortid)
+function get_cohort_dip(){
+    global $DB;
+    $sql = 'SELECT * FROM lcau999_moodle_test.mdl_cohort ch
+    where ch.name like "%Diploma%"';
+    $result = $DB->get_records_sql($sql);
+    return $result;
+}
+function get_userlist_dip($cohortid)
 {
     global $DB;
     $sql = " SELECT

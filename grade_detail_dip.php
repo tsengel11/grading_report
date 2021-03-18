@@ -16,16 +16,24 @@ require_once($CFG->dirroot . '/blocks/grading_report/lib.php');
 
 $user_id = $USER->id;
 
-$PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details.php'));
+$PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details_dip.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Grade Details');
 
+
 echo $OUTPUT->header();
+$selected_groupid=$_GET['cohortid'];
+$users = get_userlist_dip($_GET['cohortid']);
+$dip_cohorts=get_cohort_dip();
 
-$users = get_userlist(103);
+$selected_groupname= $dip_cohorts[$selected_groupid]->name;
 
+//print_r($dip_cohorts[$selected_groupid]->name) ;
 
-
+foreach($dip_cohorts as $cohort){
+    $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_dip.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
+}
+//print_r($dip_cohorts);
 foreach($users as $user){
     $user->startdate = gmdate( "d/m/Y",$user->startdate);
     $user->enddate = gmdate( "d/m/Y",$user->enddate);
@@ -52,7 +60,9 @@ foreach($users as $user){
 
 $templatecontext = (object)[
     'texttodisplay'=>'Diploma of Building and Construction (Building)',
-    'users'=>array_values($users)
+    'users'=>array_values($users),
+    'cohorts'=>array_values($dip_cohorts),
+    'groupname'=>$dip_cohorts[$selected_groupid]->name
 ];
 
 echo $OUTPUT->render_from_template('block_grading_report/report_dip',$templatecontext);

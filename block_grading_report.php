@@ -40,7 +40,7 @@ class block_grading_report extends block_base
         $user_id = $USER->id;
         $link = $CFG->wwwroot;
         
-        $resources_url = $link."/blocks/grading_report/grade_detail.php";
+        $resources_url = $link."/blocks/grading_report/grade_detail_dip.php?cohortid=103";
 
         
         $content = '';
@@ -50,7 +50,7 @@ class block_grading_report extends block_base
 
 
 
-        $link_res=html_writer::link($resources_url,'Grading Report',array('style'=>'color: #1a1a1a'));
+        $link_res=html_writer::link($resources_url,'Grading Report Diploma',array('style'=>'color: #1a1a1a'));
         $menus = 
         html_writer::div($link_res ,'grid-item4',array('style'=>'  background-color: #A7C957;
         border: 2px solid #e5e4e2;
