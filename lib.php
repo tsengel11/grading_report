@@ -196,7 +196,8 @@ function get_userlist_dip($cohortid)
         LEFT JOIN
     mdl_user_info_data AS i3 ON g.userid = i3.userid
     WHERE
-        i.courseid = 668 AND i.itemtype = 'mod'
+        i.courseid = 668 
+            AND i.itemtype = 'mod'
             AND g.userid IN (SELECT 
                 userid
             FROM
