@@ -34,10 +34,6 @@
      Group Name : {{groupname}}
 </div>
 
-
-
-
-
 <hr>
   <table class="" style='display: flex;
    flex-shrink: 0;
@@ -75,7 +71,7 @@
   <tbody style = "display: flex;">
 {{#users}}
     <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    <td style = "display: block;border:1px solid black;height:50px" class="text-center " ><a href="http://localhost/moodle/user/view.php?id="{{id}}"&course=668"> <b>{{firstname}}<b><br>{{lastname}}</a></td>
+    {{{userlink}}}
     <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
     <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
     <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>

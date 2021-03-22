@@ -17,6 +17,23 @@ function combine_letter($grade)
     return $grade = get_grade_letter($grade) ;
 }
 
+function convert($grade)
+{
+    //return $grade = get_grade_letter($grade)." (". strval($grade).")" ;
+    return $grade = get_grade_letter($grade) ;
+}
+
+function convert_userlink($userid,$firstname,$lastname,$url)
+{
+
+
+    return '<td
+    style = "display: block;border:1px solid black;height:50px" class="text-center" 
+    >
+    <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
+    </td>';
+}
+
 function get_grade_letter($grade)
 {
     //die($grade);
@@ -26,7 +43,7 @@ function get_grade_letter($grade)
         class "class="text-center" 
         style = "display: block;
         border:1px solid black;
-        "> - </td>';
+        "> N/A </td>';
      }
      else
      {
@@ -38,13 +55,6 @@ function get_grade_letter($grade)
             border:1px solid black;
             ">Satisfactory</td>';
         }
-        elseif ($grade==50){
-            $result = '<td
-            class ="bg-warning text-center" 
-            style = "display: block;
-            border:1px solid black;
-            ">Submitted</td>';
-        }
         elseif ($grade==0){
             $result = '<td 
             class = "bg-secondary text-center"
@@ -52,12 +62,12 @@ function get_grade_letter($grade)
             border:1px solid black;
             ">Not Submitted</td>';
         }
-        elseif ($grade>50 || $grade<100){
+        elseif ($grade>0 || $grade<100){
             $result = '<td 
             class ="bg-danger text-center"
             style = "display: block;
             border:1px solid black;
-            ">Require Re-submission</td>';
+            ">Not completed Yet</td>';
         }
         
      }
@@ -95,7 +105,7 @@ function get_grade_letter2($grade)
 }
 function get_cohort_dip(){
     global $DB;
-    $sql = 'SELECT * FROM lcau999_moodle_test.mdl_cohort ch
+    $sql = 'SELECT * FROM {cohort} ch
     where ch.name like "%Diploma%"';
     $result = $DB->get_records_sql($sql);
     return $result;
@@ -108,9 +118,10 @@ function get_userlist_dip($cohortid)
      	u.firstname,
         u.lastname,
         
-        i1.data AS `startdate`,
-        i2.data AS `enddate`,
-        i3.data AS `studentid`,
+
+        if(i1.data='','N/A',i1.data) as `startdate`,
+        if(i2.data='','N/A',i2.data) as `enddate`,
+        if(i3.data='','N/A',i3.data) as `studentid`,
         ROUND(SUM(IF(i.itemname = 'CPCCWHS1001:Prepare to work safely in the construction industry',
         g.finalgrade/ g.rawgrademax * 100,
                     NULL)),
@@ -194,7 +205,7 @@ function get_userlist_dip($cohortid)
             LEFT JOIN
         {user_info_data} AS i2 ON g.userid = i2.userid
         LEFT JOIN
-    mdl_user_info_data AS i3 ON g.userid = i3.userid
+        {user_info_data} AS i3 ON g.userid = i3.userid
     WHERE
         i.courseid = 668 
             AND i.itemtype = 'mod'

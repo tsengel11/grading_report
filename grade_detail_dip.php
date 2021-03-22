@@ -15,6 +15,7 @@ require_once($CFG->dirroot . '/blocks/grading_report/lib.php');
 
 
 $user_id = $USER->id;
+$url = $CFG->wwwroot;
 
 $PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details_dip.php'));
 $PAGE->set_context(\context_system::instance());
@@ -33,7 +34,7 @@ $selected_groupname= $dip_cohorts[$selected_groupid]->name;
 foreach($dip_cohorts as $cohort){
     $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_dip.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
 }
-//print_r($dip_cohorts);
+//print_object($users);
 foreach($users as $user){
     $user->startdate = gmdate( "d/m/Y",$user->startdate);
     $user->enddate = gmdate( "d/m/Y",$user->enddate);
@@ -55,8 +56,10 @@ foreach($users as $user){
     $user->bsbpmg508a=combine_letter($user->bsbpmg508a);
     $user->bsbpmg505a=combine_letter($user->bsbpmg505a);
     $user->bsbohs504b=combine_letter($user->bsbohs504b);
+    $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url);
     //$user->cpccbc4005a = get_grade_letter($user->cpccbc4005a);
 }
+print_object($users);
 
 $templatecontext = (object)[
     'texttodisplay'=>'Diploma of Building and Construction (Building)',
