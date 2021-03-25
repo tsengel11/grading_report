@@ -59,7 +59,7 @@ foreach($users as $user){
     $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url);
     //$user->cpccbc4005a = get_grade_letter($user->cpccbc4005a);
 }
-print_object($users);
+//print_object($users);
 
 $templatecontext = (object)[
     'texttodisplay'=>'Diploma of Building and Construction (Building)',

@@ -25,12 +25,14 @@ function convert($grade)
 
 function convert_userlink($userid,$firstname,$lastname,$url)
 {
-
-
     return '<td
     style = "display: block;border:1px solid black;height:50px" class="text-center" 
     >
     <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
+    <a 
+    href="'.$url.'/blocks/student_dashboard/grade_cert4.php?id='.$userid.'"; 
+    target="_blank";
+    class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
     </td>';
 }
 
@@ -110,6 +112,15 @@ function get_cohort_dip(){
     $result = $DB->get_records_sql($sql);
     return $result;
 }
+
+function get_cohort_cert4(){
+    global $DB;
+    $sql = 'SELECT * FROM {cohort} ch
+    where ch.name like "%Cert IV%"';
+    $result = $DB->get_records_sql($sql);
+    return $result;
+}
+
 function get_userlist_dip($cohortid)
 {
     global $DB;
@@ -118,11 +129,10 @@ function get_userlist_dip($cohortid)
      	u.firstname,
         u.lastname,
         
-
         if(i1.data='','N/A',i1.data) as `startdate`,
         if(i2.data='','N/A',i2.data) as `enddate`,
         if(i3.data='','N/A',i3.data) as `studentid`,
-        ROUND(SUM(IF(i.itemname = 'CPCCWHS1001:Prepare to work safely in the construction industry',
+        ROUND(SUM(IF(i.itemname = 'CPCCWHS1001: Prepare to work safely in the construction industry',
         g.finalgrade/ g.rawgrademax * 100,
                     NULL)),
                 1) AS 'CPCCWHS1001',
@@ -206,18 +216,15 @@ function get_userlist_dip($cohortid)
         {user_info_data} AS i2 ON g.userid = i2.userid
         LEFT JOIN
         {user_info_data} AS i3 ON g.userid = i3.userid
+        right join 
+	    {cohort_members} as cm on u.id = cm.userid
     WHERE
         i.courseid = 668 
             AND i.itemtype = 'mod'
-            AND g.userid IN (SELECT 
-                userid
-            FROM
-                {cohort_members} AS cm
-            WHERE
-                cohortid = :cohort_id)
             AND i1.fieldid = 4
             AND i2.fieldid = 5
             AND i3.fieldid = 3
+            AND cm.cohortid =:cohortid
     GROUP BY g.userid
     ORDER BY i2.data
     ";
@@ -227,7 +234,111 @@ function get_userlist_dip($cohortid)
 
     return $result;
 }
-function get_grade($userid)
+function get_userlist_cert4($cohortid)
 {
+    global $DB;
+    $sql = "SELECT 
+	u.firstname,
+    u.lastname,
+    u.email,
+    g.userid,
+	if(i1.data='','N/A',i1.data) as `startdate`,
+    if(i2.data='','N/A',i2.data) as `enddate`,
+    if(i3.data='','N/A',i3.data) as `studentid`,
+    ROUND(SUM(IF(i.itemname = 'CPCCWHS1001:Prepare to work safely in the construction industry',
+                 g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCWHS1001',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4001A: Apply building codes',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4001A',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4002A: Manage occupational health',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4002A',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4003A: Select and prepare',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4003A',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4004A: Identify and produce',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4004A',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4005A: Produce labour',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4005A',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4006B: Select, procure and store',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4006B',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4007A: Plan building or construction',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4007A',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4008B: Conduct on-site',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4008B',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4009B: Apply legal requirements',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4009B',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4010B: Apply structural principless',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4010B',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4011B: Apply structural principles',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4011B',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4012B: Read and interpret plans',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4012B',
+    ROUND(SUM(IF(i.itemname = 'BSBLDR403: Lead team effectiveness',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'BSBLDR403',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4013A: Prepare and evaluate',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'CPCCBC4013A',
+    ROUND(SUM(IF(i.itemname = 'BSBSMB406: Manage small business finances',
+                g.finalgrade/ g.rawgrademax * 100,
+                NULL)),
+            2) AS 'BSBSMB406'
+            FROM
+        {grade_grades} AS g
+            LEFT JOIN
+        {grade_items} AS i ON g.itemid = i.id
+            LEFT JOIN
+        {user} as u on g.userid = u.id
+            LEFT JOIN
+        {user_info_data} AS i1 ON g.userid = i1.userid
+            LEFT JOIN
+        {user_info_data} AS i2 ON g.userid = i2.userid
+        LEFT JOIN
+        {user_info_data} AS i3 ON g.userid = i3.userid
+    WHERE
+    i.courseid = 301 AND i.itemtype = 'mod'
+        AND g.userid IN (SELECT 
+            userid
+        FROM
+            {cohort_members} AS cm
+        WHERE
+            cohortid = :cohort_id)
+		AND i1.fieldid = 4
+        AND i2.fieldid = 5
+        AND i3.fieldid = 3
+
+    GROUP BY g.userid
+    ORDER BY i2.data ; ";
+
+    $para = ['cohort_id'=>$cohortid];
+    $result = $DB->get_records_sql($sql,$para);
+
+    return $result;
 
 }

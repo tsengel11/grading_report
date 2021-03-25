@@ -23,7 +23,7 @@
 <div class="dropdown show">
   <input type="button" class="btn btn-primary" value="Back" onclick="location.href='https://moodle.libertycollege.edu.au/'">
   <a class="custom-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Diploma Group
+    Select Groups
   </a>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -31,7 +31,10 @@
       {{{drop_downitem}}}
         {{/cohorts}}
     </div>
-     Group Name : {{groupname}}
+    <th>
+    <div><b>Group Name : </b>{{groupname}}</div>
+    <div><b>Total number of students : </b>{{studentnumber}}</div>
+     
 </div>
 
 <hr>
@@ -44,59 +47,60 @@
     <th style = "display: block; border:1px solid black ">Start Date</th>
     <th style = "display: block; border:1px solid black ">End Date</th>
     <th style = "display: block; border:1px solid black ">Student ID</th>
+    <th style = "display: block; border:1px solid black ">Student Email</th>
     <th style = "display: block; border:1px solid black ">Schedule</th>
     <th style = "display: block; border:1px solid black ">Term 1</th>
     <th style = "display: block; border:1px solid black ">CPCCWHS1001</th>
     <th style = "display: block; border:1px solid black ">CPCCBC4001A</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4002A</th>
     <th style = "display: block; border:1px solid black ">CPCCBC4003A</th>
     <th style = "display: block; border:1px solid black ">CPCCBC4004A</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC4005A</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC4010B</th>
     <th style = "display: block; border:1px solid black ">Term 2</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5001B</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5010B</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5003A</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5002A</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4005A</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4006B</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4007A</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4008B</th>
     <th style = "display: block; border:1px solid black ">Term 3</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5011A</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5018A</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5005A</th>
-    <th style = "display: block; border:1px solid black ">CPCCBC5004A</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4009B</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4010B</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4011B</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4012B</th>
     <th style = "display: block; border:1px solid black ">Term 4</th>
-    <th style = "display: block; border:1px solid black ">BSBPMG508A</th>
-    <th style = "display: block; border:1px solid black ">BSBPMG505A</th>
-    <th style = "display: block; border:1px solid black ">BSBOHS504B</th>
+    <th style = "display: block; border:1px solid black ">CPCCBC4013A</th>
+    <th style = "display: block; border:1px solid black ">BSBLDR403</th>
+    <th style = "display: block; border:1px solid black ">BSBSMB406</th>
+    
     </tr>
   </thead>
   <tbody style = "display: flex;">
 {{#users}}
     <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
     {{{userlink}}}
-    <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{startdate_std}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{enddate_std}}</td>
     <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{email}}</td>
     <td style = "display: block;border:1px solid black">&nbsp</td>
     <td style = "display: block;border:1px solid black">&nbsp</td>
     {{{cpccwhs1001}}}
     {{{cpccbc4001a}}}
+    {{{cpccbc4002a}}}
     {{{cpccbc4003a}}}
     {{{cpccbc4004a}}}
-    {{{cpccbc4005a}}}
-    {{{cpccbc4010b}}}
     <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpccbc5001b}}}
-    {{{cpccbc5010b}}}
-    {{{cpccbc5003a}}}
-    {{{cpccbc5002a}}}
+    {{{cpccbc4005a}}}
+    {{{cpccbc4006b}}}
+    {{{cpccbc4007a}}}
+    {{{cpccbc4008b}}}
     <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccbc5011a}}}
-    {{{cpccbc5018a}}}
-    {{{cpccbc5005a}}}
-    {{{cpccbc5004a}}}
+    {{{cpccbc4009b}}}
+    {{{cpccbc4010b}}}
+    {{{cpccbc4011b}}}
+    {{{cpccbc4012b}}}
     <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{bsbpmg508a}}}
-    {{{bsbpmg505a}}}
-    {{{bsbohs504b}}}
+    {{{cpccbc4013a}}}
+    {{{bsbldr403}}}
+    {{{bsbsmb406}}}
     </tr>
 {{/users}}
     </tbody>

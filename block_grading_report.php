@@ -27,7 +27,7 @@ class block_grading_report extends block_base
     function get_content()
     {
 
-        global $DB, $USER, $CFG;
+        global $DB, $USER, $CFG,$OUTPUT;
         require_once(__DIR__ . '/../../config.php');
        
 
@@ -40,7 +40,9 @@ class block_grading_report extends block_base
         $user_id = $USER->id;
         $link = $CFG->wwwroot;
         
-        $resources_url = $link."/blocks/grading_report/grade_detail_dip.php?cohortid=103";
+        $dip_url = $link."/blocks/grading_report/grade_detail_dip.php?cohortid=103";
+
+        $cert4_url = $link."/blocks/grading_report/grade_detail_cert4.php?cohortid=102";
 
         
         $content = '';
@@ -60,6 +62,18 @@ class block_grading_report extends block_base
         $content .= html_writer::div($menus,"grid-container",array('style'=>'  display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         padding: 5px;'));
+
+        $diplomalink = '<a href="'.$dip_url.'" class="alert-link">Grading Report Diploma</a>';
+        $cer4link = '<a href="'.$cert4_url.'" class="alert-link">Grading Report Certificate IV</a>';
+
+        
+        $templatecontext = (object)[
+            'texttodisplay'=>'Diploma of Building and Construction (Building)',
+            'diplomalink'=>$diplomalink,
+            'cer4link'=>$cer4link
+        ];
+        //print_object($templatecontext);
+        $content .= $OUTPUT->render_from_template('block_grading_report/block',$templatecontext);
         
         # Hide for temporary
         $this->content = new stdClass;
