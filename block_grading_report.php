@@ -43,6 +43,7 @@ class block_grading_report extends block_base
         $dip_url = $link."/blocks/grading_report/grade_detail_dip.php?cohortid=103";
 
         $cert4_url = $link."/blocks/grading_report/grade_detail_cert4.php?cohortid=102";
+        $carp_grade_link_url = $link."/blocks/grading_report/grading_carpentry.php?cohortid=115";
 
         
         $content = '';
@@ -52,23 +53,15 @@ class block_grading_report extends block_base
 
 
 
-        $link_res=html_writer::link($resources_url,'Grading Report Diploma',array('style'=>'color: #1a1a1a'));
-        $menus = 
-        html_writer::div($link_res ,'grid-item4',array('style'=>'  background-color: #A7C957;
-        border: 2px solid #e5e4e2;
-        padding: 10px;
-        font-size: 20px;
-        text-align: center;'));
-        $content .= html_writer::div($menus,"grid-container",array('style'=>'  display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        padding: 5px;'));
-
         $diplomalink = '<a href="'.$dip_url.'" class="alert-link">Grading Report Diploma</a>';
         $cer4link = '<a href="'.$cert4_url.'" class="alert-link">Grading Report Certificate IV</a>';
+        $carp_grade_link = '<a href="'.$carp_grade_link_url.'" class="alert-link">Grading Certificate III </a>';
+
 
         
         $templatecontext = (object)[
             'texttodisplay'=>'Diploma of Building and Construction (Building)',
+            'carp_grade_link'=>$carp_grade_link,
             'diplomalink'=>$diplomalink,
             'cer4link'=>$cer4link
         ];
@@ -81,6 +74,5 @@ class block_grading_report extends block_base
         
         //$this->content->footer = 'this is the footera';
         return $this->content;
-        
     }
 }

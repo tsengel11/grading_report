@@ -11,7 +11,7 @@
 
 global $DB, $USER, $CFG;
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot . '/blocks/grading_report/lib.php');
+require_once($CFG->dirroot . '/blocks/grading_report/locallib.php');
 
 
 $user_id = $USER->id;
@@ -24,21 +24,15 @@ $PAGE->set_title('Grade Details');
 
 echo $OUTPUT->header();
 $selected_groupid=$_GET['cohortid'];
-$users = get_userlist_cert4($_GET['cohortid']);
+
+$users = get_userlist_cert4($selected_groupid);
 $cohorts=get_cohort_cert4();
-
-$selected_groupname= $dip_cohorts[$selected_groupid]->name;
-
-//print_r($dip_cohorts[$selected_groupid]->name) ;
-
 foreach($cohorts as $cohort){
     $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_cert4.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
 }
 //print_object($users);
 foreach($users as $user){
-    $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url,$enddate);
-    $user->startdate_std = gmdate( "d/m/Y",$user->startdate);
-    $user->enddate_std = gmdate( "d/m/Y",$user->enddate);
+    $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url);
     $user->cpccwhs1001=combine_letter($user->cpccwhs1001);
     $user->cpccbc4001a=combine_letter($user->cpccbc4001a);
     $user->cpccbc4002a=combine_letter($user->cpccbc4002a);

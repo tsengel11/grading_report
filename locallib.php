@@ -14,19 +14,19 @@ defined('MOODLE_INTERNAL') || die();
 function combine_letter($grade)
 {
     //return $grade = get_grade_letter($grade)." (". strval($grade).")" ;
-    return $grade = get_grade_letter($grade) ;
+    return $grade = convert_grade($grade) ;
 }
 
 function convert($grade)
 {
     //return $grade = get_grade_letter($grade)." (". strval($grade).")" ;
-    return $grade = get_grade_letter($grade) ;
+    return $grade = convert_grade($grade) ;
 }
 
 function convert_userlink($userid,$firstname,$lastname,$url)
 {
     return '<td
-    style = "display: block;border:1px solid black;height:50px" class="text-center" 
+    style = "display: block;border:0.5px solid black;height:50px" class="text-center" 
     >
     <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
     <a 
@@ -35,8 +35,30 @@ function convert_userlink($userid,$firstname,$lastname,$url)
     class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
     </td>';
 }
+function convert_userlink_notd($userid,$firstname,$lastname,$url)
+{
+    return '
+    <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
+    <a href="'.$url.'/blocks/student_dashboard/grade_cert4.php?id='.$userid.'"; 
+    target="_blank";
+    class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
+    ';
+}
 
-function get_grade_letter($grade)
+function convert_userlink_dip($userid,$firstname,$lastname,$url)
+{
+    return '<td
+    style = "display: block;border:0.5px solid black;height:50px" class="text-center" 
+    >
+    <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
+    <a 
+    href="'.$url.'/blocks/student_dashboard/grade_dip.php?id='.$userid.'"; 
+    target="_blank";
+    class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
+    </td>';
+}
+
+function convert_grade($grade)
 {
     //die($grade);
     $result = '';
@@ -69,43 +91,55 @@ function get_grade_letter($grade)
             class ="bg-danger text-center"
             style = "display: block;
             border:1px solid black;
-            ">Not completed Yet</td>';
+            ">Not Yet Completed</td>';
         }
         
      }
      return $result;
 
 }
-function get_grade_letter2($grade)
+function get_grade_letter($grade)
 {
     //die($grade);
     $result = '';
-
-    switch(true){
-        case ($grade== null): 
-            $result=' - '; 
-            break;
-        case ($grade== 0):
-            $result='Not Submitted'; 
-            break;
-        case ($grade== 50):
-            $result='Submitted'; 
-            break;
-        case ($grade== 100):
-            $result='Satisfactory'; 
-            break;
-        case ($grade>0||$grade<50):
-            $result='Require Re-submission'; 
-            break;
-        case ($grade>50||$grade<100):
-            $result='Require Re-submission'; 
-            break;
-    }
-
+     if($grade == null){
+        $result = '<div
+        class "class="text-center" 
+        style = "
+        "> - </div>';
+     }
+     else
+     {
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<div
+            class =" text-center" 
+            style = " color:green"
+            ">Satisfactory</div>';
+        }
+        elseif ($grade==50){
+            $result = '<div
+            class =" text-center text-primary" 
+            style = "
+            ">Submitted</div>';
+        }
+        elseif ($grade==0){
+            $result = '<div 
+            class = " text-center"
+            style = " ;
+            ">Not Submitted</div>';
+        }
+        elseif ($grade>50 || $grade<100){
+            $result = '<div 
+            class =" text-center  "
+            style = " color:red"
+            ">Require Re-submission</div>';
+        }
+        
+     }
      return $result;
 
-}
-function get_cohort_dip(){
+}function get_cohort_dip(){
     global $DB;
     $sql = 'SELECT * FROM {cohort} ch
     where ch.name like "%Diploma%"';
@@ -120,6 +154,13 @@ function get_cohort_cert4(){
     $result = $DB->get_records_sql($sql);
     return $result;
 }
+function get_cohort_carptenty(){
+    global $DB;
+    $sql = 'SELECT * FROM {cohort} ch
+    where ch.name like "%Carptenty%"';
+    $result = $DB->get_records_sql($sql);
+    return $result;
+}
 
 function get_userlist_dip($cohortid)
 {
@@ -129,8 +170,8 @@ function get_userlist_dip($cohortid)
      	u.firstname,
         u.lastname,
         
-        if(i1.data='','N/A',i1.data) as `startdate`,
-        if(i2.data='','N/A',i2.data) as `enddate`,
+        from_unixtime(i1.data,'%d %M %Y') as `startdate`,
+        from_unixtime(i2.data,'%d %M %Y') as `enddate`,
         if(i3.data='','N/A',i3.data) as `studentid`,
         ROUND(SUM(IF(i.itemname = 'CPCCWHS1001: Prepare to work safely in the construction industry',
         g.finalgrade/ g.rawgrademax * 100,
@@ -224,7 +265,7 @@ function get_userlist_dip($cohortid)
             AND i1.fieldid = 4
             AND i2.fieldid = 5
             AND i3.fieldid = 3
-            AND cm.cohortid =:cohortid
+            AND cm.cohortid =:cohort_id
     GROUP BY g.userid
     ORDER BY i2.data
     ";
@@ -237,13 +278,14 @@ function get_userlist_dip($cohortid)
 function get_userlist_cert4($cohortid)
 {
     global $DB;
-    $sql = "SELECT 
+    $sql = "SELECT
+    u.id, 
 	u.firstname,
     u.lastname,
     u.email,
     g.userid,
-	if(i1.data='','N/A',i1.data) as `startdate`,
-    if(i2.data='','N/A',i2.data) as `enddate`,
+	from_unixtime(i1.data,'%d %M %Y') as `startdate`,
+    from_unixtime(i2.data,'%d %M %Y') as `enddate`,
     if(i3.data='','N/A',i3.data) as `studentid`,
     ROUND(SUM(IF(i.itemname = 'CPCCWHS1001:Prepare to work safely in the construction industry',
                  g.finalgrade/ g.rawgrademax * 100,
@@ -285,7 +327,7 @@ function get_userlist_cert4($cohortid)
                 g.finalgrade/ g.rawgrademax * 100,
                 NULL)),
             2) AS 'CPCCBC4009B',
-    ROUND(SUM(IF(i.itemname = 'CPCCBC4010B: Apply structural principless',
+    ROUND(SUM(IF(i.itemname = 'CPCCBC4010B: Apply structural principles',
                 g.finalgrade/ g.rawgrademax * 100,
                 NULL)),
             2) AS 'CPCCBC4010B',
@@ -335,6 +377,40 @@ function get_userlist_cert4($cohortid)
 
     GROUP BY g.userid
     ORDER BY i2.data ; ";
+
+    $para = ['cohort_id'=>$cohortid];
+    $result = $DB->get_records_sql($sql,$para);
+
+    return $result;
+
+}
+
+function get_userlist_carptenty($cohortid)
+{
+    global $DB;
+    $sql = " SELECT
+    g.userid, 
+    u.firstname,
+    u.firstname,
+	u.lastname,
+    round(sum(if(g.itemid=2868, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCOHS2001A_practical`,
+    round(sum(if(g.itemid=2104, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1012A_practical`,
+    round(sum(if(g.itemid=2803, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1013A_practical_swms`,
+    round(sum(if(g.itemid=2804, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1013A_practical_photo`,
+    round(sum(if(g.itemid=2561, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1014A_practical`,
+    round(sum(if(g.itemid=2695, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1015A_practical`,
+	round(sum(if(g.itemid=2697, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM2001A_practical`,
+    round(sum(if(g.itemid=2807, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2011A_practical_swms`,
+    round(sum(if(g.itemid=2805, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2011A_practical_photo`,
+	round(sum(if(g.itemid=2808, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2002B_practical_swms`,
+    round(sum(if(g.itemid=2806, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2002B_practical_photo`,
+	round(sum(if(g.itemid=2801, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA3002A_practical_swms`,
+    round(sum(if(g.itemid=2802, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA3002A_practical_photo`
+    FROM {grade_grades} as g
+    left join {user} as u on g.userid = u.id
+    left join {cohort_members} as cm on u.id = cm.userid
+    where cm.cohortid=:cohort_id
+    GROUP BY g.userid";
 
     $para = ['cohort_id'=>$cohortid];
     $result = $DB->get_records_sql($sql,$para);

@@ -11,11 +11,12 @@
 
 global $DB, $USER, $CFG;
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot . '/blocks/grading_report/lib.php');
+require_once($CFG->dirroot . '/blocks/grading_report/locallib.php');
 
 
 $user_id = $USER->id;
 $url = $CFG->wwwroot;
+
 
 $PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details_dip.php'));
 $PAGE->set_context(\context_system::instance());
@@ -24,7 +25,10 @@ $PAGE->set_title('Grade Details');
 
 echo $OUTPUT->header();
 $selected_groupid=$_GET['cohortid'];
-$users = get_userlist_dip($_GET['cohortid']);
+$users = get_userlist_dip($selected_groupid);
+
+
+
 $dip_cohorts=get_cohort_dip();
 
 $selected_groupname= $dip_cohorts[$selected_groupid]->name;
@@ -36,8 +40,6 @@ foreach($dip_cohorts as $cohort){
 }
 //print_object($users);
 foreach($users as $user){
-    $user->startdate = gmdate( "d/m/Y",$user->startdate);
-    $user->enddate = gmdate( "d/m/Y",$user->enddate);
     $user->cpccwhs1001=combine_letter($user->cpccwhs1001);
     $user->cpccbc4001a=combine_letter($user->cpccbc4001a);
     $user->cpccbc4003a=combine_letter($user->cpccbc4003a);
@@ -56,10 +58,9 @@ foreach($users as $user){
     $user->bsbpmg508a=combine_letter($user->bsbpmg508a);
     $user->bsbpmg505a=combine_letter($user->bsbpmg505a);
     $user->bsbohs504b=combine_letter($user->bsbohs504b);
-    $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url);
-    //$user->cpccbc4005a = get_grade_letter($user->cpccbc4005a);
+    $user->userlink=convert_userlink_dip($user->userid,$user->firstname,$user->lastname,$url);
 }
-//print_object($users);
+print_object($CFG->wwwroot);
 
 $templatecontext = (object)[
     'texttodisplay'=>'Diploma of Building and Construction (Building)',
