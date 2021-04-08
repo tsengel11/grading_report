@@ -13,7 +13,7 @@ global $DB, $USER, $CFG;
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot . '/blocks/grading_report/locallib.php');
 
-
+require_login();
 $user_id = $USER->id;
 $url = $CFG->wwwroot;
 

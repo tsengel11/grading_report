@@ -52,7 +52,7 @@ function convert_userlink($userid,$firstname,$lastname,$url)
     class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
     </td>';
 }
-function convert_userlink_notd($userid,$firstname,$lastname,$url)
+function convert_userlink_without_td($userid,$firstname,$lastname,$url)
 {
     return '
     <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
@@ -115,6 +115,36 @@ function convert_grade($grade)
      return $result;
 
 }
+
+function get_grade_details($attemptid)
+{
+    global $DB;
+    $sql = " SELECT a.id, round(a.sumgrades/q.sumgrades*100) as mark, a.attempt 
+    FROM {quiz_attempts} as a
+    left join {quiz} as q on a.quiz = q.id
+    where a.id = :attempt_id;
+    ";
+    $para = ['attempt_id'=>$attemptid];
+    $result = $DB->get_records_sql($sql,$para);
+    
+    return $result;
+    
+}
+
+function convert_attempt_link($attemptid,$url)
+{   
+    if($attemptid)
+    {
+        $grade=get_grade_details($attemptid);
+        print_object ($grade);
+
+        echo $grade->grade;
+        return '
+        <a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; target="_blank">aaaaa</a>';
+    }
+
+}
+
 function get_grade_letter($grade)
 {
     //die($grade);
@@ -182,109 +212,32 @@ function get_cohort_carptenty(){
 function get_userlist_dip($cohortid)
 {
     global $DB;
-    $sql = " SELECT
-        g.userid,
-     	u.firstname,
-        u.lastname,
-        
-        from_unixtime(i1.data,'%d %M %Y') as `startdate`,
-        from_unixtime(i2.data,'%d %M %Y') as `enddate`,
-        if(i3.data='','N/A',i3.data) as `studentid`,
-        ROUND(SUM(IF(i.itemname = 'CPCCWHS1001: Prepare to work safely in the construction industry',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCWHS1001',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC4001A:Apply building codes and standards to the construction process for low rise building projects',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC4001A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC4003A: Select and prepare a construction contract',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC4003A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC4004A:Identify and produce estimated costs for building and construction projects',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC4004A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC4010B:Apply structural principles to residential low rise constructions',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC4010B',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC4013: Prepare and evaluate tender documentation',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC4013A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC4005A:Produce labour and material schedules for ordering',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC4005A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5001B: Apply building codes and standards to the construction process for medium rise building projects',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5001B',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5010B: Manage construction work',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5010B',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5003A: Supervise the planning of on-site medium rise building or construction work',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5003A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5002A: Monitor costing systems on medium rise building and construction projects',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5002A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5011A: Manage environmental management practices and processes in building and construction',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5011A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5018A: Apply structural principles to the construction of medium rise buildings',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5018A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5005A: Select and manage building and construction contractors',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5005A',
-        ROUND(SUM(IF(i.itemname = 'CPCCBC5004A: Supervise and apply quality standards to the selection of building and construction materials',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'CPCCBC5004A',
-        ROUND(SUM(IF(i.itemname = 'BSBPMG508A:Manage project risk',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'BSBPMG508A',
-        ROUND(SUM(IF(i.itemname = 'BSBPMG505A: Manage project quality',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'BSBPMG505A',
-        ROUND(SUM(IF(i.itemname = 'BSBOHS504B: Apply principles of OHS risk management',
-        g.finalgrade/ g.rawgrademax * 100,
-                    NULL)),
-                1) AS 'BSBOHS504B'
-    FROM
-        {grade_grades} AS g
-            LEFT JOIN
-        {grade_items} AS i ON g.itemid = i.id
-            LEFT JOIN
-        {user} as u on g.userid = u.id
-            LEFT JOIN
-        {user_info_data} AS i1 ON g.userid = i1.userid
-            LEFT JOIN
-        {user_info_data} AS i2 ON g.userid = i2.userid
-        LEFT JOIN
-        {user_info_data} AS i3 ON g.userid = i3.userid
-        right join 
-	    {cohort_members} as cm on u.id = cm.userid
-    WHERE
-        i.courseid = 668 
-            AND i.itemtype = 'mod'
-            AND i1.fieldid = 4
-            AND i2.fieldid = 5
-            AND i3.fieldid = 3
-            AND cm.cohortid =:cohort_id
-    GROUP BY g.userid
-    ORDER BY i2.data
+    $sql = " select 
+    u.firstname,
+    u.lastname,
+    u.email,
+    max(if(m.id=3768, a.id,null )) as `CPCCOHS2001_practical`,
+    max(if(m.id=3288, a.id,null )) as `CPCCCM1012A_practical`,
+    max(if(m.id=3689, a.id,null )) as `CPCCCM1013A_practical_SWMS`,
+    max(if(m.id=3690, a.id,null )) as `CPCCCM1013A_practical_Photo`,
+    max(if(m.id=3447, a.id,null )) as `CPCCCM1014A_practical`,
+    max(if(m.id=3583, a.id,null )) as `CPCCCM1015A_practical`,
+    max(if(m.id=3585, a.id,null )) as `CPCCCM2001A_practical`,
+    max(if(m.id=3694, a.id,null )) as `CPCCCA2011A_practical_SWMS`,
+    max(if(m.id=3691, a.id,null )) as `CPCCCA2011A_practical_Photo`,
+    max(if(m.id=3695, a.id,null )) as `CPCCCA2002B_practical_SWMS`,
+    max(if(m.id=3692, a.id,null )) as `CPCCCA2002B_practical_Photo`,
+    max(if(m.id=3686, a.id,null )) as `CPCCCA3002A_practical_SWMS`,
+    max(if(m.id=3692, a.id,null )) as `CPCCCA3002A_practical_Photolog`
+    from mdl_cohort_members as cm
+    left join mdl_quiz_attempts as a on  cm.userid = a.userid
+    left join mdl_course_modules as m on a.quiz = m.instance
+    left join mdl_quiz as q on a.quiz = q.id
+    left join mdl_user as u on a.userid = u.id
+    where cm.cohortid=101
+    and m.id in (3768,3288,3689,3690,3447,  3583,3585,3694,3691,3695,3692,3686,3692)
+    group by a.userid
+    
     ";
 
     $para = ['cohort_id'=>$cohortid];
@@ -406,32 +359,53 @@ function get_userlist_carptenty($cohortid)
 {
     global $DB;
     $sql = " SELECT
-    g.userid, 
-    u.firstname,
-    u.firstname,
-	u.lastname,
-    round(sum(if(g.itemid=2868, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCOHS2001A_practical`,
-    round(sum(if(g.itemid=2104, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1012A_practical`,
-    round(sum(if(g.itemid=2803, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1013A_practical_swms`,
-    round(sum(if(g.itemid=2804, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1013A_practical_photo`,
-    round(sum(if(g.itemid=2561, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1014A_practical`,
-    round(sum(if(g.itemid=2695, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM1015A_practical`,
-	round(sum(if(g.itemid=2697, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCM2001A_practical`,
-    round(sum(if(g.itemid=2807, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2011A_practical_swms`,
-    round(sum(if(g.itemid=2805, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2011A_practical_photo`,
-	round(sum(if(g.itemid=2808, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2002B_practical_swms`,
-    round(sum(if(g.itemid=2806, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA2002B_practical_photo`,
-	round(sum(if(g.itemid=2801, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA3002A_practical_swms`,
-    round(sum(if(g.itemid=2802, (g.finalgrade / g.rawgrademax * 100 ),null)),2) as `CPCCCA3002A_practical_photo`
-    FROM {grade_grades} as g
-    left join {user} as u on g.userid = u.id
-    left join {cohort_members} as cm on u.id = cm.userid
-    where cm.cohortid=:cohort_id
-    GROUP BY g.userid";
+            u.id as userid, 
+            u.firstname,
+            u.lastname,
+            u.email,
+            MAX(IF(m.id = 3768, a.id, NULL)) AS `CPCCOHS2001_practical`,
+            MAX(IF(m.id = 3288, a.id, NULL)) AS `CPCCCM1012A_practical`,
+            MAX(IF(m.id = 3689, a.id, NULL)) AS `CPCCCM1013A_practical_SWMS`,
+            MAX(IF(m.id = 3690, a.id, NULL)) AS `CPCCCM1013A_practical_Photo`,
+            MAX(IF(m.id = 3447, a.id, NULL)) AS `CPCCCM1014A_practical`,
+            MAX(IF(m.id = 3583, a.id, NULL)) AS `CPCCCM1015A_practical`,
+            MAX(IF(m.id = 3585, a.id, NULL)) AS `CPCCCM2001A_practical`,
+            MAX(IF(m.id = 3694, a.id, NULL)) AS `CPCCCA2011A_practical_SWMS`,
+            MAX(IF(m.id = 3691, a.id, NULL)) AS `CPCCCA2011A_practical_Photo`,
+            MAX(IF(m.id = 3695, a.id, NULL)) AS `CPCCCA2002B_practical_SWMS`,
+            MAX(IF(m.id = 3692, a.id, NULL)) AS `CPCCCA2002B_practical_Photo`,
+            MAX(IF(m.id = 3686, a.id, NULL)) AS `CPCCCA3002A_practical_SWMS`,
+            MAX(IF(m.id = 3692, a.id, NULL)) AS `CPCCCA3002A_practical_Photolog`
+        FROM
+            {cohort_members} AS cm
+                LEFT JOIN
+            {quiz_attempts} AS a ON cm.userid = a.userid
+                LEFT JOIN
+            {course_modules} AS m ON a.quiz = m.instance
+                LEFT JOIN
+            {quiz} AS q ON a.quiz = q.id
+                LEFT JOIN
+            {user} AS u ON a.userid = u.id
+        WHERE
+            cm.cohortid = :cohort_id
+                AND m.id IN (3768 , 3288,
+                3689,
+                3690,
+                3447,
+                3583,
+                3585,
+                3694,
+                3691,
+                3695,
+                3692,
+                3686,
+                3692)
+        GROUP BY a.userid";
 
     $para = ['cohort_id'=>$cohortid];
     $result = $DB->get_records_sql($sql,$para);
 
     return $result;
+
 
 }
