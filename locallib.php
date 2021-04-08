@@ -11,6 +11,23 @@
 defined('MOODLE_INTERNAL') || die();
 
 
+function check_admin($user_id)
+{
+    $user_array=explode(',',get_config('block_grading_report','adminuser'));
+
+    foreach($user_array as $user){
+
+        if($user==$user_id)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
 function combine_letter($grade)
 {
     //return $grade = get_grade_letter($grade)." (". strval($grade).")" ;
