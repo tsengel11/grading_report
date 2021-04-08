@@ -45,9 +45,9 @@ $count=0;
         print_r($mark->mark);
         $count=$count+1;
         $user->userlink=convert_userlink_without_td($user->userid,$user->firstname,$user->lastname,$url);
-        $user->cpcccm1012a_practical=convert_attempt_link($user->cpcccm1012a_practical,$url);
-        $user->cpccca2011a_practical_swms=convert_attempt_link($user->cpccca2011a_practical_swms,$url);
-        $user->cpcccm1014a_practical=convert_attempt_link($user->cpcccm1014a_practical,$url);
+        $user->cpcccm1012a_practical=get_grade_details($user->cpcccm1012a_practical);
+
+        echo $user->cpcccm1012a_practical->id;
         $user->count =$count;
     
     }

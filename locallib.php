@@ -119,28 +119,24 @@ function convert_grade($grade)
 function get_grade_details($attemptid)
 {
     global $DB;
-    $sql = " SELECT a.id, round(a.sumgrades/q.sumgrades*100) as mark, a.attempt 
+    $sql = " SELECT  a.id, round(a.sumgrades/q.sumgrades*100) as mark, a.attempt 
     FROM {quiz_attempts} as a
     left join {quiz} as q on a.quiz = q.id
     where a.id = :attempt_id;
     ";
     $para = ['attempt_id'=>$attemptid];
-    $result = $DB->get_records_sql($sql,$para);
+    $result = $DB->get_record_sql($sql,$para);
     
     return $result;
     
 }
 
-function convert_attempt_link($attemptid,$url)
+function convert_attempt_link($attemptid,$mark,$url)
 {   
     if($attemptid)
     {
-        $grade=get_grade_details($attemptid);
-        print_object ($grade);
-
-        echo $grade->grade;
         return '
-        <a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; target="_blank">aaaaa</a>';
+        <a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; target="_blank">'.$mark.'</a>';
     }
 
 }
