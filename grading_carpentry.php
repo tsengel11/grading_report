@@ -52,20 +52,40 @@ $count=0;
         $user->count =$count;
     
     }
+
+    $units_term1 = array();
+    $units_term2 = array();
+    $units_term3 = array();
+    $units_term4 = array();
+    $units_term5 = array();
+    $units_term6 = array();
+
     foreach($units as $unit)
     {
         $unit->assigment_link = '<a href="'.$url.'/mod/quiz/report.php?id='.$unit->id.'&mode=overview">'.$unit->unit_name.'</br>'.$unit->name.'</a>';
-    }
 
-print_object($users) ;
-print_object($units);
+
+        if ($unit->id==3768||$unit->id==3288||$unit->id==3689||$unit->id==3690||$unit->id==3447)
+        {
+            array_push($units_term1,$unit);
+        }
+            if (($unit->id==3583||$unit->id==3585||$unit->id==3694||$unit->id==3691||$unit->id==3695||$unit->id==3692||$unit->id==3686||$unit->id==3687 ) )
+            {
+                array_push($units_term2,$unit);
+            }
+    }
+print_object($units_term1);
+// print_object($users) ;
+// print_object($units);
 $templatecontext = (object)[
     'texttodisplay'=>'Certificate III in Carpentry 2019',
     'users'=>array_values($users),
     'cohorts'=>array_values($cohorts),
     'studentnumber'=>count($users),
-    'url'=>$url,
-    'units'=>array_values($units)
+    'units_term1'=>array_values($units_term1),
+    'units_term2'=>array_values($units_term2),
+    'url'=>$url
+    
 ];
 
 echo $OUTPUT->render_from_template('block_grading_report/grading_carpentry',$templatecontext);
