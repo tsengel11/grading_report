@@ -131,12 +131,25 @@ function get_grade_details($attemptid)
     
 }
 
-function convert_attempt_link($attemptid,$mark,$url)
+function convert_attempt_link($attemptid,$url)
+
 {   
     if($attemptid)
-    {
-        return '
-        <a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; target="_blank">'.$mark.'</a>';
+    {        
+        $mark = get_grade_details($attemptid);
+        if($mark->mark==100){
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: green" ; target="_blank";>Satisfactory('.$mark->attempt.')</a>';   
+        }
+        elseif ($mark->mark==50){
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'";style="color: #0275d8"; target="_blank">Sumitted('.$mark->attempt.')</a>';   
+        }
+        elseif ($mark->mark>50 && $mark->mark<100){
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #d9534f" ;target="_blank">Require Re-submission('.$mark->attempt.')</a>'; 
+        }
+        else {
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #292b2c" target="_blank">Not Finished('.$mark->attempt.')</a>'; 
+        }
+
     }
 
 }
@@ -351,40 +364,28 @@ function get_userlist_cert4($cohortid)
 
 }
 
-function get_userlist_carptenty($cohortid)
+// Carpentry units
+
+function get_carptenty_units()
 {
     global $DB;
-    $sql = " SELECT
-            u.id as userid, 
-            u.firstname,
-            u.lastname,
-            u.email,
-            MAX(IF(m.id = 3768, a.id, NULL)) AS `CPCCOHS2001_practical`,
-            MAX(IF(m.id = 3288, a.id, NULL)) AS `CPCCCM1012A_practical`,
-            MAX(IF(m.id = 3689, a.id, NULL)) AS `CPCCCM1013A_practical_SWMS`,
-            MAX(IF(m.id = 3690, a.id, NULL)) AS `CPCCCM1013A_practical_Photo`,
-            MAX(IF(m.id = 3447, a.id, NULL)) AS `CPCCCM1014A_practical`,
-            MAX(IF(m.id = 3583, a.id, NULL)) AS `CPCCCM1015A_practical`,
-            MAX(IF(m.id = 3585, a.id, NULL)) AS `CPCCCM2001A_practical`,
-            MAX(IF(m.id = 3694, a.id, NULL)) AS `CPCCCA2011A_practical_SWMS`,
-            MAX(IF(m.id = 3691, a.id, NULL)) AS `CPCCCA2011A_practical_Photo`,
-            MAX(IF(m.id = 3695, a.id, NULL)) AS `CPCCCA2002B_practical_SWMS`,
-            MAX(IF(m.id = 3692, a.id, NULL)) AS `CPCCCA2002B_practical_Photo`,
-            MAX(IF(m.id = 3686, a.id, NULL)) AS `CPCCCA3002A_practical_SWMS`,
-            MAX(IF(m.id = 3692, a.id, NULL)) AS `CPCCCA3002A_practical_Photolog`
-        FROM
-            {cohort_members} AS cm
+
+    $sql = "SELECT 
+            m.id,
+            q.name,
+            SUBSTRING_INDEX(SUBSTRING_INDEX(c.fullname, ': ', 1),
+                    '_',
+                    - 1) AS `unit_name`
+            FROM
+            {quiz} AS q
                 LEFT JOIN
-            {quiz_attempts} AS a ON cm.userid = a.userid
+            mdl_course_modules AS m ON q.id = m.instance
                 LEFT JOIN
-            {course_modules} AS m ON a.quiz = m.instance
-                LEFT JOIN
-            {quiz} AS q ON a.quiz = q.id
-                LEFT JOIN
-            {user} AS u ON a.userid = u.id
-        WHERE
-            cm.cohortid = :cohort_id
-                AND m.id IN (3768 , 3288,
+            mdl_course AS c ON q.course = c.id
+            WHERE
+            m.id IN (
+                3768, 
+                3288,
                 3689,
                 3690,
                 3447,
@@ -395,8 +396,89 @@ function get_userlist_carptenty($cohortid)
                 3695,
                 3692,
                 3686,
-                3692)
-        GROUP BY a.userid";
+                3696,
+                3697,
+                3698,
+                3699,
+                3700,
+                3702,
+                3701,
+                3704,
+                3705,
+                3706,
+                3715,
+                3711,
+                3707,
+                3708,
+                3712,
+                3709,
+                3713,
+                3710,
+                3714,
+                3724,
+                3716,
+                3720,
+                3725,
+                3717,
+                3721,
+                3718,
+                3723,
+                3719,
+                3722,
+                3726,
+                3731,
+                3727,
+                3729,
+                3728,
+                3730,
+                2693,
+                2694,
+                2725)
+                order by unit_name,id ";
+                ;
+            $result = $DB->get_records_sql($sql);
+
+            return $result;
+}
+   
+
+function get_userlist_carptenty($cohortid)
+{
+    $units = get_carptenty_units();
+
+ 
+    global $DB;
+    $sql = " SELECT
+            u.id as userid, 
+            u.firstname,
+            u.lastname,
+            u.email,";
+
+            foreach ($units as $unit)
+            {
+                $sql.= "MAX(IF(m.id = ".$unit->id.", a.id, NULL)) AS `".$unit->id."`,";
+            };
+           $sql= rtrim($sql,", ") ;
+            $sql.="FROM
+                {cohort_members} AS cm
+                    LEFT JOIN
+                {quiz_attempts} AS a ON cm.userid = a.userid
+                    LEFT JOIN
+                {course_modules} AS m ON a.quiz = m.instance
+                    LEFT JOIN
+                {quiz} AS q ON a.quiz = q.id
+                    LEFT JOIN
+                {user} AS u ON a.userid = u.id
+            WHERE
+                cm.cohortid = :cohort_id
+                    AND m.id ";
+                $sql.= "IN (";
+                foreach ($units as $unit)
+                {
+                    $sql.=$unit->id.",";
+                };
+                $sql= rtrim($sql,", ") ;
+        $sql.=") GROUP BY a.userid";
 
     $para = ['cohort_id'=>$cohortid];
     $result = $DB->get_records_sql($sql,$para);

@@ -25,10 +25,9 @@
   <a class="custom-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Select Groups
   </a>
-
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         {{#cohorts}}
-      {{{drop_downitem}}}
+        {{{drop_downitem}}}
         {{/cohorts}}
     </div>
     <th>
@@ -41,44 +40,34 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col" style="width: 100px">Student Name</th>
-      <th scope="col">Student ID</th>
+      <th scope="col">Student Name</th>
       <th scope="col">Student Email</th>
-      <th scope="col">CPCCOHS2001A Practical</th>
-      <th scope="col">CPCCCM1012A Practical</th>
-      <th scope="col">CPCCCM1013A Practical(SWMS)</th>
-      <th scope="col">CPCCCM1013A Practical(Photos)</th>
-      <th scope="col">CPCCCM1014A Practical</th>
-      <th scope="col">CPCCCM1015A Practical</th>
-      <th scope="col">CPCCCM2001A Practical</th>
-      <th scope="col">CPCCCA2011A Practical(SWMS)</th>
-      <th scope="col">CPCCCA2011A Practical(Photos)</th>
-      <th scope="col">CPCCCA2002B Practical(SWMS)</th>
-      <th scope="col">CPCCCA2002B Practical(Photos)</th>
-      <th scope="col">CPCCCA3002A Practical(SWMS)</th>
-      <th scope="col">CPCCCA3002A Practical(Photos)</th>
+      {{#units}}
+      <th scope="col"><small>{{{assigment_link}}}</small></th>
+      {{/units}}
+       <th scope="col">Student Name</th>
+
     </tr>
   </thead>
   <tbody>
   {{#users}}
     <tr>
     <td>{{{count}}}</td>
-    <td> {{{userlink}}}</td>
-    <td>{{{id}}}</td>
+    <td>{{{userlink}}}</td>
     <td>{{{email}}}</td>
-    <td>{{{cpccohs2001a_practical}}}</td>
-    <td>{{{cpcccm1012a_practical}}}</td>
-    <td>{{{cpcccm1013a_practical_swms}}}</td>
-    <td>{{{cpcccm1013a_practical_photo}}}</td>
-    <td>{{{cpcccm1014a_practical}}}</td>
-    <td>{{{cpcccm1015a_practical}}}</td>
-    <td>{{{cpcccm2001a_practical}}}</td>
-    <td>{{{cpccca2011a_practical_swms}}}</td>
-    <td>{{{cpccca2011a_practical_photo}}}</td>
-    <td>{{{cpccca2002b_practical_swms}}}</td>
-    <td>{{{cpccca2002b_practical_photo}}}</td>
-    <td>{{{cpccca3002a_practical_swms}}}</td>
-    <td>{{{cpccca3002a_practical_photo}}}</td>
+    <td>{{{3692}}}</td>
+    <td>{{{3695}}}</td>
+    <td>{{{3691}}}</td>
+    <td>{{{3694}}}</td>
+    <td>{{{3686}}}</td>
+    <td>{{{3288}}}</td>
+    <td>{{{3689}}}</td>
+    <td>{{{3690}}}</td>
+    <td>{{{3447}}}</td>
+    <td>{{{3583}}}</td>
+    <td>{{{3585}}}</td>
+    <td>{{{3768}}}</td>
+    <td>{{{userlink}}}</td>
     </tr>
     {{/users}}
   </tbody>
