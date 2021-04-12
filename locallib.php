@@ -27,19 +27,6 @@ function check_admin($user_id)
 }
 
 
-
-function combine_letter($grade)
-{
-    //return $grade = get_grade_letter($grade)." (". strval($grade).")" ;
-    return $grade = convert_grade($grade) ;
-}
-
-function convert($grade)
-{
-    //return $grade = get_grade_letter($grade)." (". strval($grade).")" ;
-    return $grade = convert_grade($grade) ;
-}
-
 function convert_userlink($userid,$firstname,$lastname,$url)
 {
     return '<td
@@ -75,7 +62,7 @@ function convert_userlink_dip($userid,$firstname,$lastname,$url)
     </td>';
 }
 
-function convert_grade($grade)
+function convert_grade($grade,$userid,$item_w,$item_s)
 {
     //die($grade);
     $result = '';
@@ -104,16 +91,56 @@ function convert_grade($grade)
             ">Not Submitted</td>';
         }
         elseif ($grade>0 || $grade<100){
-            $result = '<td 
-            class ="bg-danger text-center"
-            style = "display: block;
-            border:1px solid black;
-            ">Not Yet Completed</td>';
+
+            if($item_w==0)
+            {
+                $result = '<td 
+                class = "bg-danger text-center"
+                style = "display: block;
+                border:1px solid black;
+                ">Require Re-submission</td>';
+            }
+            
+            else {
+                $w_mark_per =get_grade_details_itemid($userid,$item_w)->grade;
+                $s_mark_per =get_grade_details_itemid($userid,$item_s)->grade;
+
+
+
+                $w_mark =get_grade_letter_span($w_mark_per);
+                $s_mark =get_grade_letter_span($s_mark_per);
+    
+                $result = '<td 
+                class ="text-left"
+                style = "display: block;
+                border:1px solid black;
+                background-color:#D3D3D3;
+                "><b>W:</b>'.$w_mark.';&nbsp<b>S:</b>'.$s_mark.'
+                </td>';
+            }
+
         }
         
      }
      return $result;
 
+}
+
+function get_grade_details_itemid($userid,$itemid)
+{
+    global $DB;
+    $sql = " SELECT 
+        ROUND(rawgrade / rawgrademax * 100, 1) AS grade
+    FROM
+        {grade_grades}
+    WHERE
+        itemid = :item_id AND userid =:user_id
+    ";
+    $para = ['item_id'=>$itemid,'user_id'=>$userid];
+    $result = $DB->get_record_sql($sql,$para);
+    
+    return $result;
+    
 }
 
 function get_grade_details($attemptid)
@@ -153,7 +180,43 @@ function convert_attempt_link($attemptid,$url)
     }
 
 }
-
+function get_grade_letter_span($grade)
+{
+    //die($grade);
+    $result = '';
+     if($grade == null){
+        $result = '<span
+        class "class="text-center" 
+        style = "
+        "> Not Submitted </span>';
+     }
+     else
+     {
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<span
+            style = " color:green"
+            ">Satisfactory</span>';
+        }
+        elseif ($grade==50){
+            $result = '<span
+            class ="text-primary" 
+            style = "
+            ">Submitted</span>';
+        }
+        elseif ($grade==0){
+            $result = '<span 
+            ">Not Submitted</span>';
+        }
+        elseif ($grade>50 || $grade<100){
+            $result = '<span 
+            style = " color:red"
+            ">Require Re-sub</span>';
+        }
+        
+     }
+     return $result;
+    }
 function get_grade_letter($grade)
 {
     //die($grade);
