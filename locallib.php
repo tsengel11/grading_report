@@ -61,8 +61,11 @@ function convert_userlink_dip($userid,$firstname,$lastname,$url)
     </td>';
 }
 
-function convert_grade($grade,$userid,$item_w,$item_s)
+function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information of Grades
 {
+    
+    global $CFG;
+    $url = $CFG->wwwroot;
     //die($grade);
     $result = '';
      if($grade == null){
@@ -101,15 +104,31 @@ function convert_grade($grade,$userid,$item_w,$item_s)
             }
             
             else {
-                $w_mark_per =get_grade_details_itemid($userid,$item_w)->grade;
-                $s_mark_per =get_grade_details_itemid($userid,$item_s)->grade;
+                // $w_mark_per =get_grade_details_itemid($userid,$item_w)->grade;
+                // $s_mark_per =get_grade_details_itemid($userid,$item_s)->grade;
+                // $w_mark =get_grade_letter_with_attemptlink($w_mark_per,$userid);
+                // $s_mark =get_grade_letter_with_attemptlink($s_mark_per,$userid);
 
-
-
-                $w_mark =get_grade_letter_span($w_mark_per);
-                $s_mark =get_grade_letter_span($s_mark_per);
-    
-                $result = '<td 
+                $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+                $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
+                if($w_attempt)
+                {
+                    $w_mark = convert_attempt_link($w_attempt->attemptid,$url);
+                }
+            
+                else
+                {
+                    $w_mark='';
+                }
+                if($s_attempt)
+                {
+                    $s_mark = convert_attempt_link($s_attempt->attemptid,$url);
+                }
+                else
+                {
+                    $s_mark='';
+                }
+               $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
@@ -179,7 +198,7 @@ function convert_attempt_link($attemptid,$url)
     }
 
 }
-function get_grade_letter_span($grade)
+function get_grade_letter_with_attemptlink($grade)
 {
     //die($grade);
     $result = '';
@@ -656,8 +675,32 @@ function get_userlist_carptenty($cohortid)
 
     $para = ['cohort_id'=>$cohortid];
     $result = $DB->get_records_sql($sql,$para);
-
     return $result;
 
+}
+
+function get_attemtid_from_gradeitem($grade_itemid,$userid)
+{
+    global $DB;
+    if ($grade_itemid)
+    {
+        $sql = " SELECT 
+        i.id, i.courseid, a.id AS attemptid, a.userid
+            FROM
+                {grade_items} AS i
+                    LEFT JOIN
+                {quiz_attempts} AS a ON i.iteminstance = a.quiz
+            WHERE
+                i.id = :itemid AND a.userid = :user_id
+                    AND i.itemmodule = 'quiz'
+            order by a.attempt desc";
+    
+        $para = ['itemid'=>$grade_itemid,'user_id'=>$userid];
+        $result = $DB->get_record_sql($sql,$para);
+        
+
+            return $result;
+        
+    }
 
 }
