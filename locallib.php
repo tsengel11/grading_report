@@ -64,8 +64,7 @@ function convert_userlink_dip($userid,$firstname,$lastname,$url)
 function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information of Grades
 {
     
-    global $CFG;
-    $url = $CFG->wwwroot;
+
     //die($grade);
     $result = '';
      if($grade == null){
@@ -104,25 +103,29 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
             }
             
             else {
-                // $w_mark_per =get_grade_details_itemid($userid,$item_w)->grade;
-                // $s_mark_per =get_grade_details_itemid($userid,$item_s)->grade;
-                // $w_mark =get_grade_letter_with_attemptlink($w_mark_per,$userid);
-                // $s_mark =get_grade_letter_with_attemptlink($s_mark_per,$userid);
+                $w_mark_per =get_grade_details_itemid($userid,$item_w)->grade;
+                $s_mark_per =get_grade_details_itemid($userid,$item_s)->grade;
 
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
+
+                
+
+                //print_object($w_attempt);
+                // $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                // $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
+
                 if($w_attempt)
                 {
-                    $w_mark = convert_attempt_link($w_attempt->attemptid,$url);
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
                 }
-            
                 else
                 {
                     $w_mark='';
                 }
                 if($s_attempt)
                 {
-                    $s_mark = convert_attempt_link($s_attempt->attemptid,$url);
+                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
                 }
                 else
                 {
@@ -133,7 +136,7 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
                 style = "display: block;
                 border:1px solid black;
                 background-color:#D3D3D3;
-                "><b>W:</b>'.$w_mark.';&nbsp<b>S:</b>'.$s_mark.'
+                "><b>W:</b>'.$w_result.';&nbsp<b>S:</b>'.$s_result.'
                 </td>';
             }
 
@@ -176,30 +179,32 @@ function get_grade_details($attemptid)
     
 }
 
-function convert_attempt_link($attemptid,$url)
+function convert_attempt_link($attemptid,$url,$mark,$attempt)
 
 {   
     if($attemptid)
     {        
-        $mark = get_grade_details($attemptid);
+        //$mark = get_grade_details($attemptid);
         if($mark->mark==100){
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: green" ; target="_blank";>Satisfactory('.$mark->attempt.')</a>';   
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: green" ; target="_blank";>Satisfactory('.$attempt.')</a>';   
         }
         elseif ($mark->mark==50){
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'";style="color: #0275d8"; target="_blank">Sumitted('.$mark->attempt.')</a>';   
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'";style="color: #0275d8"; target="_blank">Sumitted('.$attempt.')</a>';   
         }
         elseif ($mark->mark>50 && $mark->mark<100){
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #d9534f" ;target="_blank">Require Re-submission('.$mark->attempt.')</a>'; 
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #d9534f" ;target="_blank">Require Re-submission('.$attempt.')</a>'; 
         }
         else {
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #292b2c" target="_blank">Not Finished('.$mark->attempt.')</a>'; 
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #292b2c" target="_blank">Not Finished('.$attempt.')</a>'; 
         }
 
     }
 
 }
-function get_grade_letter_with_attemptlink($grade)
+function get_grade_letter_with_attemptlink($grade,$attempt)
 {
+    // global $CFG;
+    // $url = $CFG->wwwroot;
     //die($grade);
     $result = '';
      if($grade == null){
@@ -211,10 +216,16 @@ function get_grade_letter_with_attemptlink($grade)
      else
      {
         if($grade==100){
-            //$result = 'Satisfactory';
+            $result = 'Satisfactory';
             $result = '<span
             style = " color:green"
             ">Satisfactory</span>';
+            //print_object($attempt);
+            //echo $attempt->attemptid;
+            gettype($attempt->attemptid);
+            $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
+            $result.= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
+            //$result .= '<a href="'.$url.'/mod/quiz/review.php?attempt=''"; style="color: green" ; target="_blank";>Satisfactory('')</a>';
         }
         elseif ($grade==50){
             $result = '<span
@@ -685,7 +696,7 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
     if ($grade_itemid)
     {
         $sql = " SELECT 
-        i.id, i.courseid, a.id AS attemptid, a.userid
+        i.id, i.courseid, max(a.id) AS attemptid, max(a.attempt) as attempt, a.userid
             FROM
                 {grade_items} AS i
                     LEFT JOIN
@@ -699,7 +710,7 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
         $result = $DB->get_record_sql($sql,$para);
         
 
-            return $result;
+        return $result;
         
     }
 
