@@ -23,7 +23,7 @@
 <div class="dropdown show">
   <input type="button" class="btn btn-primary" value="Back" onclick="location.href='https://moodle.libertycollege.edu.au/'">
   <a class="custom-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Diploma Group
+    Select Groups
   </a>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -31,7 +31,10 @@
       {{{drop_downitem}}}
         {{/cohorts}}
     </div>
-     Group Name : {{groupname}}
+    <th>
+    <div><b>Group Name : </b>{{groupname}}</div>
+    <div><b>Total number of students : </b>{{studentnumber}}</div>
+     
 </div>
 
 <hr>
