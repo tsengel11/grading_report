@@ -41,7 +41,6 @@ class block_grading_report extends block_base
         $link = $CFG->wwwroot;
         
         $dip_url = $link."/blocks/grading_report/grade_detail_dip.php?cohortid=103";
-
         $cert4_url = $link."/blocks/grading_report/grade_detail_cert4.php?cohortid=102";
         $carp_grade_link_url = $link."/blocks/grading_report/grade_detail_carp.php?cohortid=111";
 

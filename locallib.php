@@ -204,11 +204,11 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
         }
         elseif ($grade>0 || $grade<100)
         {
-            //echo $grade;
-            echo $item_w;
-            echo ",";
-            echo $userid;
-            echo ":";
+            // //echo $grade;
+            // echo $item_w;
+            // echo ",";
+            // echo $userid;
+            // echo ":";
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
 

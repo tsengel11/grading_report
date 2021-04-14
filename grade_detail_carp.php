@@ -28,7 +28,7 @@ $selected_groupid=$_GET['cohortid'];
 $users = get_userlist_carp($selected_groupid);
 $cohorts=get_cohort_carptenty();
 foreach($cohorts as $cohort){
-    $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_carpc.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
+    $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_carp.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
 }
 //print_object($cohorts);
 //print_object($users);
