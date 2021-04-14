@@ -103,34 +103,49 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
             }
             
             else {
-                $w_mark_per =get_grade_details_itemid($userid,$item_w)->grade;
-                $s_mark_per =get_grade_details_itemid($userid,$item_s)->grade;
-
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
 
-                
-
-                //print_object($w_attempt);
-                // $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                // $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
-
-                if($w_attempt)
+                $w_grade_detail =get_grade_details_itemid($userid,$item_w);
+                if($w_grade_detail)
                 {
-                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                    $w_mark_per =$w_grade_detail->grade;
+                    if($w_attempt)
+                    {
+                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                    }
+                    else
+                    {
+                        $w_result='';
+                    }
                 }
                 else
                 {
-                    $w_mark='';
+                    $w_result='';
                 }
-                if($s_attempt)
+
+                $s_grade_detail =get_grade_details_itemid($userid,$item_s);
+                if($s_grade_detail)
                 {
-                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
+                    $s_mark_per =$s_grade_detail->grade;
+                    if($s_attempt)
+                    {
+                        $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
+                    }
+                    else
+                    {
+                        $s_result='';
+                    }
                 }
                 else
                 {
-                    $s_mark='';
+                    $s_result='';
                 }
+
+
+
+
+
                $result = '<td 
                 class ="text-left"
                 style = "display: block;
@@ -203,9 +218,7 @@ function convert_attempt_link($attemptid,$url,$mark,$attempt)
 }
 function get_grade_letter_with_attemptlink($grade,$attempt)
 {
-    // global $CFG;
-    // $url = $CFG->wwwroot;
-    //die($grade);
+    $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
     $result = '';
      if($grade == null){
         $result = '<span
@@ -215,32 +228,29 @@ function get_grade_letter_with_attemptlink($grade,$attempt)
      }
      else
      {
-        if($grade==100){
-            $result = 'Satisfactory';
-            $result = '<span
-            style = " color:green"
-            ">Satisfactory</span>';
-            //print_object($attempt);
-            //echo $attempt->attemptid;
-            gettype($attempt->attemptid);
-            $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
-            $result.= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
-            //$result .= '<a href="'.$url.'/mod/quiz/review.php?attempt=''"; style="color: green" ; target="_blank";>Satisfactory('')</a>';
+        if($grade==100)
+        {
+            $result= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
         }
-        elseif ($grade==50){
-            $result = '<span
-            class ="text-primary" 
-            style = "
-            ">Submitted</span>';
+        elseif ($grade==50)
+        {
+            // $result = '<span
+            // class ="text-primary" 
+            // style = "
+            // ">Submitted</span>';
+            $result= html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array("target"=>"_blank"));
         }
-        elseif ($grade==0){
-            $result = '<span 
-            ">Not Submitted</span>';
+        elseif ($grade==0)
+        {
+            // $result = '<span 
+            // ">Not Submitted</span>';
+            $result= html_writer::link($url, 'Not Submitted'.'('.$attempt->attempt.')',array('style'=>"color: gray","target"=>"_blank"));
         }
         elseif ($grade>50 || $grade<100){
-            $result = '<span 
-            style = " color:red"
-            ">Require Re-sub</span>';
+        //     $result = '<span 
+        //     style = " color:red"
+        //     ">Require Re-sub</span>';
+            $result= html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
         }
         
      }
@@ -427,31 +437,272 @@ function get_userlist_dip($cohortid)
 function get_userlist_carp($cohortid)
 {
     global $DB;
-    $sql = " select 
+    $sql = " SELECT 
+    u.id,
     u.firstname,
     u.lastname,
     u.email,
-    max(if(m.id=3768, a.id,null )) as `CPCCOHS2001_practical`,
-    max(if(m.id=3288, a.id,null )) as `CPCCCM1012A_practical`,
-    max(if(m.id=3689, a.id,null )) as `CPCCCM1013A_practical_SWMS`,
-    max(if(m.id=3690, a.id,null )) as `CPCCCM1013A_practical_Photo`,
-    max(if(m.id=3447, a.id,null )) as `CPCCCM1014A_practical`,
-    max(if(m.id=3583, a.id,null )) as `CPCCCM1015A_practical`,
-    max(if(m.id=3585, a.id,null )) as `CPCCCM2001A_practical`,
-    max(if(m.id=3694, a.id,null )) as `CPCCCA2011A_practical_SWMS`,
-    max(if(m.id=3691, a.id,null )) as `CPCCCA2011A_practical_Photo`,
-    max(if(m.id=3695, a.id,null )) as `CPCCCA2002B_practical_SWMS`,
-    max(if(m.id=3692, a.id,null )) as `CPCCCA2002B_practical_Photo`,
-    max(if(m.id=3686, a.id,null )) as `CPCCCA3002A_practical_SWMS`,
-    max(if(m.id=3692, a.id,null )) as `CPCCCA3002A_practical_Photolog`
-    from mdl_cohort_members as cm
-    left join mdl_quiz_attempts as a on  cm.userid = a.userid
-    left join mdl_course_modules as m on a.quiz = m.instance
-    left join mdl_quiz as q on a.quiz = q.id
-    left join mdl_user as u on a.userid = u.id
-    where cm.cohortid=101
-    and m.id in (3768,3288,3689,3690,3447,  3583,3585,3694,3691,3695,3692,3686,3692)
-    group by a.userid ";
+    g.userid,
+    FROM_UNIXTIME(i1.data, '%d %M %Y') AS `startdate`,
+    FROM_UNIXTIME(i2.data, '%d %M %Y') AS `enddate`,
+    IF(i3.data = '', 'N/A', i3.data) AS `studentid`,
+            ROUND(SUM(IF(i.itemname = 'CPCCWHS1001: White Card',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCWHS1001,
+            ROUND(SUM(IF(i.itemname = 'CPCCSH3008: Install internal shop walls and fixtures_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCSH3008_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCSH3008: Install internal shop walls and fixtures',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCSH3008,
+            ROUND(SUM(IF(i.itemname = 'CPCCSF2004A: Place and fix reinforcement materials_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCSF2004A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCSF2004A: Place and fix reinforcement materials',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCSF2004A,
+            ROUND(SUM(IF(i.itemname = 'CPCCOHS2001A: Apply OHS requirements, policies and procedures in the construction industry_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCOHS2001A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCOHS2001A: Apply OHS requirements, policies and procedures in the construction industry',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCOHS2001A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCO2013A: Carry out concreting to simple forms_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCO2013A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCO2013A: Carry out concreting to simple forms',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCO2013A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2010B: Work safely at heights_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2010B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2010B: Work safely at heights',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2010B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2008B: Erect and dismantle restricted height scaffolding_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2008B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2008B: Erect and dismantle restricted height scaffolding',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2008B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2007B: Use explosive power tools_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2007B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2007B: Use explosive power tools',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2007B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2002A: Carry out excavation_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2002A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2002A: Carry out excavation',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2002A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2001A: Read and interpret plans and specifications_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2001A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM2001A: Read and interpret plans and specifications',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM2001A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1015A: Carry out measurements and calculations_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1015A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1015A: Carry out measurements and calculations',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1015A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1014A: Conduct workplace communication_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1014A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1014A: Conduct workplace communication',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1014A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1013A: Plan and organise work_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1013A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1013A: Plan and organise work',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1013A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1012A: Work effectively and sustainably in the construction industry_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1012A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCM1012A: Work effectively and sustainably in the construction industry',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCM1012A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3023A: Carry out levelling operations_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3023A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3023A: Carry out levelling operations',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3023A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3017B: Install exterior cladding_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3017B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3017B: Install exterior cladding',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3017B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3010A: Install and replace windows and doors_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3010A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3010A: Install and replace windows and doors',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3010A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3008B: Construct eaves_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3008B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3008B: Construct eaves',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3008B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3007C: Construct pitched roofs_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3007C_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3007C: Construct pitched roofs',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3007C,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3006B: Erect roof trusses_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3006B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3006B: Erect roof trusses',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3006B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3005B: Construct ceiling frames_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3005B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3005B: Construct ceiling frames',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3005B,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3004A: Construct wall frames_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3004A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3004A: Construct wall frames',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3004A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3003A: Install flooring systems_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3003A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3003A: Install flooring systems',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3003A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3002A: Carry out setting out_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3002A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3002A: Carry out setting out',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3002A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3001A: Carry out general demolition of minor building structures_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3001A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA3001A: Carry out general demolition of minor building structures',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA3001A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA2011A: Handle carpentry materials_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA2011A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA2011A: Handle carpentry materials',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA2011A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA2003A: Erect and dismantle formwork for footings and slabs on ground_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA2003A_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA2003A: Erect and dismantle formwork for footings and slabs on ground',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA2003A,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA2002B: Use carpentry tools and equipment_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA2002B_practical,
+            ROUND(SUM(IF(i.itemname = 'CPCCCA2002B: Use carpentry tools and equipment',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS CPCCCA2002B,
+            ROUND(SUM(IF(i.itemname = 'BSBSMB406: Manage small business finances',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS BSBSMB406,
+            ROUND(SUM(IF(i.itemname = 'BSBSMB301: Investigate micro business opportunities_Practical',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS BSBSMB301_practical,
+            ROUND(SUM(IF(i.itemname = 'BSBSMB301: Investigate micro business opportunities',
+                        g.finalgrade / g.rawgrademax * 100,
+                        NULL)),
+                    2) AS BSBSMB301
+        FROM
+            lcau999_moodle_test.mdl_grade_grades AS g
+                LEFT JOIN
+            lcau999_moodle_test.mdl_grade_items AS i ON g.itemid = i.id
+                LEFT JOIN
+            lcau999_moodle_test.mdl_user AS u ON g.userid = u.id
+                LEFT JOIN
+            lcau999_moodle_test.mdl_user_info_data AS i1 ON g.userid = i1.userid
+                LEFT JOIN
+            lcau999_moodle_test.mdl_user_info_data AS i2 ON g.userid = i2.userid
+                LEFT JOIN
+            lcau999_moodle_test.mdl_user_info_data AS i3 ON g.userid = i3.userid
+        WHERE
+            i.courseid = 212 AND i.itemtype = 'mod'
+                AND g.userid IN (SELECT 
+                    userid
+                FROM
+                    lcau999_moodle_test.mdl_cohort_members AS cm
+                WHERE
+                    cohortid = :cohort_id)
+                AND i1.fieldid = 4
+                AND i2.fieldid = 5
+                AND i3.fieldid = 3
+        GROUP BY g.userid
+        ORDER BY i2.data;";
 
     $para = ['cohort_id'=>$cohortid];
     $result = $DB->get_records_sql($sql,$para);
@@ -570,81 +821,6 @@ function get_userlist_cert4($cohortid)
 
 // Carpentry units
 
-function get_carptenty_units()
-{
-    global $DB;
-
-    $sql = "SELECT 
-            m.id,
-            q.name,
-            SUBSTRING_INDEX(SUBSTRING_INDEX(c.fullname, ': ', 1),
-                    '_',
-                    - 1) AS `unit_name`
-            FROM
-            {quiz} AS q
-                LEFT JOIN
-            mdl_course_modules AS m ON q.id = m.instance
-                LEFT JOIN
-            mdl_course AS c ON q.course = c.id
-            WHERE
-            m.id IN (
-                3768, 
-                3288,
-                3689,
-                3690,
-                3447,
-                3583,
-                3585,
-                3694,
-                3691,
-                3695,
-                3692,
-                3686,
-                3696,
-                3697,
-                3698,
-                3699,
-                3700,
-                3702,
-                3701,
-                3704,
-                3705,
-                3706,
-                3715,
-                3711,
-                3707,
-                3708,
-                3712,
-                3709,
-                3713,
-                3710,
-                3714,
-                3724,
-                3716,
-                3720,
-                3725,
-                3717,
-                3721,
-                3718,
-                3723,
-                3719,
-                3722,
-                3726,
-                3731,
-                3727,
-                3729,
-                3728,
-                3730,
-                2693,
-                2694,
-                2725)
-                order by unit_name,id ";
-                ;
-            $result = $DB->get_records_sql($sql);
-
-            return $result;
-}
-   
 
 function get_userlist_carptenty($cohortid)
 {
