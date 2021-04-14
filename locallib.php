@@ -61,6 +61,117 @@ function convert_userlink_dip($userid,$firstname,$lastname,$url)
     </td>';
 }
 
+function convert_grade_quiz($grade,$userid) // For QUIZ based units
+{
+    $result = '';
+    if($grade == null)
+    {
+       $result = '<td
+       class "class="text-center" 
+       style = "display: block;
+       border:1px solid black;
+       "> N/A </td>';
+    }
+    else
+    {
+       if($grade==100){
+           //$result = 'Satisfactory';
+           $result = '<td
+           class ="bg-success text-center" 
+           style = "display: block;
+           border:1px solid black;
+           ">Satisfactory</td>';
+       }
+       elseif ($grade==0)
+       {
+           $result = '<td 
+           class = "bg-secondary text-center"
+           style = "display: block;
+           border:1px solid black;
+           ">Not Submitted</td>';
+       }
+       elseif ($grade>0 || $grade<100)
+       {
+        $result = '<td 
+        class = "bg-danger text-center"
+        style = "display: block;
+        border:1px solid black;
+        ">Not Completed</td>';
+       }
+       
+
+    }
+
+    return $result;
+}
+
+function convert_grade_one_item($grade,$userid,$item_w) // FOR ONE assigment units
+{
+    
+
+    //die($grade);
+    $result = '';
+     if($grade == null){
+        $result = '<td
+        class "class="text-center" 
+        style = "display: block;
+        border:1px solid black;
+        "> N/A </td>';
+     }
+     else
+     {
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<td
+            class ="bg-success text-center" 
+            style = "display: block;
+            border:1px solid black;
+            ">Satisfactory</td>';
+        }
+        elseif ($grade==0){
+            $result = '<td 
+            class = "bg-secondary text-center"
+            style = "display: block;
+            border:1px solid black;
+            ">Not Submitted</td>';
+        }
+        elseif ($grade>0 || $grade<100)
+        {
+                $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+                $w_grade_detail =get_grade_details_itemid($userid,$item_w);
+                if($w_grade_detail)
+                {
+                    $w_mark_per =$w_grade_detail->grade;
+                    if($w_attempt)
+                    {
+                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                    }
+                    else
+                    {
+                        $w_result='';
+                    }
+                }
+                else
+                {
+                    $w_result='';
+                }
+
+              
+               $result = '<td 
+                class ="text-left"
+                style = "display: block;
+                border:1px solid black;
+                background-color:#D3D3D3;
+                "><b>A:</b>'.$w_result.';&nbsp<b>S:</b>'.'
+                </td>';
+            }
+
+        
+     }
+     return $result;
+
+}
+
 function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information of Grades
 {
     
@@ -91,18 +202,13 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
             border:1px solid black;
             ">Not Submitted</td>';
         }
-        elseif ($grade>0 || $grade<100){
-
-            if($item_w==0)
-            {
-                $result = '<td 
-                class = "bg-danger text-center"
-                style = "display: block;
-                border:1px solid black;
-                ">Require Re-submission</td>';
-            }
-            
-            else {
+        elseif ($grade>0 || $grade<100)
+        {
+            //echo $grade;
+            echo $item_w;
+            echo ",";
+            echo $userid;
+            echo ":";
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
 
@@ -142,10 +248,6 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
                     $s_result='';
                 }
 
-
-
-
-
                $result = '<td 
                 class ="text-left"
                 style = "display: block;
@@ -155,7 +257,6 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
                 </td>';
             }
 
-        }
         
      }
      return $result;
@@ -315,7 +416,7 @@ function get_cohort_cert4(){
 function get_cohort_carptenty(){
     global $DB;
     $sql = 'SELECT * FROM {cohort} ch
-    where ch.name like "%Carptenty%"';
+    where ch.name like "%Carpentry%"';
     $result = $DB->get_records_sql($sql);
     return $result;
 }

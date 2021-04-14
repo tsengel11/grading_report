@@ -43,7 +43,7 @@ class block_grading_report extends block_base
         $dip_url = $link."/blocks/grading_report/grade_detail_dip.php?cohortid=103";
 
         $cert4_url = $link."/blocks/grading_report/grade_detail_cert4.php?cohortid=102";
-        $carp_grade_link_url = $link."/blocks/grading_report/grading_carpentry.php?cohortid=115";
+        $carp_grade_link_url = $link."/blocks/grading_report/grade_detail_carp.php?cohortid=111";
 
         
         $content = '';
@@ -55,13 +55,13 @@ class block_grading_report extends block_base
 
         $diplomalink = '<a href="'.$dip_url.'" class="alert-link">Grading Report Diploma</a>';
         $cer4link = '<a href="'.$cert4_url.'" class="alert-link">Grading Report Certificate IV</a>';
-        $carp_grade_link = '<a href="'.$carp_grade_link_url.'" class="alert-link">Grading Certificate III </a>';
+        $carp_link = '<a href="'.$carp_grade_link_url.'" class="alert-link">Grading Certificate III </a>';
 
 
         
         $templatecontext = (object)[
             'texttodisplay'=>'Diploma of Building and Construction (Building)',
-            'carp_grade_link'=>$carp_grade_link,
+            'carp_grade_link'=>$carp_link,
             'diplomalink'=>$diplomalink,
             'cer4link'=>$cer4link
         ];
