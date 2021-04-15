@@ -96,7 +96,7 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
            class ="bg-success text-center" 
            style = "display: block;
            border:1px solid black;
-           ">Satisfactory</td>';
+           ">Satisfactory('.$grade.'%)</td>';
        }
        elseif ($grade==0)
        {
@@ -112,7 +112,7 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
         class = "bg-danger text-center"
         style = "display: block;
         border:1px solid black;
-        ">Not Completed</td>';
+        ">Not Completed('.$grade.'%)</td>';
        }
        
 
