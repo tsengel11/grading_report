@@ -155,11 +155,13 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
             // echo $item_w;
             // echo $userid;
 
-            // echo $grade;
+            // echo "overall grade:".$grade;
+            // echo "\n userid:".$userid;
+            // echo "\n itemid:".$item_w;
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $w_grade_detail =get_grade_details_itemid($userid,$item_w);
 
-                print_object($w_grade_detail);
+                // print_object($w_grade_detail);
                 if($w_grade_detail)
                 {
                     $w_mark_per =$w_grade_detail->grade;
@@ -183,7 +185,7 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
                 style = "display: block;
                 border:1px solid black;
                 background-color:#D3D3D3;
-                "><b>'.$letter.':</b>'.$w_result.'
+                "><b>'.$letter.':</b>'.$w_result.'('.$w_mark_per.')
                 </td>';
             }
 
@@ -810,23 +812,23 @@ function get_userlist_carp($cohortid)
                         NULL)),
                     2) AS BSBSMB301
         FROM
-            lcau999_moodle_test.mdl_grade_grades AS g
+            {grade_grades} AS g
                 LEFT JOIN
-            lcau999_moodle_test.mdl_grade_items AS i ON g.itemid = i.id
+            {grade_items} AS i ON g.itemid = i.id
                 LEFT JOIN
-            lcau999_moodle_test.mdl_user AS u ON g.userid = u.id
+            {user} AS u ON g.userid = u.id
                 LEFT JOIN
-            lcau999_moodle_test.mdl_user_info_data AS i1 ON g.userid = i1.userid
+            {user_info_data} AS i1 ON g.userid = i1.userid
                 LEFT JOIN
-            lcau999_moodle_test.mdl_user_info_data AS i2 ON g.userid = i2.userid
+            {user_info_data} AS i2 ON g.userid = i2.userid
                 LEFT JOIN
-            lcau999_moodle_test.mdl_user_info_data AS i3 ON g.userid = i3.userid
+            {user_info_data} AS i3 ON g.userid = i3.userid
         WHERE
             i.courseid = 212 AND i.itemtype = 'mod'
                 AND g.userid IN (SELECT 
                     userid
                 FROM
-                    lcau999_moodle_test.mdl_cohort_members AS cm
+                    {cohort_members} AS cm
                 WHERE
                     cohortid = :cohort_id)
                 AND i1.fieldid = 4
