@@ -33,25 +33,25 @@ foreach($cohorts as $cohort){
 //print_object($users);
 foreach($users as $user){
     $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url);
-    $user->cpccwhs1001=convert_grade($user->cpccwhs1001,$user->userid,0,0);
-    $user->cpccbc4001a=convert_grade($user->cpccbc4001a,$user->userid,2788,2789);
-    $user->cpccbc4002a=convert_grade($user->cpccbc4002a,$user->userid,2447,2446);
-    $user->cpccbc4003a=convert_grade($user->cpccbc4003a,$user->userid,2449,2448);
-    $user->cpccbc4004a=convert_grade($user->cpccbc4004a,$user->userid,2451,2450);
+    $user->cpccwhs1001=convert_grade($user->cpccwhs1001,$user->userid,0,"W",0,"S");
+    $user->cpccbc4001a=convert_grade($user->cpccbc4001a,$user->userid,2788,"W",2789,"S");
+    $user->cpccbc4002a=convert_grade($user->cpccbc4002a,$user->userid,2447,"W",2446,"S");
+    $user->cpccbc4003a=convert_grade($user->cpccbc4003a,$user->userid,2449,"W",2448,"S");
+    $user->cpccbc4004a=convert_grade($user->cpccbc4004a,$user->userid,2451,"W",2450,"S");
 
-    $user->cpccbc4005a=convert_grade($user->cpccbc4005a,$user->userid,2453,2452);
-    $user->cpccbc4006b=convert_grade($user->cpccbc4006b,$user->userid,2455,2454);
-    $user->cpccbc4007a=convert_grade($user->cpccbc4007a,$user->userid,2457,2456);
-    $user->cpccbc4008b=convert_grade($user->cpccbc4008b,$user->userid,2459,2458);
+    $user->cpccbc4005a=convert_grade($user->cpccbc4005a,$user->userid,2453,"W",2452,"S");
+    $user->cpccbc4006b=convert_grade($user->cpccbc4006b,$user->userid,2455,"W",2454,"S");
+    $user->cpccbc4007a=convert_grade($user->cpccbc4007a,$user->userid,2457,"W",2456,"S");
+    $user->cpccbc4008b=convert_grade($user->cpccbc4008b,$user->userid,2459,"W",2458,"S");
 
-    $user->cpccbc4009b=convert_grade($user->cpccbc4009b,$user->userid,2461,2460);
-    $user->cpccbc4010b=convert_grade($user->cpccbc4010b,$user->userid,2463,2462);
-    $user->cpccbc4011b=convert_grade($user->cpccbc4011b,$user->userid,2465,2464);
-    $user->cpccbc4012b=convert_grade($user->cpccbc4012b,$user->userid,2467,2466);
+    $user->cpccbc4009b=convert_grade($user->cpccbc4009b,$user->userid,2461,"W",2460,"S");
+    $user->cpccbc4010b=convert_grade($user->cpccbc4010b,$user->userid,2463,"W",2462,"S");
+    $user->cpccbc4011b=convert_grade($user->cpccbc4011b,$user->userid,2465,"W",2464,"S");
+    $user->cpccbc4012b=convert_grade($user->cpccbc4012b,$user->userid,2467,"W",2466,"S");
 
-    $user->cpccbc4013a=convert_grade($user->cpccbc4013a,$user->userid,2471,2468);
-    $user->bsbldr403=convert_grade($user->bsbldr403,$user->userid,2472,2469);
-    $user->bsbsmb406=convert_grade($user->bsbsmb406,$user->userid,2473,2470);
+    $user->cpccbc4013a=convert_grade($user->cpccbc4013a,$user->userid,2471,"W",2468,"S");
+    $user->bsbldr403=convert_grade($user->bsbldr403,$user->userid,2472,"W",2469,"S");
+    $user->bsbsmb406=convert_grade($user->bsbsmb406,$user->userid,2473,"W",2470,"S");
 }
 //print_object($users);
 

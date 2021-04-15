@@ -60,6 +60,22 @@ function convert_userlink_dip($userid,$firstname,$lastname,$url)
     class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
     </td>';
 }
+// // Seperating Assment names
+// function get_assesmentname($itemname)
+// {
+//     $itemnames= explode(" - ",$itemname);
+//     print_object($itemnames);
+
+//     $result= "";
+//     // foreach($i as $itemname){
+//     //     $result.= $i""
+//     // }
+//     if($itemnames[1]){
+//         return substr($itemnames[0],0,2)."-".substr($itemnames[1],0,2);
+//     }
+//     return $itemnames[0];
+    
+// }
 
 function convert_grade_quiz($grade,$userid) // For QUIZ based units
 {
@@ -108,7 +124,6 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
 function convert_grade_one_item($grade,$userid,$item_w) // FOR ONE assigment units
 {
     
-
     //die($grade);
     $result = '';
      if($grade == null){
@@ -172,7 +187,7 @@ function convert_grade_one_item($grade,$userid,$item_w) // FOR ONE assigment uni
 
 }
 
-function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information of Grades
+function convert_grade($grade,$userid,$item_w,$w_letter,$item_s,$s_letter) // Detailed information of Grades
 {
     
 
@@ -212,6 +227,14 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
 
+                // print_object($w_attempt);
+                // echo ($w_attempt->itemname);
+
+                // Assessment letter
+
+                // $w_letter= get_assesmentname($w_attempt->itemname);
+                // $s_letter= get_assesmentname($s_attempt->itemname);
+
                 $w_grade_detail =get_grade_details_itemid($userid,$item_w);
                 if($w_grade_detail)
                 {
@@ -248,12 +271,13 @@ function convert_grade($grade,$userid,$item_w,$item_s) // Detailed information o
                     $s_result='';
                 }
 
+
                $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
                 background-color:#D3D3D3;
-                "><b>W:</b>'.$w_result.';&nbsp<b>S:</b>'.$s_result.'
+                "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
             }
 
@@ -967,13 +991,14 @@ function get_userlist_carptenty($cohortid)
 
 }
 
+// Fetching grade item information based itemid and userid
 function get_attemtid_from_gradeitem($grade_itemid,$userid)
 {
     global $DB;
     if ($grade_itemid)
     {
         $sql = " SELECT 
-        i.id, i.courseid, max(a.id) AS attemptid, max(a.attempt) as attempt, a.userid
+        i.id, i.courseid,itemname, max(a.id) AS attemptid, max(a.attempt) as attempt, a.userid
             FROM
                 {grade_items} AS i
                     LEFT JOIN
