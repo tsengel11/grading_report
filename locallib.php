@@ -93,8 +93,9 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
        if($grade==100){
            //$result = 'Satisfactory';
            $result = '<td
-           class ="bg-success text-center" 
-           style = "display: block;
+           id = "term1";
+           class ="bg-success text-center" ;
+           style = "display: hide;
            border:1px solid black;
            ">Satisfactory('.$grade.'%)</td>';
        }
@@ -185,7 +186,7 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
                 style = "display: block;
                 border:1px solid black;
                 background-color:#D3D3D3;
-                "><b>'.$letter.':</b>'.$w_result.'('.$w_mark_per.')
+                "><b>'.$letter.':</b>'.$w_result.'
                 </td>';
             }
 

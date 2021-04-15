@@ -21,6 +21,8 @@ $PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details_carp.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Grade Details');
 
+//$PAGE->requires->js('/blocks/grading_report/javascripts/scripts.js',true);
+
 
 echo $OUTPUT->header();
 $selected_groupid=$_GET['cohortid'];
@@ -100,9 +102,6 @@ foreach($users as $user){
     $user->bsbsmb406=convert_grade_quiz($user->bsbsmb406,$user->userid);
     $user->bsbsmb301=convert_grade_quiz($user->bsbsmb301,$user->userid);
     $user->bsbsmb301_practical=convert_grade_one_item($user->bsbsmb301_practical,$user->userid,2161,"PA");
-
-
-
 }
 //print_object($users);
 
