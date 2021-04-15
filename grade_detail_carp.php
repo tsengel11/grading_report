@@ -38,18 +38,18 @@ foreach($users as $user){
     //Term 1
     $user->cpccwhs1001=convert_grade_quiz($user->cpccwhs1001,$user->userid);
     $user->cpccohs2001a=convert_grade_quiz($user->cpccohs2001a,$user->userid);
-    $user->cpccohs2001a_practical=convert_grade_one_item($user->cpccohs2001a_practical,$user->userid,2868);
+    $user->cpccohs2001a_practical=convert_grade_one_item($user->cpccohs2001a_practical,$user->userid,2868,"PA");
     $user->cpcccm1012a=convert_grade_quiz($user->cpcccm1012a,$user->userid);
-    $user->cpcccm1012a_practical=convert_grade_one_item($user->cpcccm1012a_practical,$user->userid,2442);
+    $user->cpcccm1012a_practical=convert_grade_one_item($user->cpcccm1012a_practical,$user->userid,2442,"PA");
     $user->cpcccm1013a=convert_grade_quiz($user->cpcccm1013a,$user->userid);
     $user->cpcccm1013a_practical=convert_grade($user->cpcccm1013a_practical,$user->userid,2803,"SW",2804,"PH");
     $user->cpcccm1014a=convert_grade_quiz($user->cpcccm1014a,$user->userid);
-    $user->cpcccm1014a_practical=convert_grade_one_item($user->cpcccm1014a_practical,$user->userid,2561);
+    $user->cpcccm1014a_practical=convert_grade_one_item($user->cpcccm1014a_practical,$user->userid,2561,"PA");
     // Term 2
     $user->cpcccm1015a=convert_grade_quiz($user->cpcccm1015a,$user->userid);
-    $user->cpcccm1015a_practical=convert_grade_one_item($user->cpcccm1015a_practical,$user->userid,2695);
+    $user->cpcccm1015a_practical=convert_grade_one_item($user->cpcccm1015a_practical,$user->userid,2695,"PA");
     $user->cpcccm2001a=convert_grade_quiz($user->cpcccm2001a,$user->userid);
-    $user->cpcccm2001a_practical=convert_grade_one_item($user->cpcccm2001a_practical,$user->userid,2697);
+    $user->cpcccm2001a_practical=convert_grade_one_item($user->cpcccm2001a_practical,$user->userid,2697,"PA");
     $user->cpccca2011a=convert_grade_quiz($user->cpccca2011a,$user->userid);
     $user->cpccca2011a_practical=convert_grade($user->cpccca2011a_practical,$user->userid,2807,"SW",2805,"PH");
     $user->cpccca2002b=convert_grade_quiz($user->cpccca2002b,$user->userid);
@@ -99,7 +99,7 @@ foreach($users as $user){
     $user->cpccca2003a_practical=convert_grade($user->cpccca2003a_practical,$user->userid,2841,"SW",2843,"PH");
     $user->bsbsmb406=convert_grade_quiz($user->bsbsmb406,$user->userid);
     $user->bsbsmb301=convert_grade_quiz($user->bsbsmb301,$user->userid);
-    $user->bsbsmb301_practical=convert_grade_one_item($user->bsbsmb301_practical,$user->userid,2161);
+    $user->bsbsmb301_practical=convert_grade_one_item($user->bsbsmb301_practical,$user->userid,2161,"PA");
 
 
 

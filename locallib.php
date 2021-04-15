@@ -121,7 +121,7 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
     return $result;
 }
 
-function convert_grade_one_item($grade,$userid,$item_w) // FOR ONE assigment units
+function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assigment units
 {
     
     //die($grade);
@@ -152,8 +152,14 @@ function convert_grade_one_item($grade,$userid,$item_w) // FOR ONE assigment uni
         }
         elseif ($grade>0 || $grade<100)
         {
+            // echo $item_w;
+            // echo $userid;
+
+            // echo $grade;
                 $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 $w_grade_detail =get_grade_details_itemid($userid,$item_w);
+
+                print_object($w_grade_detail);
                 if($w_grade_detail)
                 {
                     $w_mark_per =$w_grade_detail->grade;
@@ -177,7 +183,7 @@ function convert_grade_one_item($grade,$userid,$item_w) // FOR ONE assigment uni
                 style = "display: block;
                 border:1px solid black;
                 background-color:#D3D3D3;
-                "><b>A:</b>'.$w_result.';&nbsp<b>S:</b>'.'
+                "><b>'.$letter.':</b>'.$w_result.'
                 </td>';
             }
 
