@@ -198,7 +198,6 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
 
 function convert_grade($grade,$userid,$item_w,$w_letter,$item_s,$s_letter) // Detailed information of Grades
 {
-    
 
     //die($grade);
     $result = '';
@@ -294,6 +293,88 @@ function convert_grade($grade,$userid,$item_w,$w_letter,$item_s,$s_letter) // De
      }
      return $result;
 
+}
+
+function convert_grade_three_item($grade,$userid,$item_1,$letter_1,$item_2,$letter_2,$item_3,$letter_3) // Detailed information of Grades
+{
+
+    //die($grade);
+    $result = '';
+     if($grade == null){
+        $result = '<td
+        class "class="text-center" 
+        style = "display: block;
+        border:1px solid black;
+        "> N/A </td>';
+     }
+     else
+     {
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<td
+            class ="bg-success text-center" 
+            style = "display: block;
+            border:1px solid black;
+            ">Satisfactory</td>';
+        }
+        elseif ($grade==0){
+            $result = '<td 
+            class = "bg-secondary text-center"
+            style = "display: block;
+            border:1px solid black;
+            ">Not Submitted</td>';
+        }
+        elseif ($grade>0 || $grade<100)
+        {
+            // //echo $grade;
+            // echo $item_w;
+            // echo ",";
+            // echo $userid;
+            // echo ":";
+                $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+                
+
+                $result_1=grade_result($userid,$item_1);
+                $result_2=grade_result($userid,$item_2);
+                $result_3=grade_result($userid,$item_2);
+
+
+               $result = '<td 
+                class ="text-left"
+                style = "display: block;
+                border:1px solid black;
+                background-color:#D3D3D3;
+                "><b>'.$letter_1.':</b>'.$result_1.';&nbsp<b>'.$letter_2.':</b>'.$result_2.';&nbsp<b>'.$letter_3.':</b>'.$result_3.'
+                </td>';
+            }
+
+        
+     }
+     return $result;
+
+}
+
+
+function grade_result($userid,$item){
+    $attempt = get_attemtid_from_gradeitem($item,$userid);
+    $grade_detail =get_grade_details_itemid($userid,$item,$attempt);
+
+    if($grade_detail)
+    {
+        $mark_per =$grade_detail->grade;
+        if($attempt)
+        {
+            return get_grade_letter_with_attemptlink($mark_per,$attempt);
+        }
+        else
+        {
+            return '';
+        }
+    }
+    else
+    {
+        return '';
+    }
 }
 
 function get_grade_details_itemid($userid,$itemid)
@@ -450,6 +531,13 @@ function get_cohort_carptenty(){
     global $DB;
     $sql = 'SELECT * FROM {cohort} ch
     where ch.name like "%Carpentry%"';
+    $result = $DB->get_records_sql($sql);
+    return $result;
+}
+function get_cohort_wall(){
+    global $DB;
+    $sql = 'SELECT * FROM {cohort} ch
+    where ch.name like "%Wall & Floor%"';
     $result = $DB->get_records_sql($sql);
     return $result;
 }
@@ -843,6 +931,195 @@ function get_userlist_carp($cohortid)
 
     return $result;
 }
+
+function get_userlist_wall($cohortid)
+{
+    global $DB;
+    $sql = " SELECT 
+    u.id,
+    u.firstname,
+    u.lastname,
+    u.email,
+    g.userid,
+    FROM_UNIXTIME(i1.data, '%d %M %Y') AS `startdate`,
+    FROM_UNIXTIME(i2.data, '%d %M %Y') AS `enddate`,
+    IF(i3.data = '', 'N/A', i3.data) AS `studentid`,
+    ROUND(SUM(IF(i.itemname = 'CPCCWP3002A: Apply waterproofing process to internal wet areas_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWP3002A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWP3002A: Apply waterproofing process to internal wet areas',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWP3002A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWHS1001: White Card',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWHS1001,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3007A: Tile curved surfaces_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3007A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3007A: Tile curved surfaces',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3007A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3006A: Carry out mosaic tiling_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3006A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3006A: Carry out mosaic tiling',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3006A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3004A: Repair wall and floor tiles_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3004A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3004A: Repair wall and floor tiles',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3004A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3003A: Fix wall tiles_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3003A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3003A: Fix wall tiles',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3003A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3002A: Fix floor tiles_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3002A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3002A: Fix floor tiles',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3002A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3001A: Prepare surfaces for tiling application_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3001A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF3001A: Prepare surfaces for tiling application',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF3001A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF2002A: Use wall and floor tiling tools and equipment_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF2002A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF2002A: Use wall and floor tiling tools and equipment',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF2002A,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF2001A: Handle wall and floor tiling materials_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF2001A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCWF2001A: Handle wall and floor tiling materials',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCWF2001A,
+    ROUND(SUM(IF(i.itemname = 'CPCCOHS2001A: Apply OHS requirements, policies and procedures in the construction industry_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCOHS2001A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCOHS2001A: Apply OHS requirements, policies and procedures in the construction industry',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCOHS2001A,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM2006B: Apply basic levelling procedures_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM2006B_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM2006B: Apply basic levelling procedures',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM2006B,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM2001A: Read and interpret plans and specifications_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM2001A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM2001A: Read and interpret plans and specifications',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM2001A,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1015A: Carry out measurements and calculations_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1015A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1015A: Carry out measurements and calculations',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1015A,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1014A: Conduct workplace communication_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1014A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1014A: Conduct workplace communication',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1014A,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1013A: Plan and organise work_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1013A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1013A: Plan and organise work',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1013A,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1012A: Work effectively and sustainably in the construction industry_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1012A_practical,
+    ROUND(SUM(IF(i.itemname = 'CPCCCM1012A: Work effectively and sustainably in the construction industry',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS CPCCCM1012A,
+    ROUND(SUM(IF(i.itemname = 'BSBSMB406: Manage small business finances',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS BSBSMB406,
+    ROUND(SUM(IF(i.itemname = 'BSBSMB301: Investigate micro business_Practical',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS BSBSMB301_practical,
+    ROUND(SUM(IF(i.itemname = 'BSBSMB301: Investigate micro business',
+                g.finalgrade / g.rawgrademax * 100,
+                NULL)),
+            2) AS BSBSMB301
+        FROM
+            {grade_grades} AS g
+                LEFT JOIN
+            {grade_items} AS i ON g.itemid = i.id
+                LEFT JOIN
+            {user} AS u ON g.userid = u.id
+                LEFT JOIN
+            {user_info_data} AS i1 ON g.userid = i1.userid
+                LEFT JOIN
+            {user_info_data} AS i2 ON g.userid = i2.userid
+                LEFT JOIN
+            {user_info_data} AS i3 ON g.userid = i3.userid
+        WHERE
+            i.courseid = 214 AND i.itemtype = 'mod'
+                AND g.userid IN (SELECT 
+                    userid
+                FROM
+                    {cohort_members} AS cm
+                WHERE
+                    cohortid = :cohort_id)
+                AND i1.fieldid = 4
+                AND i2.fieldid = 5
+                AND i3.fieldid = 3
+        GROUP BY g.userid
+        ORDER BY i2.data;";
+
+    $para = ['cohort_id'=>$cohortid];
+    $result = $DB->get_records_sql($sql,$para);
+
+    return $result;
+}
+
 function get_userlist_cert4($cohortid)
 {
     global $DB;
