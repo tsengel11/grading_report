@@ -281,22 +281,29 @@ function convert_grade($grade,$userid,
      }
      return $result;
 }
-function convert_grade_cer4($grade,$userid,
+function convert_grade_cert4($grade,$userid,
                         $item_w,$w_letter,
                         $item_s,$s_letter,
-                        $item_pa,$pa_letter) // Grade item of Combined old Assessments
+                        $item_pa2,$pa2_letter,// Grade item of Combined old Assessments
+                        $item_pa,$pa_letter) // Most Oldest assessment
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-    $pa_attempt = get_attemtid_from_gradeitem($item_pa,$userid);
+    $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
+
+    
     //die($grade);
     $w_grade_detail = get_grade_details_itemid($userid,$item_w);
     $s_grade_detail = get_grade_details_itemid($userid,$item_s);
-    $pa_grade_detail = get_grade_details_itemid($userid,$item_pa);
+    //$pa_grade_detail = get_grade_details_itemid($userid,$item_pa);
 
     // print_object($w_attempt);
     // print_object($s_attempt);
-
+    // initilizing the total grades
+    $pa1_total=0;
+    $pa2_total=0;
+    $w_total=0;
+    $s_total=0;
 
     $result = '';
      if($grade == null){
@@ -323,21 +330,9 @@ function convert_grade_cer4($grade,$userid,
             border:1px solid black;
             ">Not Submitted</td>';
         }
-        elseif ($grade>0 || $grade<100)
+        elseif ($grade>0 || $grade<=100)
         {
-
-                // Checking the combined version of Assessment
-
-                if($pa_grade_detail->grade==100)
-                {
-                    $result = '<td 
-                    class ="text-left"
-                    style = "display: block;
-                    border:1px solid black;
-                    background-color:#D3D3D3;
-                    "><b>'.$pa_letter.':</b>'.$pa_result.'</td>';
-                }
-
+                
                 // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
                 // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
                 // $w_grade_detail =get_grade_details_itemid($userid,$item_w);
@@ -347,6 +342,7 @@ function convert_grade_cer4($grade,$userid,
                     if($w_attempt)
                     {
                         $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                        $w_total = $w_mark_per;
                     }
                     else
                     {
@@ -364,6 +360,7 @@ function convert_grade_cer4($grade,$userid,
                     if($s_attempt)
                     {
                         $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
+                        $s_total = $s_mark_per;
                     }
                     else
                     {
@@ -381,6 +378,54 @@ function convert_grade_cer4($grade,$userid,
                 background-color:#D3D3D3;
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
+
+                // Checking the combined version of Assessment
+
+                
+                if($pa2_attempt){
+                    //print_object ($pa2_attempt);
+                    if($pa2_attempt->grade==100)
+                    {   $pa2_total = 100;
+                        $pa2_result = get_grade_letter_with_attemptlink($pa2_attempt->grade,$pa2_attempt);
+                        $result = '<td 
+                        class ="text-left"
+                        style = "display: block;
+                        border:1px solid black;
+                        background-color:#D3D3D3;
+                        "><b>'.$pa2_letter.':</b>'.$pa2_result.'</td>';
+                        $pa2_total=200;
+                    }
+                }
+                // Checking the very old assessment exist or not.
+                if($item_pa!=0){
+                    $pa_attempt = get_attemtid_from_gradeitem($item_pa,$userid);
+                    if($pa_attempt){
+                        //print_object ($pa_attempt);
+                        if($pa_attempt->grade==100)
+                        {   
+                            $pa1_total = 100;
+                            $pa_result = get_grade_letter_with_attemptlink($pa_attempt->grade,$pa_attempt);
+                            $result = '<td 
+                            class ="text-left"
+                            style = "display: block;
+                            border:1px solid black;
+                            background-color:#D3D3D3;
+                            "><b>'.$pa_letter.':</b>'.$pa_result.'</td>';
+                            $pa1_total=200;
+                        }
+                    }
+                }
+                // // Checking the manual overrall grading
+                // // echo $userid.':'.$grade.';'.$pa1_total.';'.$pa2_total.';'.$s_total.';'.$s_total.'\n';
+                // if($grade==100&&($pa1_total<200||$pa2_total<200||($s_total+$w_total)<200)){
+          
+                //     $result = '<td
+                //     class ="bg-success text-center" 
+                //     style = "display: block;
+                //     border:1px solid black;
+                //     ">Satisfactory</td>';
+        
+                // }
         }
      }
      return $result;
@@ -1366,11 +1411,19 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
     if ($grade_itemid)
     {
         $sql = " SELECT 
-        i.id, i.courseid,itemname, max(a.id) AS attemptid, max(a.attempt) as attempt, a.userid
+            i.id,
+            i.courseid,
+            MAX(a.id) AS attemptid,
+            q.id,
+            ROUND(a.sumgrades / q.sumgrades * 100, 1) AS grade,
+            MAX(a.attempt) AS attempt,
+            a.userid
             FROM
                 {grade_items} AS i
                     LEFT JOIN
                 {quiz_attempts} AS a ON i.iteminstance = a.quiz
+                    LEFT JOIN
+                {quiz} AS q ON i.iteminstance = q.id
             WHERE
                 i.id = :itemid AND a.userid = :user_id
                     AND i.itemmodule = 'quiz'
