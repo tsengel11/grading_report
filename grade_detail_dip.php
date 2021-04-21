@@ -41,12 +41,12 @@ foreach($dip_cohorts as $cohort){
 //print_object($users);
 foreach($users as $user){
     $user->cpccwhs1001=convert_grade_one_item($user->cpccwhs1001,$user->userid,0,0);
-    $user->cpccbc4001a=convert_grade($user->cpccbc4001a,$user->userid,2788,"W",2789,"S");
-    $user->cpccbc4003a=convert_grade($user->cpccbc4003a,$user->userid,2449,"W",2448,"S");
-    $user->cpccbc4004a=convert_grade($user->cpccbc4004a,$user->userid,2451,"W",2450,"S");
-    $user->cpccbc4010b=convert_grade($user->cpccbc4010b,$user->userid,2463,"W",2462,"S");
-    $user->cpccbc4013a=convert_grade($user->cpccbc4013a,$user->userid,2471,"W",2468,"S");
-    $user->cpccbc4005a=convert_grade($user->cpccbc4005a,$user->userid,2453,"W",2452,"S");
+    $user->cpccbc4001a=convert_grade_cert4($user->cpccbc4001a,$user->userid,2788,"W",2789,"S",2280,'PA1',2403,'PA2');
+    $user->cpccbc4003a=convert_grade_cert4($user->cpccbc4003a,$user->userid,2449,"W",2448,"S",2423,'PA1',2282,'PA2');
+    $user->cpccbc4004a=convert_grade_cert4($user->cpccbc4004a,$user->userid,2451,"W",2450,"S",2428,'PA1',2283,'PA2');
+    $user->cpccbc4010b=convert_grade_cert4($user->cpccbc4010b,$user->userid,2463,"W",2462,"S",2425,'PA1',2289,'PA2');
+    $user->cpccbc4013a=convert_grade_cert4($user->cpccbc4013a,$user->userid,2471,"W",2468,"S",2432,'PA1',2291,'PA2');
+    $user->cpccbc4005a=convert_grade_cert4($user->cpccbc4005a,$user->userid,2453,"W",2452,"S",2431,'PA1',2284,'PA2');
     $user->cpccbc5001b=convert_grade($user->cpccbc5001b,$user->userid,2533,"W",2548,"S");
     $user->cpccbc5010b=convert_grade($user->cpccbc5010b,$user->userid,2539,"W",2624,"S");
     $user->cpccbc5003a=convert_grade($user->cpccbc5003a,$user->userid,2538,"W",2702,"S");

@@ -32,8 +32,11 @@ $cohorts=get_cohort_carptenty();
 foreach($cohorts as $cohort){
     $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_carp.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
 }
+
+    //print_object($users);
+
 //print_object($cohorts);
-//print_object($users);
+//
 foreach($users as $user){
     $user->userlink=convert_userlink($user->userid,$user->firstname,$user->lastname,$url);
     // Quizes

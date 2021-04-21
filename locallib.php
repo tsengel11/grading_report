@@ -182,7 +182,7 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
-                background-color:#D3D3D3;
+                background-color:#F5F5F5;
                 "><b>'.$letter.':</b>'.$w_result.'
                 </td>';
             }
@@ -199,13 +199,15 @@ function convert_grade($grade,$userid,
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-    //die($grade);
+
+    
     $w_grade_detail =get_grade_details_itemid($userid,$item_w);
     $s_grade_detail =get_grade_details_itemid($userid,$item_s);
 
     // print_object($w_attempt);
     // print_object($s_attempt);
 
+    
 
     $result = '';
      if($grade == null){
@@ -217,15 +219,17 @@ function convert_grade($grade,$userid,
      }
      else
      {
-         
+        
         if($grade==100){
-            $result = '<td
-            class ="bg-success text-center" 
+            //echo $item_w.':'.$grade.'<br>';
+               $result = '<td
+            class ="text-center bg-success"
+            
             style = "display: block;
             border:1px solid black;
             ">Satisfactory</td>';
         }
-        if ($grade==0){
+        elseif ($grade==0){
             $result = '<td 
             class = "bg-secondary text-center"
             style = "display: block;
@@ -274,7 +278,7 @@ function convert_grade($grade,$userid,
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
-                background-color:#D3D3D3;
+                background-color:#F5F5F5;
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
         }
@@ -289,7 +293,7 @@ function convert_grade_cert4($grade,$userid,
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-    $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
+    
 
     
     //die($grade);
@@ -375,23 +379,26 @@ function convert_grade_cert4($grade,$userid,
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
-                background-color:#D3D3D3;
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
 
                 // Checking the combined version of Assessment
 
-                
+                $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
+                if($userid==389){
+
+                    print_object ($pa2_attempt);
+                }
                 if($pa2_attempt){
+                    
                     //print_object ($pa2_attempt);
                     if($pa2_attempt->grade==100)
                     {   $pa2_total = 100;
                         $pa2_result = get_grade_letter_with_attemptlink($pa2_attempt->grade,$pa2_attempt);
                         $result = '<td 
-                        class ="text-left"
+                        class ="text-left "
                         style = "display: block;
                         border:1px solid black;
-                        background-color:#D3D3D3;
                         "><b>'.$pa2_letter.':</b>'.$pa2_result.'</td>';
                         $pa2_total=200;
                     }
@@ -406,10 +413,9 @@ function convert_grade_cert4($grade,$userid,
                             $pa1_total = 100;
                             $pa_result = get_grade_letter_with_attemptlink($pa_attempt->grade,$pa_attempt);
                             $result = '<td 
-                            class ="text-left"
+                            class ="text-left "
                             style = "display: block;
                             border:1px solid black;
-                            background-color:#D3D3D3;
                             "><b>'.$pa_letter.':</b>'.$pa_result.'</td>';
                             $pa1_total=200;
                         }
@@ -613,8 +619,7 @@ function get_grade_letter($grade)
         if($grade==100){
             //$result = 'Satisfactory';
             $result = '<div
-            class =" text-center" 
-            style = " color:green"
+            class =" text-center text-light  bg-success" 
             ">Satisfactory</div>';
         }
         elseif ($grade==50){
@@ -1415,7 +1420,7 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
             i.courseid,
             MAX(a.id) AS attemptid,
             q.id,
-            ROUND(a.sumgrades / q.sumgrades * 100, 1) AS grade,
+            max(ROUND(a.sumgrades / q.sumgrades * 100, 1)) AS grade,
             MAX(a.attempt) AS attempt,
             a.userid
             FROM
@@ -1431,8 +1436,6 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
     
         $para = ['itemid'=>$grade_itemid,'user_id'=>$userid];
         $result = $DB->get_record_sql($sql,$para);
-        
-
         return $result;
         
     }

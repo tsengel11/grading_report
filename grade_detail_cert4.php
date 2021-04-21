@@ -40,7 +40,7 @@ foreach($users as $user){
     $user->cpccbc4004a=convert_grade_cert4($user->cpccbc4004a,$user->userid,2451,"W",2450,"S",2428,'PA1',2283,'PA2');
 
     $user->cpccbc4005a=convert_grade_cert4($user->cpccbc4005a,$user->userid,2453,"W",2452,"S",2431,'PA1',2284,'PA2');
-    $user->cpccbc4006b=convert_grade_cert4($user->cpccbc4006b,$user->userid,2455,"W",2454,"S",2433,'PA1',2285,'PA2');
+    $user->cpccbc4006b=convert_grade_cert4($user->cpccbc4006b,$user->userid,2455,"W",2454,"S",2285,'PA1',2341,'PA2');
     $user->cpccbc4007a=convert_grade_cert4($user->cpccbc4007a,$user->userid,2457,"W",2456,"S",2420,'PA1',2286,'PA2');
     $user->cpccbc4008b=convert_grade_cert4($user->cpccbc4008b,$user->userid,2459,"W",2458,"S",2422,'PA1',2287,'PA2');
 
