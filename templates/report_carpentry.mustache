@@ -3,7 +3,7 @@
     Moodle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+     (at your option) any later version.
     Moodle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -13,24 +13,50 @@
 }}
 {{!
     @template block/student_dashboard
-    Example context (json):
+    Example context  (json):
     {
     }
 }}
+<style>
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+.dropdown-content a {
+  color: black;
+  padding: 5px 5px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
 <h1>Grading Report</h1>
 <p>{{texttodisplay}}</p>
 
-<div class="dropdown show">
+<div class="dropdown show" style = "z-index: 4;">
   <input type="button" class="btn btn-primary" value="Back" onclick="location.href='https://moodle.libertycollege.edu.au/'">
-  <a class="custom-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Groups
-  </a>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        {{#cohorts}}
-      {{{drop_downitem}}}
-        {{/cohorts}}
-    </div>
+<div class="dropdown">
+  <button class="btn btn-primary">Select Cohort</button>
+  <div class="dropdown-content">
+          {{#cohorts}}
+          {{{drop_downitem}}}
+          {{/cohorts}}
+  </div>
+</div>
     <th>
     <div><b>Group Name : </b>{{groupname}}</div>
     <div><b>Total number of students : </b>{{studentnumber}}</div>
@@ -39,169 +65,180 @@
 
 
 
-<hr>
-  <table class="" style='display: flex;
-   flex-shrink: 0;
-   min-width: min-content;'>
-  <thead style = "display: flex;">
-    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    <th style = "display: block; border:1px solid black; width:350px ; height:50px "><b>Student name<b></th>
-    <th style = "display: block; border:1px solid black ">Start Date</th>
-    <th style = "display: block; border:1px solid black ">End Date</th>
-    <th style = "display: block; border:1px solid black ">Student ID</th>
-    <th style = "display: block; border:1px solid black ">Student Email</th>
-    <th style = "display: block; border:1px solid black ">Schedule</th>
-    <th style = "display: block; border:1px solid black ">Term 1</th>
-    <th style = "display: block; border:1px solid black ">CPCCWHS1001</th>
-    <th style = "display: block; border:1px solid black ">CPCCOHS2001A(Apply OHS requirements)</th>
-    <th style = "display: block; border:1px solid black ">CPCCOHS2001A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1012A(Work effectively)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1012A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1013A(Plan and organise work)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1013A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1014A(Conduct workplace)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1014A_Practical</th>
-    <th style = "display: block; border:1px solid black ">Term 2</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1015A(Carry out measurements)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM1015A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2001A(Read and interpret)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2001A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA2011A(Handle carpentry materials)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA2011A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA2002B(Use carpentry tools)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA2002B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3002A(Carry out setting out)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3002A_Practical</th>
-    <th style = "display: block; border:1px solid black ">Term 3</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3003A(Install flooring systems)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3003A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3004A(Construct wall frames)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3004A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCSH3008(Install internal shop)</th>
-    <th style = "display: block; border:1px solid black ">CPCCSH3008_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3010A(Install and replace windows)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3010A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3017B(Install exterior cladding)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3017B_Practical</th>
-    <th style = "display: block; border:1px solid black ">Term 4</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3007C(Construct pitched roofs)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3007C_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3005B(Construct ceiling frames)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3005B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3008B(Construct eaves)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3008B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3006B(Erect roof trusses)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3006B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3023A(Carry out levelling operations)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3023A_Practical</th>
-    <th style = "display: block; border:1px solid black ">Term 5</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2007B(Use explosive power tools)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2007B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2002A(Carry out excavation)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2002A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2010B(Work safely at heights)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2010B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2008B(Erect and dismantle)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCM2008B_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3001A(Carry out general demolition)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA3001A_Practical</th>
-    <th style = "display: block; border:1px solid black ">Term 6</th>
-    <th style = "display: block; border:1px solid black ">CPCCSF2004A(Place and fix reinforcemen)</th>
-    <th style = "display: block; border:1px solid black ">CPCCSF2004A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCO2013A(Carry out concreting)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCO2013A_Practical</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA2003A(Erect and dismantle formwork)</th>
-    <th style = "display: block; border:1px solid black ">CPCCCA2003A_Practical</th>
-    <th style = "display: block; border:1px solid black ">BSBSMB406(Manage small business)</th>
-    <th style = "display: block; border:1px solid black ">BSBSMB301(Investigate micro business)</th>
-    <th style = "display: block; border:1px solid black ">BSBSMB301_Practical</th>
-    <th style = "display: block; border:1px solid black; height:50px "><b>Student name<b></th>
 
-    
+
+
+<hr>
+<div style="  height: 600px;
+  position: relative;">
+  <table  style="min-width: min-content;
+  font-size: 90%;
+  white-space: nowrap;
+  margin: 0;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid black;
+  border-collapse: separate;
+  ">
+  <thead class="thead-light table-bordered" style = "white-space: pre-wrap; 
+  padding:0;">
+    <tr class="thead-light">
+      <th colspan="5" ></th>
+      <th colspan="9"style ="border: 1px solid black;">TERM 1</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 2</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 3</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 4</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 5</th>
+      <th colspan="9"style ="border: 1px solid black;">TERM 6</th>
+    </tr>
+    <tr>
+    <th class = "bg-secondary" style = " position:sticky; position: -webkit-sticky; left: 0 ;z-index: 3;  "><b>Student name<b></th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2 ">Start Date</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2 ">End Date</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">Student ID</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">Student Email</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWHS1001</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCOHS2001A (Apply OHS requirements)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCOHS2001A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1012A (Work effectively)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1012A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1013A (Plan and organise work)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1013A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1014A (Conduct workplace)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1014A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1015A (Carry out measurements)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1015A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM2001A (Read and interpret)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM2001A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCA2011A (Handle carpentry materials)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCA2011A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCA2002B (Use carpentry tools)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA2002B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3002A (Carry out setting out)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3002A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3003A (Install flooring systems)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3003A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3004A (Construct wall frames)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3004A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCSH3008 (Install internal shop)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCSH3008 Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3010A (Install and replace windows)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3010A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3017B (Install exterior cladding)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3017B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3007C (Construct pitched roofs)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3007C Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3005B (Construct ceiling frames)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3005B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3008B (Construct eaves)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3008B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3006B (Erect roof trusses)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3006B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3023A (Carry out levelling operations)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3023A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2007B (Use explosive power tools)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2007B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2002A (Carry out excavation)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2002A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2010B (Work safely at heights)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2010B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2008B (Erect and dismantle)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCM2008B Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3001A (Carry out general demolition)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA3001A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCSF2004A (Place and fix reinforcemen)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCSF2004A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCO2013A (Carry out concreting)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCO2013A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA2003A (Erect and dismantle formwork)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">CPCCCA2003A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2">BSBSMB406 (Manage small business)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2 ">BSBSMB301 (Investigate micro business)</th>
+    <th class = "bg-secondary" style = " position:sticky;top: 0; z-index : 2 ">BSBSMB301 Practical</th>
     </tr>
   </thead>
-  <tbody style = "display: flex;">
-{{#users}}
-    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    {{{userlink}}}
-    <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{email}}</td>
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpccwhs1001}}}
-    {{{cpccohs2001a}}}
-    {{{cpccohs2001a_practical}}}
-    {{{cpcccm1012a}}}
-    {{{cpcccm1012a_practical}}}
-    {{{cpcccm1013a}}}
-    {{{cpcccm1013a_practical}}}
-    {{{cpcccm1014a}}}
-    {{{cpcccm1014a_practical}}}
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpcccm1015a}}}
-    {{{cpcccm1015a_practical}}}
-    {{{cpcccm2001a}}}
-    {{{cpcccm2001a_practical}}}
-    {{{cpccca2011a}}}
-    {{{cpccca2011a_practical}}}
-    {{{cpccca2002b}}}
-    {{{cpccca2002b_practical}}}
-    {{{cpccca3002a}}}
-    {{{cpccca3002a_practical}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccca3003a}}}
-    {{{cpccca3003a_practical}}}
-    {{{cpccca3004a}}}
-    {{{cpccca3004a_practical}}}
-    {{{cpccsh3008}}}
-    {{{cpccsh3008_practical}}}
-    {{{cpccca3010a}}}
-    {{{cpccca3010a_practical}}}
-    {{{cpccca3017b}}}
-    {{{cpccca3017b_practical}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccca3007c}}}
-    {{{cpccca3007c_practical}}}
-    {{{cpccca3005b}}}
-    {{{cpccca3005b_practical}}}
-    {{{cpccca3008b}}}
-    {{{cpccca3008b_practical}}}
-    {{{cpccca3006b}}}
-    {{{cpccca3006b_practical}}}
-    {{{cpccca3023a}}}
-    {{{cpccca3023a_practical}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpcccm2007b}}}
-    {{{cpcccm2007b_practical}}}
-    {{{cpcccm2002a}}}
-    {{{cpcccm2002a_practical}}}
-    {{{cpcccm2010b}}}
-    {{{cpcccm2010b_practical}}}
-    {{{cpcccm2008b}}}
-    {{{cpcccm2008b_practical}}}
-    {{{cpccca3001a}}}
-    {{{cpccca3001a_practical}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccsf2004a}}}
-    {{{cpccsf2004a_practical}}}
-    {{{cpccco2013a}}}
-    {{{cpccco2013a_practical}}}
-    {{{cpccca2003a}}}
-    {{{cpccca2003a_practical}}}
-    {{{bsbsmb406}}}
-    {{{bsbsmb301}}}
-    {{{bsbsmb301_practical}}}
-    {{{userlink}}}
-    </tr>
-{{/users}}
-    </tbody>
+
+  <tbody>
+  {{#users}}
+      <tr>
+      <td style = "position: sticky;left: 0;z-index: 1;" class="bg-light table-bordered" >{{{userlink}}}
+      <td style = ""class="text-center">{{startdate}}</td>
+      <td style = " "class="text-center ">{{enddate}}</td>
+      <td style = " "class="text-center ">{{studentid}}</td>
+      <td style = " "class="text-center ">{{email}}</td>
+       {{{cpccwhs1001}}}
+       {{{cpccohs2001a}}}
+       {{{cpccohs2001a_practical}}}
+       {{{cpcccm1012a}}}
+       {{{cpcccm1012a_practical}}}
+       {{{cpcccm1013a}}}
+       {{{cpcccm1013a_practical}}}
+       {{{cpcccm1014a}}}
+       {{{cpcccm1014a_practical}}}
+       {{{cpcccm1015a}}}
+       {{{cpcccm1015a_practical}}}
+       {{{cpcccm2001a}}}
+       {{{cpcccm2001a_practical}}}
+       {{{cpccca2011a}}}
+       {{{cpccca2011a_practical}}}
+       {{{cpccca2002b}}}
+       {{{cpccca2002b_practical}}}
+       {{{cpccca3002a}}}
+       {{{cpccca3002a_practical}}}
+       {{{cpccca3003a}}}
+       {{{cpccca3003a_practical}}}
+       {{{cpccca3004a}}}
+       {{{cpccca3004a_practical}}}
+       {{{cpccsh3008}}}
+       {{{cpccsh3008_practical}}}
+       {{{cpccca3010a}}}
+       {{{cpccca3010a_practical}}}
+       {{{cpccca3017b}}}
+       {{{cpccca3017b_practical}}}
+       {{{cpccca3007c}}}
+       {{{cpccca3007c_practical}}}
+       {{{cpccca3005b}}}
+       {{{cpccca3005b_practical}}}
+       {{{cpccca3008b}}}
+       {{{cpccca3008b_practical}}}
+       {{{cpccca3006b}}}
+       {{{cpccca3006b_practical}}}
+       {{{cpccca3023a}}}
+       {{{cpccca3023a_practical}}}
+       {{{cpcccm2007b}}}
+       {{{cpcccm2007b_practical}}}
+       {{{cpcccm2002a}}}
+       {{{cpcccm2002a_practical}}}
+       {{{cpcccm2010b}}}
+       {{{cpcccm2010b_practical}}}
+       {{{cpcccm2008b}}}
+       {{{cpcccm2008b_practical}}}
+       {{{cpccca3001a}}}
+       {{{cpccca3001a_practical}}}
+       {{{cpccsf2004a}}}
+       {{{cpccsf2004a_practical}}}
+       {{{cpccco2013a}}}
+       {{{cpccco2013a_practical}}}
+       {{{cpccca2003a}}}
+       {{{cpccca2003a_practical}}}
+       {{{bsbsmb406}}}
+       {{{bsbsmb301}}}
+       {{{bsbsmb301_practical}}}
+      </tr>
+    {{/users}}
+  </tbody>
   </table>
-<hr>
-<div class="card">
-  <h5>Description</h5>
-  <div>
-  <b>SW:</b> Practical Assessment - SWMS ; <b>PH:</b>Practical Assessment - Photo ;<b>PA:</b>Practical Assessment <b>Q:</b>Quiz
-  </div>  
+
+
+    <div class="card">
+      <h5>Description</h5>
+      <div>
+      <b>SW:</b> Practical Assessment - SWMS ; <b>PH:</b>Practical Assessment - Photo ;<b>PA:</b>Practical Assessment <b>Q:</b>Quiz
+      </div>  
+    </div>
+
 </div>
+
+
+
