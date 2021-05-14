@@ -1,62 +1,58 @@
-.block_grading_report .grading_report table {
-  font-family: "Fraunces", serif;
-  font-size: 100%;
-  white-space: nowrap;
-  margin: 0;
-  border: none;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid black;
-}
-.block_grading_report table td,
-.block_grading_report table th {
-  border: 1px solid black;
-  padding: 0.5rem 1rem;
-}
-.block_grading_report table thead th {
-  padding: 3px;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  width: 25vw;
-  background: white;
-}
-.block_grading_report table td {
-  background: #fff;
-  padding: 4px 5px;
-  text-align: center;
-}
-
-.block_grading_report table tbody th {
-  font-weight: 100;
-  font-style: italic;
-  text-align: left;
-  position: relative;
-}
-.block_grading_report table thead th:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 2;
-}
-.block_grading_report table tbody th {
-  position: sticky;
-  left: 0;
-  background: white;
-  z-index: 1;
-}
-.block_grading_report caption {
-  text-align: left;
-  padding: 0.25rem;
-  position: sticky;
-  left: 0;
-}
-
-[role="region"][aria-labelledby][tabindex] {
-  width: 100%;
-  max-height: 98vh;
-  overflow: auto;
-}
-[role="region"][aria-labelledby][tabindex]:focus {
-  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
-  outline: 0;
-}
+@supports (display: grid) {
+    .block_grading_report .vertical {
+      display: grid;
+      grid-template-columns: min-content min-content;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "caption caption"
+        "head body";
+    }
+    .block_grading_report .vertical thead {
+      grid-area: head;
+    }
+    .block_grading_report .vertical tbody {
+      grid-area: body;
+    }
+    .block_grading_report .vertical caption {
+      grid-area: caption; 
+    }
+ }
+ 
+ /* Flex - Cross Browser CSS */
+ .block_grading_report .vertical thead {
+   display: flex;
+   flex-shrink: 0;
+   min-width: min-content;
+ }
+ .block_grading_report .vertical tbody {
+     display: flex;
+ }
+ .block_grading_report .vertical tr {
+   display: flex;
+   flex-direction: column;
+   min-width: min-content;
+   flex-shrink: 0;
+ }
+ .block_grading_report .vertical td, .vertical th {
+   display: block;
+ }
+ .block_grading_report .vertical caption {
+   display: block;
+ }
+ 
+ 
+ /* Visual styling */
+ .block_grading_report  table { border-collapse: collapse; }
+ .block_grading_report table td {
+   border: 1px solid black; 
+ }
+ .block_grading_report table th {
+   border: 1px solid black;
+   background-color: grey;
+   color: white;
+ }
+ .block_grading_report .test {
+    border: 1px solid black;
+    background-color: grey;
+    color: white;
+  }

@@ -4,7 +4,6 @@
  * Version details
  *
  * @package    block_grading_report
- * @author    2021 Bayartsengel Baatarkhuyag bayartsengelt@gmail.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -17,6 +17,20 @@ require_login();
 $user_id = $USER->id;
 $url = $CFG->wwwroot;
 
+
+
+    // Checking the admin user;
+    $user_array=explode(',',get_config('block_grading_report','adminuser'));
+    //print_object($user_array);
+    //echo $user_id;
+    if (!in_array($user_id, $user_array))
+    {
+        echo "not found";
+        \core\notification::add("You don't have permission to access to Grading Report", \core\output\notification::NOTIFY_ERROR);
+        redirect($url);
+    }
+
+
 $PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details_cert4.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Grade Details');
