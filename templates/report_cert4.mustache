@@ -17,8 +17,18 @@
     {
     }
 }}
+{{#grade_info}}
+    <div>
+        Grade:{{itemtype}}<br>
+        Grade:{{id}}<br>
+        Students:{{#grades}}
+        <ul> student:</ul>
+        {{/grades}}
+    </div>
+{{/grade_info}}
 <h1>Grading Report</h1>
 <p>{{texttodisplay}}</p>
+
 
 <div class="dropdown show">
   <input type="button" class="btn btn-primary" value="Back" onclick="location.href='https://moodle.libertycollege.edu.au/'">
@@ -28,7 +38,7 @@
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         {{#cohorts}}
-      {{{drop_downitem}}}
+          {{{drop_downitem}}}
         {{/cohorts}}
     </div>
     <th>
@@ -37,80 +47,87 @@
      
 </div>
 
-<hr>
-  <table class="" style='display: flex;
-   flex-shrink: 0;
-   min-width: min-content;'>
-  <thead style = "display: flex;">
-    <tr style = "display: flex; flex-direction: column; min-width: min-content; flex-shrink: 0;">
-    <th style = "display: block; border:1px solid black; width:400px; height:50px  "><b>Student name<b></th>
-    <th style = "display: block; border:1px solid black ">Start Date</th>
-    <th style = "display: block; border:1px solid black ">End Date</th>
-    <th style = "display: block; border:1px solid black ">Student ID</th>
-    <th style = "display: block; border:1px solid black ">Student Email</th>
-    <th style = "display: block; border:1px solid black ">Schedule</th>
-    <th style = "display: block; border:1px solid black ">Term 1</th>
-    <th style = "display: block; border:1px solid black ">CPCCWHS1001</th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=382">CPCCBC4001A(Apply building codes)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=380">CPCCBC4002A(Manage occupational)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=381">CPCCBC4003A(Prepare a construction contract)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=383">CPCCBC4004A(Produce estimated costs)</a></th>
-    <th style = "display: block; border:1px solid black ">Term 2</th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=384">CPCCBC4005A(Produce labour schedules)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=385">CPCCBC4006B(Select construction materials)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=387">CPCCBC4007A(Plan building work)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=386">CPCCBC4008B(Conduct on-site supervision)</a></th>
-    <th style = "display: block; border:1px solid black ">Term 3</th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=388">CPCCBC4009B(Apply legal requirements to building)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=389">CPCCBC4010B(Apply principles residential low rise)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=391">CPCCBC4011B(Apply principles commercial low rise)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=390">CPCCBC4012B(Read and interpret plans)</a></th>
-    <th style = "display: block; border:1px solid black ">Term 4</th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=466">BSBLDR403(Lead team effectiveness)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=392">CPCCBC4013A(Prepare tender documentation)</a></th>
-    <th style = "display: block; border:1px solid black "><a href="https://moodle.libertycollege.edu.au/course/view.php?id=394">BSBSMB406(Manage small business finances)</a></th>
+<div class="container-fluid">
+  <div class="row">
+  </div>
+			
+    <div class="scrolling-wrapper row flex-row flex-nowrap mt-2 pb-4 pt-2" style="overflow-x:auto">
     
-    </tr>
-  </thead>
-  <tbody style = "display: flex;">
-{{#users}}
-    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    {{{userlink}}}
-    <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{email}}</td>
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpccwhs1001}}}
-    {{{cpccbc4001a}}}
-    {{{cpccbc4002a}}}
-    {{{cpccbc4003a}}}
-    {{{cpccbc4004a}}}
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpccbc4005a}}}
-    {{{cpccbc4006b}}}
-    {{{cpccbc4007a}}}
-    {{{cpccbc4008b}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccbc4009b}}}
-    {{{cpccbc4010b}}}
-    {{{cpccbc4011b}}}
-    {{{cpccbc4012b}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{bsbldr403}}}
-    {{{cpccbc4013a}}}
-    {{{bsbsmb406}}}
-    </tr>
-{{/users}}
-    </tbody>
-  </table>
+    <div class="col-4 p-0"  style = "position:sticky  ; left: 0 ;z-index: 4;">
+          <div class="card card-block" >
+          <div class="border font-weight-bold text-center" style="height:50px">Student name</div>
+          <div class="border " style="height:25px">Start Date</div>
+          <div class="border" style="height:25px">End Date</div>
+          <div class="border" style="height:25px">Student ID</div>
+          <div class="border" style="height:25px">Student Email</div>
+          <div class="border" style="height:25px">Schedule</div>
+          <div class="border" style="height:25px">Term 1</div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=468">CPCCWHS1001: Prepare to work safely in the construction industry</a></div><div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=382">CPCCBC4001A(Apply building codes)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=380">CPCCBC4002A(Manage occupational)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=381">CPCCBC4003A(Prepare a construction contract)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=383">CPCCBC4004A(Produce estimated costs)</a></div>
+          <div class="border font-weight-bold" style="height:25px">Term 2</div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=384">CPCCBC4005A(Produce labour schedules)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=385">CPCCBC4006B(Select construction materials)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=387">CPCCBC4007A(Plan building work)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=386">CPCCBC4008B(Conduct on-site supervision)</a></div>
+          <div class="border font-weight-bold" style="height:25px">Term 3</div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=388">CPCCBC4009B(Apply legal requirements to building)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=389">CPCCBC4010B(Apply principles residential low rise)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=391">CPCCBC4011B(Apply principles commercial low rise)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=390">CPCCBC4012B(Read and interpret plans)</a></div>
+          <div class="border font-weight-bold" style="height:25px">Term 4</div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=466">BSBLDR403(Lead team effectiveness)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=392">CPCCBC4013A(Prepare tender documentation)</a></div>
+          <div class="border font-weight-bold" style="height:25px"><a href="https://moodle.libertycollege.edu.au/course/view.php?id=394">BSBSMB406(Manage small business finances)</a></div>
+        </div>
+			</div>
+		{{#users}}
+    <div class="col-3 p-0 text-center">
+    <div class="card card-block" >
+        <div class="card flex-nowrap border text-center" style="height:50px">{{{userlink}}}</div>
+        <div class="card flex-nowrap border text-center"style="height:25px">{{startdate}}</div>
+        <div class="card flex-nowrap border text-center"style="height:25px">{{enddate}}</div>
+        <div class="card flex-nowrap border text-center"style="height:25px">{{studentid}}</div>
+        <div class="card flex-nowrap border text-center"style="height:25px">{{email}}</div>
+        <div class="card flex-nowrap border"style="height:25px">&nbsp</div>
+        <div class="card flex-nowrap border"style="height:25px">&nbsp</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccwhs1001}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4001a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4002a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4003a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4004a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">&nbsp</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4005a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4006b}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4007a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4008b}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">&nbsp</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4009b}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4010b}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4011b}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4012b}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">&nbsp</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{bsbldr403}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{cpccbc4013a}}}</div>
+        <div class="card flex-nowrap border"style="height:25px">{{{bsbsmb406}}}</div>
+        </div>
+		</div>
+    {{/users}}
+    </div>
+</div>
+
+
+<hr>
+  
   <hr>
 <div class="card">
-  <h5>Description</h5>
-  <div>
-  <b>W:</b> Written Activities ; <b>S:</b> Summative Activities; <b>CT:</b> Manually Graded (Credit Transfer)
+    <h5>Description</h5>
+    <div>
+    <b>W:</b> Written Activities ; <b>S:</b> Summative Activities; <b>CT:</b> Manually Graded (Credit Transfer)
   </div>  
 </div>
+
+
     
 

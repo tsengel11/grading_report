@@ -43,6 +43,7 @@ $selected_groupid=$_GET['cohortid'];
 
 $users = get_userlist_carp($selected_groupid);
 
+//print_object($users);
 $cohorts=get_cohort_carptenty();
 
 foreach($cohorts as $cohort){
@@ -54,7 +55,7 @@ foreach($cohorts as $cohort){
 //print_object($cohorts);
 //
 foreach($users as $user){
-    $user->userlink=convert_userlink_without_td($user->userid,$user->firstname,$user->lastname,$url);
+    $user->userlink=convert_userlink_without_td_carp($user->userid,$user->firstname,$user->lastname,$url);
     // Quizes
     //Term 1
     $user->cpccwhs1001=convert_grade_quiz_carp($user->cpccwhs1001,$user->userid);
@@ -63,7 +64,7 @@ foreach($users as $user){
     $user->cpcccm1012a=convert_grade_quiz_carp($user->cpcccm1012a,$user->userid);
     $user->cpcccm1012a_practical=convert_grade_one_item_carp($user->cpcccm1012a_practical,$user->userid,2442,"PA");
     $user->cpcccm1013a=convert_grade_quiz_carp($user->cpcccm1013a,$user->userid);
-    $user->cpcccm1013a_practical=convert_grade_carp($user->cpcccm1013a_practical,$user->userid,2803,"SW",2804,"PH");
+    $user->cpcccm1013a_practical=convert_grade_one_item_carp($user->cpcccm1013a_practical,$user->userid,2803,"PA",2804,"PH");
     $user->cpcccm1014a=convert_grade_quiz_carp($user->cpcccm1014a,$user->userid);
     $user->cpcccm1014a_practical=convert_grade_one_item_carp($user->cpcccm1014a_practical,$user->userid,2561,"PA");
     // Term 2
