@@ -1142,6 +1142,13 @@ function get_cohort_wall(){
     $result = $DB->get_records_sql($sql);
     return $result;
 }
+function get_cohort_wall_new(){
+    global $DB;
+    $sql = 'SELECT * FROM {cohort} ch
+    where ch.name like "New Wall & Floor%"';
+    $result = $DB->get_records_sql($sql);
+    return $result;
+}
 
 function get_userlist_dip($cohortid)
 {
@@ -2178,4 +2185,66 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
         return $result;
     }
 
+}
+function get_userdata($cohortid){
+    global $DB;
+
+    $sql = "SELECT
+                u.id, 
+                u.firstname,
+                u.lastname,
+                u.email,
+                from_unixtime(i1.data,'%d %M %Y') as `startdate`,
+                from_unixtime(i2.data,'%d %M %Y') as `enddate`,
+                if(i3.data='','N/A',i3.data) as `studentid`
+                FROM
+                    {user} as u
+                        LEFT JOIN
+                    {user_info_data} AS i1 ON u.id = i1.userid
+                        LEFT JOIN
+                    {user_info_data} AS i2 ON u.id = i2.userid
+                    LEFT JOIN
+                    {user_info_data} AS i3 ON u.id = i3.userid
+                WHERE u.id IN (SELECT 
+                        userid
+                    FROM
+                        {cohort_members} AS cm
+                    WHERE
+                        cohortid =:cohort_id)
+                    AND i1.fieldid = 4
+                    AND i2.fieldid = 5
+                    AND i3.fieldid = 3
+                GROUP BY u.id
+                ORDER BY i2.data ";
+    $para = ['cohort_id'=>$cohortid];
+    $result = $DB->get_records_sql($sql,$para);
+    return $result;
+}
+/*
+    $userid = Moodle user id of student.
+    $course = Moodle course id for calculating overrall grade of units.
+    $items = array if list of activity items
+
+*/
+function get_grade_from_item($userid,$courseid,$items){
+    global $DB;
+    if(empty($items)){
+        // returning Total grade of units.
+        $result=grade_get_grades($courseid, 'course',NULL,get_modinstance_id($courseid)->iteminstance, $userid)->items[null];
+        if($result->grademax==$result->grades[$userid]->grade){
+            return html_writer::div($result->grades[$userid]->str_grade,'text-center',array('style'=>"color: green"));
+        }
+        print_object($result);
+        return $result->grades[$userid]->str_grade;
+    }
+    else{
+        foreach ($items as $i){
+            get_attemtid_from_gradeitem($i,$userid);
+        }
+    }
+}
+
+function get_modinstance_id($courseid){
+    global $DB;
+    return $DB->get_record('grade_items',array("courseid"=>$courseid,"itemtype"=>'course'),'iteminstance');
 }
