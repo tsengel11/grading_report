@@ -274,9 +274,7 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
                 {
                     $w_result='';
                 }
-
-              
-               $result = '<td 
+             $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
@@ -791,7 +789,6 @@ function convert_grade_cert4_without_td($grade,$userid,
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
     $w_grade_detail = get_grade_details_itemid($userid,$item_w);
     $s_grade_detail = get_grade_details_itemid($userid,$item_s);
-
     $pa1_total=0;
     $pa2_total=0;
     $w_total=0;
@@ -1051,22 +1048,13 @@ function get_grade_letter_with_attemptlink($grade,$attempt)
         }
         elseif ($grade==50)
         {
-            // $result = '<span
-            // class ="text-primary" 
-            // style = "
-            // ">Submitted</span>';
             $result= html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array("target"=>"_blank"));
         }
         elseif ($grade==0)
         {
-            // $result = '<span 
-            // ">Not Submitted</span>';
             $result= html_writer::link($url, 'Not Submitted'.'('.$attempt->attempt.')',array('style'=>"color: gray","target"=>"_blank"));
         }
         elseif ($grade>50 || $grade<100){
-        //     $result = '<span 
-        //     style = " color:red"
-        //     ">Require Re-sub</span>';
             $result= html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
         }
         
@@ -2168,6 +2156,7 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
             q.id,
             max(ROUND(a.sumgrades / q.sumgrades * 100, 1)) AS grade,
             MAX(a.attempt) AS attempt,
+            state,
             a.userid
             FROM
                 {grade_items} AS i
@@ -2227,6 +2216,10 @@ function get_userdata($cohortid){
 
 */
 function get_grade_from_item($userid,$courseid,$items){
+    //
+    $colors = array(3131,3132);
+
+
     global $DB;
     if(empty($items)){
         // returning Total grade of units.
@@ -2234,13 +2227,31 @@ function get_grade_from_item($userid,$courseid,$items){
         if($result->grademax==$result->grades[$userid]->grade){
             return html_writer::div($result->grades[$userid]->str_grade,'text-center',array('style'=>"color: green"));
         }
-        print_object($result);
+        //print_object($result);
         return $result->grades[$userid]->str_grade;
     }
     else{
-        foreach ($items as $i){
-            get_attemtid_from_gradeitem($i,$userid);
+        $result='';
+        foreach ($items as $item){
+            echo $item;
+            $grade_letter = ' <b>'.get_item_letter($item).': '.'</b>';
+
+            print_object(get_attemtid_from_gradeitem($item,$userid));
+
+            $attempt=(get_attemtid_from_gradeitem($item,$userid));
+
+            $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
+            if($attempt->grade==100){
+                $result.=   $grade_letter.html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
+            }
+            elseif ($attempt->grade==null||$attempt->grade==0){
+                $result.=  $grade_letter.'Not Submitted';
+            }
+            else{
+                $result.=   $grade_letter.html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
+            }
         }
+    return $result;
     }
 }
 
@@ -2248,3 +2259,26 @@ function get_modinstance_id($courseid){
     global $DB;
     return $DB->get_record('grade_items',array("courseid"=>$courseid,"itemtype"=>'course'),'iteminstance');
 }
+function get_item_letter($item)
+{
+    global $DB;
+    return $DB->get_record('grade_items',array("id"=>$item,"itemtype"=>'mod'),'itemname')->itemname[0];
+}
+
+//        if($grade==100)
+//        {
+//            $result= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
+//        }
+//        elseif ($grade==50)
+//        {
+//            $result= html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array("target"=>"_blank"));
+//        }
+//        elseif ($grade==0)
+//        {
+//            $result= html_writer::link($url, 'Not Submitted'.'('.$attempt->attempt.')',array('style'=>"color: gray","target"=>"_blank"));
+//        }
+//        elseif ($grade>50 || $grade<100){
+//            $result= html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
+//        }
+//
+//     }
