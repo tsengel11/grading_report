@@ -939,7 +939,7 @@ function convert_grade_three_item($grade,$userid,$item_1,$letter_1,$item_2,$lett
             // echo ",";
             // echo $userid;
             // echo ":";
-                $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+                $w_attempt = get_attemtid_from_gradeitem($item_3,$userid);
                 $result_1=grade_result($userid,$item_1);
                 $result_2=grade_result($userid,$item_2);
                 $result_3=grade_result($userid,$item_2);
@@ -2153,6 +2153,7 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
             i.id,
             i.courseid,
             MAX(a.id) AS attemptid,
+            a.sumgrades,
             q.id,
             max(ROUND(a.sumgrades / q.sumgrades * 100, 1)) AS grade,
             MAX(a.attempt) AS attempt,
@@ -2165,10 +2166,47 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
                     LEFT JOIN
                 {quiz} AS q ON i.iteminstance = q.id
             WHERE
-                i.id = :itemid AND a.userid = :user_id
-                    AND i.itemmodule = 'quiz'
+                i.id = :itemid 
+                AND a.userid = :user_id
+                AND i.itemmodule = 'quiz'
+                AND a.state = 'finished' 
             order by a.attempt desc";
     
+        $para = ['itemid'=>$grade_itemid,'user_id'=>$userid];
+        $result = $DB->get_record_sql($sql,$para);
+        return $result;
+    }
+
+}
+function get_attemtid_from_gradeitem_new($grade_itemid,$userid)
+{
+    global $DB;
+    if ($grade_itemid)
+    {
+        $sql = " SELECT 
+            i.id,
+            i.courseid,
+            a.id AS attemptid,
+            a.sumgrades,
+            q.id,
+            ROUND(a.sumgrades / q.sumgrades * 100, 1) AS grade,
+            a.attempt AS attempt,
+            a.state,
+            a.userid
+            FROM
+                {grade_items} AS i
+                    LEFT JOIN
+                {quiz_attempts} AS a ON i.iteminstance = a.quiz
+                    LEFT JOIN
+                {quiz} AS q ON i.iteminstance = q.id
+            WHERE
+                i.id = :itemid 
+                AND a.userid = :user_id
+                AND i.itemmodule = 'quiz'
+                AND a.state = 'finished' 
+            order by a.attempt desc
+            LIMIT 1";
+
         $para = ['itemid'=>$grade_itemid,'user_id'=>$userid];
         $result = $DB->get_record_sql($sql,$para);
         return $result;
@@ -2236,19 +2274,34 @@ function get_grade_from_item($userid,$courseid,$items){
             echo $item;
             $grade_letter = ' <b>'.get_item_letter($item).': '.'</b>';
 
-            print_object(get_attemtid_from_gradeitem($item,$userid));
+            //print_object(get_attemtid_from_gradeitem($item,$userid));
 
-            $attempt=(get_attemtid_from_gradeitem($item,$userid));
+            $attempt=(get_attemtid_from_gradeitem_new($item,$userid));
+
+            print_object($attempt);
 
             $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
             if($attempt->grade==100){
                 $result.=   $grade_letter.html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
             }
-            elseif ($attempt->grade==null||$attempt->grade==0){
+            elseif ($attempt->grade==null&&$attempt->state=='finished' ){
+
+                $result.= $grade_letter.html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array('style'=>"color: blue","target"=>"_blank"));
+            }
+            elseif ($attempt->grade==null&&$attempt->state=='inprogress'){
                 $result.=  $grade_letter.'Not Submitted';
             }
+            elseif($attempt->grade<=100&&$attempt->state=='finished'){
+                $sub_result = '';
+                $sub_result=   $grade_letter.html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
+
+//                if(check_not_graded($attempt)==true){
+//                    $sub_result= $grade_letter.html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array('style'=>"color: blue","target"=>"_blank"));
+//                }
+                $result.=$sub_result;
+            }
             else{
-                $result.=   $grade_letter.html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
+                $result.=  $grade_letter.'Not Submitted';
             }
         }
     return $result;
@@ -2259,12 +2312,23 @@ function get_modinstance_id($courseid){
     global $DB;
     return $DB->get_record('grade_items',array("courseid"=>$courseid,"itemtype"=>'course'),'iteminstance');
 }
+
+//function check_not_graded($attempt){
+//    global $DB;
+//
+//    $result = $DB->get_record('quiz_attempts',array("id"=>'$attempt'));
+//    echo $result;
+//    print_object($result);
+//    if($result->sumgrades==null&&$result->state='finished'){
+//        return true;
+//    }
+//    else return false;
+//}
 function get_item_letter($item)
 {
     global $DB;
     return $DB->get_record('grade_items',array("id"=>$item,"itemtype"=>'mod'),'itemname')->itemname[0];
 }
-
 //        if($grade==100)
 //        {
 //            $result= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));

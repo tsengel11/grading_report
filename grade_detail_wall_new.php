@@ -17,7 +17,6 @@ require_login();
 $user_id = $USER->id;
 $url = $CFG->wwwroot;
 
-
     // Checking the admin user;
     $user_array=explode(',',get_config('block_grading_report','adminuser'));
     //print_object($user_array);
@@ -68,7 +67,6 @@ $templatecontext = (object)[
 ];
 
 echo $OUTPUT->render_from_template('block_grading_report/report_wall_new',$templatecontext);
-
 
 
 //echo $content;
