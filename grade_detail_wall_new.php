@@ -9,6 +9,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+
 global $DB, $USER, $CFG;
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot . '/blocks/grading_report/locallib.php');
@@ -49,8 +50,29 @@ foreach($cohorts as $cohort){
 foreach($users as $user){
     $user->userlink=convert_userlink_without_td($user->id,$user->firstname,$user->lastname,$url);
     $user->cpccwhs1001 =get_grade_from_item($user->id, 289,array());
-    $user->cpccwhs2001 =get_grade_from_item($user->id, 844,array());
+    $user->CPCCWHS2001 =get_grade_from_item($user->id, 844,array(3127));
+    $user->CPCCOM1012 =get_grade_from_item($user->id, 835,array(3129));
     $user->CPCCOM1013 =get_grade_from_item($user->id, 836,array(3131,3132));
+    $user->CPCCOM1014 =get_grade_from_item($user->id, 837,array(3137,3263));
+    $user->CPCCOM1015 =get_grade_from_item($user->id, 838,array(3248,3262));
+    $user->CPCCCM2006 =get_grade_from_item($user->id, 830,array());
+    $user->CPCCCM2008 =get_grade_from_item($user->id, 831,array());
+
+    $user->CPCCWF3001 =get_grade_from_item($user->id, 771,array());
+    $user->CPCCWF2001 =get_grade_from_item($user->id, 769,array());
+    $user->CPCCOM2001 =get_grade_from_item($user->id, 768,array(3280,3281));
+    $user->CPCCWF2002 =get_grade_from_item($user->id, 770,array());
+
+    $user->CPCCWF3009 =get_grade_from_item($user->id, 778,array());
+    $user->CPCCWF3002 =get_grade_from_item($user->id, 772,array());
+    $user->CPCCWF3003 =get_grade_from_item($user->id, 773,array());
+    $user->CPCCWF3004 =get_grade_from_item($user->id, 774,array());
+
+    $user->CPCCWF3007 =get_grade_from_item($user->id, 777,array());
+    $user->CPCCWF3006 =get_grade_from_item($user->id, 776,array());
+    $user->CPCCWF3005 =get_grade_from_item($user->id, 775,array());
+    $user->BSBESB301 =get_grade_from_item($user->id, 761,array());
+    $user->BSBESB407 =get_grade_from_item($user->id, 762,array(3270,3271));
     // Quizes
     //Term 1
     //$user->cpccwhs1001=convert_grade_quiz($user->cpccwhs1001,$user->userid);

@@ -10,7 +10,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
 function check_admin($user_id)
 {
     $user_array=explode(',',get_config('block_grading_report','adminuser'));
@@ -86,7 +85,7 @@ function convert_userlink_dip($userid,$firstname,$lastname,$url)
 //         return substr($itemnames[0],0,2)."-".substr($itemnames[1],0,2);
 //     }
 //     return $itemnames[0];
-    
+
 // }
 
 function convert_grade_quiz($grade,$userid) // For QUIZ based units
@@ -94,7 +93,7 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
     $result = '';
     if($grade == null)
     {
-       $result = '<td
+        $result = '<td
        class "class="text-center" 
        style = "display: hide;
        border:1px solid black;
@@ -103,34 +102,34 @@ function convert_grade_quiz($grade,$userid) // For QUIZ based units
     }
     else
     {
-       if($grade==100){
-           //$result = 'Satisfactory';
-           $result = '<td
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<td
            id = "term1";
            class ="bg-success text-center" ;
            style = "display: hide;
         border:1px solid black;
            padding: 0.1rem;
            ">Satisfactory('.$grade.'%)</td>';
-       }
-       elseif ($grade==0)
-       {
-           $result = '<td 
+        }
+        elseif ($grade==0)
+        {
+            $result = '<td 
            class = "bg-secondary text-center"
            style = "display: hide;
         border:1px solid black;
            padding: 0.1rem;
            ">Not Submitted</td>';
-       }
-       elseif ($grade>0 || $grade<100)
-       {
-        $result = '<td 
+        }
+        elseif ($grade>0 || $grade<100)
+        {
+            $result = '<td 
         class = "bg-danger text-center"
         style = "display: hide;
         border:1px solid black;
         padding: 0.1rem;
         ">Not Completed('.$grade.'%)</td>';
-       }
+        }
     }
 
     return $result;
@@ -140,7 +139,7 @@ function convert_grade_quiz_carp($grade,$userid) // For QUIZ based units
     $result = '';
     if($grade == null)
     {
-       $result = '<td
+        $result = '<td
        class "class="text-center" 
        style = "display: hide;
        padding: 0.1rem;
@@ -148,31 +147,31 @@ function convert_grade_quiz_carp($grade,$userid) // For QUIZ based units
     }
     else
     {
-       if($grade==100){
-           //$result = 'Satisfactory';
-           $result = '<td
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<td
            id = "term1";
            class ="bg-success text-center" ;
            style = "display: hide;
            padding: 0.1rem;
            ">Satisfactory('.$grade.'%)</td>';
-       }
-       elseif ($grade==0)
-       {
-           $result = '<td 
+        }
+        elseif ($grade==0)
+        {
+            $result = '<td 
            class = "bg-secondary text-center"
            style = "display: hide;
            padding: 0.1rem;
            ">Not Submitted</td>';
-       }
-       elseif ($grade>0 || $grade<100)
-       {
-        $result = '<td 
+        }
+        elseif ($grade>0 || $grade<100)
+        {
+            $result = '<td 
         class = "bg-danger text-center"
         style = "display: hide;
         padding: 0.1rem;
         ">Not Completed('.$grade.'%)</td>';
-       }
+        }
     }
 
     return $result;
@@ -183,36 +182,36 @@ function convert_grade_quiz_without_td($grade,$userid) // For QUIZ based units
     $result = '';
     if($grade == null)
     {
-       $result = '<div
+        $result = '<div
        class "class="text-center" 
        style = "display: block;
        "> N/A </div>';
     }
     else
     {
-       if($grade==100){
-           //$result = 'Satisfactory';
-           $result = '<div
+        if($grade==100){
+            //$result = 'Satisfactory';
+            $result = '<div
            id = "term1";
            class ="bg-success text-center" ;
            style = "display: block;
            ">Satisfactory('.$grade.'%)</div>';
-       }
-       elseif ($grade==0)
-       {
-           $result = '<div 
+        }
+        elseif ($grade==0)
+        {
+            $result = '<div 
            class = "bg-secondary text-center"
            style = "display: block;
            ">Not Submitted</div>';
-       }
-       elseif ($grade>0 || $grade<100)
-       {
-        $result = '<div 
+        }
+        elseif ($grade>0 || $grade<100)
+        {
+            $result = '<div 
         class = "bg-danger text-center"
         style = "display: block;
         border:1px solid black;
         ">Not Completed('.$grade.'%)</div>';
-       }
+        }
     }
 
     return $result;
@@ -222,15 +221,15 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
 {
     //die($grade);
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<td
         class "class="text-center" 
         style = "display: hide;
         border:1px solid black;
         "> N/A </td>';
-     }
-     else
-     {
+    }
+    else
+    {
         if($grade==100){
             //$result = 'Satisfactory';
             $result = '<td
@@ -254,53 +253,53 @@ function convert_grade_one_item($grade,$userid,$item_w,$letter) // FOR ONE assig
             // echo "overall grade:".$grade;
             // echo "\n userid:".$userid;
             // echo "\n itemid:".$item_w;
-                $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-                $w_grade_detail =get_grade_details_itemid($userid,$item_w);
+            $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+            $w_grade_detail =get_grade_details_itemid($userid,$item_w);
 
-                // print_object($w_grade_detail);
-                if($w_grade_detail)
+            // print_object($w_grade_detail);
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
                 }
                 else
                 {
                     $w_result='';
                 }
-             $result = '<td 
+            }
+            else
+            {
+                $w_result='';
+            }
+            $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
                 background-color:#F5F5F5;
                 "><b>'.$letter.':</b>'.$w_result.'
                 </td>';
-            }
+        }
 
-        
-     }
-     return $result;
+
+    }
+    return $result;
 
 }
 function convert_grade_one_item_carp($grade,$userid,$item_w,$letter) // FOR ONE assigment units
 {
     //die($grade);
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<td
         class "class="text-center" 
         style = "display: hide;
         padding: 0.1rem;
         "> N/A </td>';
-     }
-     else
-     {
+    }
+    else
+    {
         if($grade==100){
             //$result = 'Satisfactory';
             $result = '<td
@@ -324,66 +323,66 @@ function convert_grade_one_item_carp($grade,$userid,$item_w,$letter) // FOR ONE 
             // echo "overall grade:".$grade;
             // echo "\n userid:".$userid;
             // echo "\n itemid:".$item_w;
-                $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-                $w_grade_detail =get_grade_details_itemid($userid,$item_w);
+            $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+            $w_grade_detail =get_grade_details_itemid($userid,$item_w);
 
-                // print_object($w_grade_detail);
-                if($w_grade_detail)
+            // print_object($w_grade_detail);
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
                 }
                 else
                 {
                     $w_result='';
                 }
+            }
+            else
+            {
+                $w_result='';
+            }
 
-              
-               $result = '<td 
+
+            $result = '<td 
                 class ="text-left"
                 style = "display: hide;
                 padding: 0.1rem;
                 background-color:#F5F5F5;
                 "><b>'.$letter.':</b>'.$w_result.'
                 </td>';
-            }
+        }
 
-        
-     }
-     return $result;
+
+    }
+    return $result;
 
 }
 
 function convert_grade($grade,$userid,
-                        $item_w,$w_letter,
-                        $item_s,$s_letter) // Grade item of Combined old Assessments
+                       $item_w,$w_letter,
+                       $item_s,$s_letter) // Grade item of Combined old Assessments
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-    $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);    
+    $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
     $w_grade_detail =get_grade_details_itemid($userid,$item_w);
     $s_grade_detail =get_grade_details_itemid($userid,$item_s);
 
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<td
         class "class="text-center" 
         style = "display: block;
         border:1px solid black;
         "> N/A </td>';
-     }
-     else
-     {
-        
+    }
+    else
+    {
+
         if($grade==100){
             //echo $item_w.':'.$grade.'<br>';
-               $result = '<td
+            $result = '<td
             class ="text-center bg-success"
             style = "display: block;
             border:1px solid black;
@@ -398,43 +397,43 @@ function convert_grade($grade,$userid,
         }
         elseif ($grade>0 || $grade<100)
         {
-                // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-                // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-                //$w_grade_detail =get_grade_details_itemid($userid,$item_w);
-                if($w_grade_detail)
+            // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+            // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
+            //$w_grade_detail =get_grade_details_itemid($userid,$item_w);
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
                 }
                 else
                 {
                     $w_result='';
                 }
-                //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
-                if($s_grade_detail)
+            }
+            else
+            {
+                $w_result='';
+            }
+            //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
+            if($s_grade_detail)
+            {
+                $s_mark_per = $s_grade_detail->grade;
+                if($s_attempt)
                 {
-                    $s_mark_per = $s_grade_detail->grade;
-                    if($s_attempt)
-                    {
-                        $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
-                    }
-                    else
-                    {
-                        $s_result='';
-                    }
+                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
                 }
                 else
                 {
                     $s_result='';
                 }
-               $result = '<td 
+            }
+            else
+            {
+                $s_result='';
+            }
+            $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
@@ -442,31 +441,31 @@ function convert_grade($grade,$userid,
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
         }
-     }
-     return $result;
+    }
+    return $result;
 }
 
 function convert_grade_without_td($grade,$userid,
-                        $item_w,$w_letter,
-                        $item_s,$s_letter) // Grade item of Combined old Assessments
+                                  $item_w,$w_letter,
+                                  $item_s,$s_letter) // Grade item of Combined old Assessments
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-    $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);    
+    $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
     $w_grade_detail =get_grade_details_itemid($userid,$item_w);
     $s_grade_detail =get_grade_details_itemid($userid,$item_s);
 
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<div
         class "class="text-center" 
         "> N/A </div>';
-     }
-     else
-     {
-        
+    }
+    else
+    {
+
         if($grade==100){
             //echo $item_w.':'.$grade.'<br>';
-               $result = '<div
+            $result = '<div
             class ="text-center bg-success"
             ">Satisfactory</div>';
         }
@@ -477,81 +476,81 @@ function convert_grade_without_td($grade,$userid,
         }
         elseif ($grade>0 || $grade<100)
         {
-                // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-                // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-                //$w_grade_detail =get_grade_details_itemid($userid,$item_w);
-                if($w_grade_detail)
+            // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+            // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
+            //$w_grade_detail =get_grade_details_itemid($userid,$item_w);
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
                 }
                 else
                 {
                     $w_result='';
                 }
-                //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
-                if($s_grade_detail)
+            }
+            else
+            {
+                $w_result='';
+            }
+            //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
+            if($s_grade_detail)
+            {
+                $s_mark_per = $s_grade_detail->grade;
+                if($s_attempt)
                 {
-                    $s_mark_per = $s_grade_detail->grade;
-                    if($s_attempt)
-                    {
-                        $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
-                    }
-                    else
-                    {
-                        $s_result='';
-                    }
+                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
                 }
                 else
                 {
                     $s_result='';
                 }
-               $result = '<div 
+            }
+            else
+            {
+                $s_result='';
+            }
+            $result = '<div 
                 class ="text-left"
                 background-color:#F5F5F5;
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </div>';
         }
-     }
-     return $result;
+    }
+    return $result;
 }
 function convert_grade_carp($grade,$userid,
-                        $item_w,$w_letter,
-                        $item_s,$s_letter) // Grade item of Combined old Assessments
+                            $item_w,$w_letter,
+                            $item_s,$s_letter) // Grade item of Combined old Assessments
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
 
-    
+
     $w_grade_detail =get_grade_details_itemid($userid,$item_w);
     $s_grade_detail =get_grade_details_itemid($userid,$item_s);
 
     // print_object($w_attempt);
     // print_object($s_attempt);
 
-    
+
 
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<td
         class "class="text-center"
         style = "display: hide;
         padding:0.1rem
         "> N/A </td>';
-     }
-     else
-     {
-        
+    }
+    else
+    {
+
         if($grade==100){
             //echo $item_w.':'.$grade.'<br>';
-               $result = '<td
+            $result = '<td
             class ="text-center bg-success"
             style = "display: hide;
             padding:0.1rem
@@ -566,43 +565,43 @@ function convert_grade_carp($grade,$userid,
         }
         elseif ($grade>0 || $grade<100)
         {
-                // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-                // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-                //$w_grade_detail =get_grade_details_itemid($userid,$item_w);
-                if($w_grade_detail)
+            // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+            // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
+            //$w_grade_detail =get_grade_details_itemid($userid,$item_w);
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
                 }
                 else
                 {
                     $w_result='';
                 }
-                //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
-                if($s_grade_detail)
+            }
+            else
+            {
+                $w_result='';
+            }
+            //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
+            if($s_grade_detail)
+            {
+                $s_mark_per = $s_grade_detail->grade;
+                if($s_attempt)
                 {
-                    $s_mark_per = $s_grade_detail->grade;
-                    if($s_attempt)
-                    {
-                        $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
-                    }
-                    else
-                    {
-                        $s_result='';
-                    }
+                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
                 }
                 else
                 {
                     $s_result='';
                 }
-               $result = '<td 
+            }
+            else
+            {
+                $s_result='';
+            }
+            $result = '<td 
                 class ="text-left"
                 style = "display: hide;
                 padding:0.1rem
@@ -610,20 +609,20 @@ function convert_grade_carp($grade,$userid,
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<br><b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
         }
-     }
-     return $result;
+    }
+    return $result;
 }
 function convert_grade_cert4($grade,$userid,
-                        $item_w,$w_letter,
-                        $item_s,$s_letter,
-                        $item_pa2,$pa2_letter,// Grade item of Combined old Assessments
-                        $item_pa,$pa_letter) // Most Oldest assessment
+                             $item_w,$w_letter,
+                             $item_s,$s_letter,
+                             $item_pa2,$pa2_letter,// Grade item of Combined old Assessments
+                             $item_pa,$pa_letter) // Most Oldest assessment
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-    
 
-    
+
+
     //die($grade);
     $w_grade_detail = get_grade_details_itemid($userid,$item_w);
     $s_grade_detail = get_grade_details_itemid($userid,$item_s);
@@ -638,19 +637,19 @@ function convert_grade_cert4($grade,$userid,
     $s_total=0;
 
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<td
         class "class="text-center" 
         style = "display: block;
         border:1px solid black;
         "> N/A </td>';
-     }
-     else
-     {
-         
+    }
+    else
+    {
+
         // if($grade==100){
         //     $result = '<td
-        //     class ="bg-success text-center" 
+        //     class ="bg-success text-center"
         //     style = "display: block;
         //     border:1px solid black;
         //     ">Satisfactory</td>';
@@ -664,126 +663,126 @@ function convert_grade_cert4($grade,$userid,
         }
         elseif ($grade>0 || $grade<=100)
         {
-                
-                // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
-                // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
-                // $w_grade_detail =get_grade_details_itemid($userid,$item_w);
-                if($w_grade_detail)
+
+            // $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
+            // $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
+            // $w_grade_detail =get_grade_details_itemid($userid,$item_w);
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                        $w_total = $w_mark_per;
-                        
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                    $w_total = $w_mark_per;
+
                 }
                 else
                 {
                     $w_result='';
                 }
-                //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
-                if($s_grade_detail)
+            }
+            else
+            {
+                $w_result='';
+            }
+            //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
+            if($s_grade_detail)
+            {
+                $s_mark_per = $s_grade_detail->grade;
+                if($s_attempt)
                 {
-                    $s_mark_per = $s_grade_detail->grade;
-                    if($s_attempt)
-                    {
-                        $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
-                        $s_total = $s_mark_per;
-                    }
-                    else
-                    {
-                        $s_result='';
-                    }
+                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
+                    $s_total = $s_mark_per;
                 }
                 else
                 {
                     $s_result='';
                 }
-               $result = '<td 
+            }
+            else
+            {
+                $s_result='';
+            }
+            $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </td>';
 
-                // Checking the combined version of Assessment
+            // Checking the combined version of Assessment
 
-                $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
-                if($userid==389){
+            $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
+            if($userid==389){
 
-                    print_object ($pa2_attempt);
-                }
-                if($pa2_attempt){
-                    
-                    //print_object ($pa2_attempt);
-                    if($pa2_attempt->grade==100)
-                    {   $pa2_total = 100;
-                        $pa2_result = get_grade_letter_with_attemptlink($pa2_attempt->grade,$pa2_attempt);
-                        $result = '<td 
+                print_object ($pa2_attempt);
+            }
+            if($pa2_attempt){
+
+                //print_object ($pa2_attempt);
+                if($pa2_attempt->grade==100)
+                {   $pa2_total = 100;
+                    $pa2_result = get_grade_letter_with_attemptlink($pa2_attempt->grade,$pa2_attempt);
+                    $result = '<td 
                         class ="text-left "
                         style = "display: block;
                         border:1px solid black;
                         "><b>'.$pa2_letter.':</b>'.$pa2_result.'</td>';
-                        $pa2_total=200;
-                    }
+                    $pa2_total=200;
                 }
-                // Checking the very old assessment exist or not.
-                if($item_pa!=0){
-                    $pa_attempt = get_attemtid_from_gradeitem($item_pa,$userid);
-                    if($pa_attempt){
-                        //print_object ($pa_attempt);
-                        if($pa_attempt->grade==100)
-                        {   
-                            $pa1_total = 100;
-                            $pa_result = get_grade_letter_with_attemptlink($pa_attempt->grade,$pa_attempt);
-                            $result = '<td 
+            }
+            // Checking the very old assessment exist or not.
+            if($item_pa!=0){
+                $pa_attempt = get_attemtid_from_gradeitem($item_pa,$userid);
+                if($pa_attempt){
+                    //print_object ($pa_attempt);
+                    if($pa_attempt->grade==100)
+                    {
+                        $pa1_total = 100;
+                        $pa_result = get_grade_letter_with_attemptlink($pa_attempt->grade,$pa_attempt);
+                        $result = '<td 
                             class ="text-left "
                             style = "display: block;
                             border:1px solid black;
                             "><b>'.$pa_letter.':</b>'.$pa_result.'</td>';
-                            $pa1_total=200;
-                        }
+                        $pa1_total=200;
                     }
                 }
-                // Checking the Manual grading
-                $total= $pa1_total+$pa2_total+$w_total+$s_total;
+            }
+            // Checking the Manual grading
+            $total= $pa1_total+$pa2_total+$w_total+$s_total;
 
-                                if($userid==493){
-                                    
-                                }
+            if($userid==493){
 
-                if($grade==100 && $total==0){
-                    $result = '<td
+            }
+
+            if($grade==100 && $total==0){
+                $result = '<td
                     class ="bg-success text-center" 
                     style = "display: block;
                     border:1px solid black;
                     ">Satisfactory (CT)</td>';
-                }
-                // // Checking the manual overrall grading
-                // // echo $userid.':'.$grade.';'.$pa1_total.';'.$pa2_total.';'.$s_total.';'.$s_total.'\n';
-                // if($grade==100&&($pa1_total<200||$pa2_total<200||($s_total+$w_total)<200)){
-          
-                //     $result = '<td
-                //     class ="bg-success text-center" 
-                //     style = "display: block;
-                //     border:1px solid black;
-                //     ">Satisfactory</td>';
-        
-                // }
+            }
+            // // Checking the manual overrall grading
+            // // echo $userid.':'.$grade.';'.$pa1_total.';'.$pa2_total.';'.$s_total.';'.$s_total.'\n';
+            // if($grade==100&&($pa1_total<200||$pa2_total<200||($s_total+$w_total)<200)){
+
+            //     $result = '<td
+            //     class ="bg-success text-center"
+            //     style = "display: block;
+            //     border:1px solid black;
+            //     ">Satisfactory</td>';
+
+            // }
         }
-     }
-     return $result;
+    }
+    return $result;
 }
 function convert_grade_cert4_without_td($grade,$userid,
-                        $item_w,$w_letter,
-                        $item_s,$s_letter,
-                        $item_pa2,$pa2_letter,// Grade item of Combined old Assessments
-                        $item_pa,$pa_letter) // Most Oldest assessment
+                                        $item_w,$w_letter,
+                                        $item_s,$s_letter,
+                                        $item_pa2,$pa2_letter,// Grade item of Combined old Assessments
+                                        $item_pa,$pa_letter) // Most Oldest assessment
 {
     $w_attempt = get_attemtid_from_gradeitem($item_w,$userid);
     $s_attempt = get_attemtid_from_gradeitem($item_s,$userid);
@@ -795,14 +794,14 @@ function convert_grade_cert4_without_td($grade,$userid,
     $s_total=0;
 
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<div
         class "class="text-center" 
         "> N/A </div>';
-     }
-     else
-     {
-  
+    }
+    else
+    {
+
         if ($grade==0){
             $result = '<div 
             class = "bg-secondary text-center"
@@ -811,96 +810,96 @@ function convert_grade_cert4_without_td($grade,$userid,
         }
         elseif ($grade>0 || $grade<=100)
         {
-                if($w_grade_detail)
+            if($w_grade_detail)
+            {
+                $w_mark_per =$w_grade_detail->grade;
+                if($w_attempt)
                 {
-                    $w_mark_per =$w_grade_detail->grade;
-                    if($w_attempt)
-                    {
-                        $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
-                        $w_total = $w_mark_per;
-                        
-                    }
-                    else
-                    {
-                        $w_result='';
-                    }
+                    $w_result =get_grade_letter_with_attemptlink($w_mark_per,$w_attempt);
+                    $w_total = $w_mark_per;
+
                 }
                 else
                 {
                     $w_result='';
                 }
-                //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
-                if($s_grade_detail)
+            }
+            else
+            {
+                $w_result='';
+            }
+            //$s_grade_detail =get_grade_details_itemid($userid,$item_s);
+            if($s_grade_detail)
+            {
+                $s_mark_per = $s_grade_detail->grade;
+                if($s_attempt)
                 {
-                    $s_mark_per = $s_grade_detail->grade;
-                    if($s_attempt)
-                    {
-                        $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
-                        $s_total = $s_mark_per;
-                    }
-                    else
-                    {
-                        $s_result='';
-                    }
+                    $s_result =get_grade_letter_with_attemptlink($s_mark_per,$s_attempt);
+                    $s_total = $s_mark_per;
                 }
                 else
                 {
                     $s_result='';
                 }
-               $result = '<div 
+            }
+            else
+            {
+                $s_result='';
+            }
+            $result = '<div 
                 class ="text-center"
                 border:1px solid black;
                 "><b>'.$w_letter.':</b>'.$w_result.';&nbsp<b>'.$s_letter.':</b>'.$s_result.'
                 </div>';
 
-                // Checking the combined version of Assessment
+            // Checking the combined version of Assessment
 
-                $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
-                if($userid==389){
+            $pa2_attempt = get_attemtid_from_gradeitem($item_pa2,$userid);
+            if($userid==389){
 
-                    print_object ($pa2_attempt);
-                }
-                if($pa2_attempt){
-                    
-                    //print_object ($pa2_attempt);
-                    if($pa2_attempt->grade==100)
-                    {   $pa2_total = 100;
-                        $pa2_result = get_grade_letter_with_attemptlink($pa2_attempt->grade,$pa2_attempt);
-                        $result = '<div
+                print_object ($pa2_attempt);
+            }
+            if($pa2_attempt){
+
+                //print_object ($pa2_attempt);
+                if($pa2_attempt->grade==100)
+                {   $pa2_total = 100;
+                    $pa2_result = get_grade_letter_with_attemptlink($pa2_attempt->grade,$pa2_attempt);
+                    $result = '<div
                         class ="text-left "
                         border:1px solid black;
                         "><b>'.$pa2_letter.':</b>'.$pa2_result.'</div>';
-                        $pa2_total=200;
-                    }
+                    $pa2_total=200;
                 }
-                // Checking the very old assessment exist or not.
-                if($item_pa!=0){
-                    $pa_attempt = get_attemtid_from_gradeitem($item_pa,$userid);
-                    if($pa_attempt){
-                        //print_object ($pa_attempt);
-                        if($pa_attempt->grade==100)
-                        {   
-                            $pa1_total = 100;
-                            $pa_result = get_grade_letter_with_attemptlink($pa_attempt->grade,$pa_attempt);
-                            $result = '<div
+            }
+            // Checking the very old assessment exist or not.
+            if($item_pa!=0){
+                $pa_attempt = get_attemtid_from_gradeitem($item_pa,$userid);
+                if($pa_attempt){
+                    //print_object ($pa_attempt);
+                    if($pa_attempt->grade==100)
+                    {
+                        $pa1_total = 100;
+                        $pa_result = get_grade_letter_with_attemptlink($pa_attempt->grade,$pa_attempt);
+                        $result = '<div
                             class ="text-left "
                             border:1px solid black;
                             "><b>'.$pa_letter.':</b>'.$pa_result.'</div>';
-                            $pa1_total=200;
-                        }
+                        $pa1_total=200;
                     }
                 }
-                // Checking the Manual grading
-                $total= $pa1_total+$pa2_total+$w_total+$s_total;
+            }
+            // Checking the Manual grading
+            $total= $pa1_total+$pa2_total+$w_total+$s_total;
 
-                if($grade==100 && $total==0){
-                    $result = '<div
+            if($grade==100 && $total==0){
+                $result = '<div
                     class ="bg-success text-center" 
                     ">Satisfactory (CT)</div>';
-                }
+            }
         }
-     }
-     return $result;
+    }
+    return $result;
 }
 
 function convert_grade_three_item($grade,$userid,$item_1,$letter_1,$item_2,$letter_2,$item_3,$letter_3) // Detailed information of Grades
@@ -908,15 +907,15 @@ function convert_grade_three_item($grade,$userid,$item_1,$letter_1,$item_2,$lett
 
     //die($grade);
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<td
         class "class="text-center" 
         style = "display: block;
         border:1px solid black;
         "> N/A </td>';
-     }
-     else
-     {
+    }
+    else
+    {
         if($grade==100){
             //$result = 'Satisfactory';
             $result = '<td
@@ -939,22 +938,22 @@ function convert_grade_three_item($grade,$userid,$item_1,$letter_1,$item_2,$lett
             // echo ",";
             // echo $userid;
             // echo ":";
-                $w_attempt = get_attemtid_from_gradeitem($item_3,$userid);
-                $result_1=grade_result($userid,$item_1);
-                $result_2=grade_result($userid,$item_2);
-                $result_3=grade_result($userid,$item_2);
+            $w_attempt = get_attemtid_from_gradeitem($item_3,$userid);
+            $result_1=grade_result($userid,$item_1);
+            $result_2=grade_result($userid,$item_2);
+            $result_3=grade_result($userid,$item_2);
 
 
-               $result = '<td 
+            $result = '<td 
                 class ="text-left"
                 style = "display: block;
                 border:1px solid black;
                 background-color:#D3D3D3;
                 "><b>'.$letter_1.':</b>'.$result_1.';&nbsp<b>'.$letter_2.':</b>'.$result_2.';&nbsp<b>'.$letter_3.':</b>'.$result_3.'
                 </td>';
-            }
-     }
-     return $result;
+        }
+    }
+    return $result;
 }
 function grade_result($userid,$item){
     $attempt = get_attemtid_from_gradeitem($item,$userid);
@@ -990,9 +989,9 @@ function get_grade_details_itemid($userid,$itemid)
     ";
     $para = ['item_id'=>$itemid,'user_id'=>$userid];
     $result = $DB->get_record_sql($sql,$para);
-    
+
     return $result;
-    
+
 }
 
 function get_grade_details($attemptid)
@@ -1005,28 +1004,28 @@ function get_grade_details($attemptid)
     ";
     $para = ['attempt_id'=>$attemptid];
     $result = $DB->get_record_sql($sql,$para);
-    
+
     return $result;
-    
+
 }
 
 function convert_attempt_link($attemptid,$url,$mark,$attempt)
 
-{   
+{
     if($attemptid)
-    {        
+    {
         //$mark = get_grade_details($attemptid);
         if($mark->mark==100){
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: green" ; target="_blank";>Satisfactory('.$attempt.')</a>';   
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: green" ; target="_blank";>Satisfactory('.$attempt.')</a>';
         }
         elseif ($mark->mark==50){
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'";style="color: #0275d8"; target="_blank">Sumitted('.$attempt.')</a>';   
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'";style="color: #0275d8"; target="_blank">Sumitted('.$attempt.')</a>';
         }
         elseif ($mark->mark>50 && $mark->mark<100){
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #d9534f" ;target="_blank">Require Re-submission('.$attempt.')</a>'; 
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #d9534f" ;target="_blank">Require Re-submission('.$attempt.')</a>';
         }
         else {
-            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #292b2c" target="_blank">Not Finished('.$attempt.')</a>'; 
+            return '<a href="'.$url.'/mod/quiz/review.php?attempt='.$attemptid.'"; style="color: #292b2c" target="_blank">Not Finished('.$attempt.')</a>';
         }
     }
 }
@@ -1034,14 +1033,14 @@ function get_grade_letter_with_attemptlink($grade,$attempt)
 {
     $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<span
         class "class="text-center" 
         style = "
         "> Not Submitted </span>';
-     }
-     else
-     {
+    }
+    else
+    {
         if($grade==100)
         {
             $result= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
@@ -1057,22 +1056,22 @@ function get_grade_letter_with_attemptlink($grade,$attempt)
         elseif ($grade>50 || $grade<100){
             $result= html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
         }
-        
-     }
-     return $result;
+
     }
+    return $result;
+}
 function get_grade_letter($grade)
 {
     //die($grade);
     $result = '';
-     if($grade == null){
+    if($grade == null){
         $result = '<div
         class "class="text-center" 
         style = "
         "> - </div>';
-     }
-     else
-     {
+    }
+    else
+    {
         if($grade==100){
             //$result = 'Satisfactory';
             $result = '<div
@@ -1097,9 +1096,9 @@ function get_grade_letter($grade)
             style = " color:red"
             ">Require Re-submission</div>';
         }
-        
-     }
-     return $result;
+
+    }
+    return $result;
 
 }function get_cohort_dip(){
     global $DB;
@@ -1126,7 +1125,7 @@ function get_cohort_carptenty(){
 function get_cohort_wall(){
     global $DB;
     $sql = 'SELECT * FROM {cohort} ch
-    where ch.name like "%Wall & Floor%"';
+    where ch.name like "Wall & Floor%"';
     $result = $DB->get_records_sql($sql);
     return $result;
 }
@@ -2103,7 +2102,7 @@ function get_userlist_carptenty($cohortid)
 {
     $units = get_carptenty_units();
 
- 
+
     global $DB;
     $sql = " SELECT
             u.id as userid, 
@@ -2111,12 +2110,12 @@ function get_userlist_carptenty($cohortid)
             u.lastname,
             u.email,";
 
-            foreach ($units as $unit)
-            {
-                $sql.= "MAX(IF(m.id = ".$unit->id.", a.id, NULL)) AS `".$unit->id."`,";
-            };
-           $sql= rtrim($sql,", ") ;
-            $sql.="FROM
+    foreach ($units as $unit)
+    {
+        $sql.= "MAX(IF(m.id = ".$unit->id.", a.id, NULL)) AS `".$unit->id."`,";
+    };
+    $sql= rtrim($sql,", ") ;
+    $sql.="FROM
                 {cohort_members} AS cm
                     LEFT JOIN
                 {quiz_attempts} AS a ON cm.userid = a.userid
@@ -2129,13 +2128,13 @@ function get_userlist_carptenty($cohortid)
             WHERE
                 cm.cohortid = :cohort_id
                     AND m.id ";
-                $sql.= "IN (";
-                foreach ($units as $unit)
-                {
-                    $sql.=$unit->id.",";
-                };
-                $sql= rtrim($sql,", ") ;
-        $sql.=") GROUP BY a.userid";
+    $sql.= "IN (";
+    foreach ($units as $unit)
+    {
+        $sql.=$unit->id.",";
+    };
+    $sql= rtrim($sql,", ") ;
+    $sql.=") GROUP BY a.userid";
 
     $para = ['cohort_id'=>$cohortid];
     $result = $DB->get_records_sql($sql,$para);
@@ -2171,7 +2170,7 @@ function get_attemtid_from_gradeitem($grade_itemid,$userid)
                 AND i.itemmodule = 'quiz'
                 AND a.state = 'finished' 
             order by a.attempt desc";
-    
+
         $para = ['itemid'=>$grade_itemid,'user_id'=>$userid];
         $result = $DB->get_record_sql($sql,$para);
         return $result;
@@ -2254,9 +2253,6 @@ function get_userdata($cohortid){
 
 */
 function get_grade_from_item($userid,$courseid,$items){
-    //
-    $colors = array(3131,3132);
-
 
     global $DB;
     if(empty($items)){
@@ -2265,84 +2261,63 @@ function get_grade_from_item($userid,$courseid,$items){
         if($result->grademax==$result->grades[$userid]->grade){
             return html_writer::div($result->grades[$userid]->str_grade,'text-center',array('style'=>"color: green"));
         }
-        //print_object($result);
         return $result->grades[$userid]->str_grade;
     }
     else{
         $result='';
         foreach ($items as $item){
-            echo $item;
             $grade_letter = ' <b>'.get_item_letter($item).': '.'</b>';
-
-            //print_object(get_attemtid_from_gradeitem($item,$userid));
-
             $attempt=(get_attemtid_from_gradeitem_new($item,$userid));
-
-            print_object($attempt);
-
-            $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
-            if($attempt->grade==100){
-                $result.=   $grade_letter.html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
-            }
-            elseif ($attempt->grade==null&&$attempt->state=='finished' ){
-
-                $result.= $grade_letter.html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array('style'=>"color: blue","target"=>"_blank"));
-            }
-            elseif ($attempt->grade==null&&$attempt->state=='inprogress'){
-                $result.=  $grade_letter.'Not Submitted';
-            }
-            elseif($attempt->grade<=100&&$attempt->state=='finished'){
-                $sub_result = '';
-                $sub_result=   $grade_letter.html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
-
-//                if(check_not_graded($attempt)==true){
-//                    $sub_result= $grade_letter.html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array('style'=>"color: blue","target"=>"_blank"));
-//                }
-                $result.=$sub_result;
+            if($attempt){
+                $url = new moodle_url('/mod/quiz/review.php', array('attempt' => $attempt->attemptid));
+                if($attempt->grade==100){
+                    $result.=   $grade_letter.html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
+                }
+                elseif ($attempt->grade==null&&$attempt->state=='finished' ){
+                    $result.= $grade_letter.html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array('style'=>"color: blue","target"=>"_blank"));
+                }
+                elseif ($attempt->grade==null&&$attempt->state=='inprogress'){
+                    $result.=  $grade_letter.'Not Submitted';
+                }
+                elseif($attempt->grade<=100&&$attempt->state=='finished'){
+                    $result.=   $grade_letter.html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
+                }
             }
             else{
-                $result.=  $grade_letter.'Not Submitted';
+//                // Checking the Manual grade and auto-graded units.
+//                print_object(get_quiz_id($courseid,$item)->iteminstance);
+                $manual_grade = grade_get_grades($courseid,'mod','quiz',get_quiz_id($courseid,$item)->iteminstance,$userid)->items[0];
+                if($manual_grade){
+                    if($manual_grade->grades[$userid]->grade>0){
+                        return $grade_letter.$manual_grade->grades[$userid]->str_grade.' (CT)';
+                    }
+                    else{
+                        $result.=  $grade_letter.'Not Submitted';
+                    }
+                }
+
+//
+//                if($manual_grade->grademax==$manual_grade->grades[$userid]->grade){
+//                    return html_writer::div($manual_grade->grades[$userid]->str_grade,'text-center',array('style'=>"color: green"));
+//                }
+//                return $manual_grade->grades[$userid]->str_grade;
+
             }
+
         }
-    return $result;
+        return $result;
     }
 }
-
 function get_modinstance_id($courseid){
     global $DB;
     return $DB->get_record('grade_items',array("courseid"=>$courseid,"itemtype"=>'course'),'iteminstance');
 }
-
-//function check_not_graded($attempt){
-//    global $DB;
-//
-//    $result = $DB->get_record('quiz_attempts',array("id"=>'$attempt'));
-//    echo $result;
-//    print_object($result);
-//    if($result->sumgrades==null&&$result->state='finished'){
-//        return true;
-//    }
-//    else return false;
-//}
+function get_quiz_id($courseid,$item){
+    global $DB;
+    return $DB->get_record('grade_items',array("courseid"=>$courseid,"itemtype"=>'mod',"id"=>$item),'iteminstance');
+}
 function get_item_letter($item)
 {
     global $DB;
     return $DB->get_record('grade_items',array("id"=>$item,"itemtype"=>'mod'),'itemname')->itemname[0];
 }
-//        if($grade==100)
-//        {
-//            $result= html_writer::link($url, 'Satisfactory'.'('.$attempt->attempt.')',array('style'=>"color: green","target"=>"_blank"));
-//        }
-//        elseif ($grade==50)
-//        {
-//            $result= html_writer::link($url, 'Submitted'.'('.$attempt->attempt.')',array("target"=>"_blank"));
-//        }
-//        elseif ($grade==0)
-//        {
-//            $result= html_writer::link($url, 'Not Submitted'.'('.$attempt->attempt.')',array('style'=>"color: gray","target"=>"_blank"));
-//        }
-//        elseif ($grade>50 || $grade<100){
-//            $result= html_writer::link($url, 'Require Re-sub'.'('.$attempt->attempt.')',array('style'=>"color: red","target"=>"_blank"));
-//        }
-//
-//     }

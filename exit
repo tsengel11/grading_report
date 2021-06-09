@@ -1,0 +1,245 @@
+[33mcommit 2214d1cfe3b61a27c4fedb72d17effbd199a9dc6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Jun 8 17:22:55 2021 +1000
+
+    fixed the grade calculation
+
+[33mcommit 11862e957505ca696482588e3a20acee3141eb13[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Jun 2 17:09:20 2021 +1000
+
+    created different grades cases
+
+[33mcommit 86b70593b30868660cfc3f5a7cd5b0089124ecf4[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Jun 1 17:08:15 2021 +1000
+
+    created the grading report
+
+[33mcommit ee7454d220cfbf3dd1c9aac8622a9357a065c140[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Jun 1 09:05:16 2021 +1000
+
+    Added new report
+
+[33mcommit 90e6aef60e2b470a0b3d3c6fdc1e860427dca2ea[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri May 14 17:40:41 2021 +1000
+
+    udpate the new wall
+
+[33mcommit a37d839cc8efd67a765698aa7a3a87895b0f440f[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri May 14 16:43:16 2021 +1000
+
+    Updated from prod
+
+[33mcommit f9fddd7567047bd5660b694d80abe839a0d1fd14[m
+Author: Bayartsengel Baatarkhuyag <44639609+tsengel11@users.noreply.github.com>
+Date:   Wed Apr 28 17:14:54 2021 +1000
+
+    Add files via upload
+
+[33mcommit ae8758c148b151f65610f0be46a7f69a40882852[m
+Author: Bayartsengel Baatarkhuyag <44639609+tsengel11@users.noreply.github.com>
+Date:   Wed Apr 28 17:14:22 2021 +1000
+
+    Add files via upload
+
+[33mcommit 1573e86e71c9246356027a09e0194c0a316fa8c9[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri Apr 23 08:24:57 2021 +1000
+
+    created the carpentry flex
+
+[33mcommit 603750a244bbe2794fe4dfaf9123d7aae713048e[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Apr 21 12:34:26 2021 +1000
+
+    updated the grade details
+
+[33mcommit f8b29f0e0b6a036c2f0ce51f44ead7f971a6315d[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Apr 20 12:18:19 2021 +1000
+
+    completed the previous asessments
+
+[33mcommit e2164532964d450531a73a712eeffc966189d8ce[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Apr 20 09:18:10 2021 +1000
+
+    Started to new CeriV Grading
+
+[33mcommit e35cac99f0d4a639b5d4f6dff093a86db3f273b3[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri Apr 16 17:08:16 2021 +1000
+
+    finished the Wall and Floor
+
+[33mcommit 79a044852193a159f7c7109b6bf593e6a118bf4c[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri Apr 16 09:15:23 2021 +1000
+
+    roll back Carpentry
+
+[33mcommit 471c738f37c20e38d424edc702d8db573686ae25[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 15 15:34:42 2021 +1000
+
+    fixed the Diploma units
+
+[33mcommit 6eb89eaee585a78b40a9d016a0aa125b8f91e79a[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 15 11:03:43 2021 +1000
+
+    check the one item assessment
+
+[33mcommit 232ff003f4a6edb7e7a8d923c7ce5c2ea06953ea[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 15 10:36:45 2021 +1000
+
+    show percent
+
+[33mcommit ffa3303a0043ba89bbc20dcf4d814c01185277ac[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 15 10:23:30 2021 +1000
+
+    added two assesment names
+
+[33mcommit 1cdc6ed34701c3a5c8d387c9c8c9408401e3f491[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 15 09:03:33 2021 +1000
+
+    fixed carpentry link
+
+[33mcommit 2100eac153b1d9694a548f5423d37a2a00bd8e68[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 15 08:18:34 2021 +1000
+
+    added the grade item of all carpentry units
+
+[33mcommit 19b6a6a74c609c69b4c030e3ef73c1c5a36bf9cc[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Apr 14 17:28:54 2021 +1000
+
+    added carpentry units grades
+
+[33mcommit 238447e31eb9d70c82d29db9efa6a4536ff0693f[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Apr 14 15:41:30 2021 +1000
+
+    started the Carpentry
+
+[33mcommit 8e1f08ddb64603d8b528f2e4d5ad314760e78066[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Apr 14 09:59:26 2021 +1000
+
+    Improved the attemt link
+
+[33mcommit eb760be6b99aad913f060a5f77ca5b27a8f2073d[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Apr 13 17:51:55 2021 +1000
+
+    Created link
+
+[33mcommit 74f2b0593ffdc1e1268df71bbfe17d9677a1659a[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Apr 13 16:40:06 2021 +1000
+
+    Updated Diploma grades
+
+[33mcommit 103631030cc640ca7707d3d2cb43dd111cf5c3ce[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Tue Apr 13 08:53:51 2021 +1000
+
+    Detailed grading reports
+
+[33mcommit 09fc1efa775e1d6947bf419c5ffdf45dafaab837[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri Apr 9 17:22:59 2021 +1000
+
+    added the tabs
+
+[33mcommit 5a0fe1959a52c8a89ce96107ef52636faf2b3d92[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri Apr 9 11:49:26 2021 +1000
+
+    created grading link
+
+[33mcommit 94b139a4350f315c1d48abef9342dfa2624ae0a2[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 8 17:12:58 2021 +1000
+
+    updated the grading link
+
+[33mcommit 2486190684eef5cffa32d1a3caabb2d5975c155f[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 8 16:48:08 2021 +1000
+
+    created the grading list
+
+[33mcommit f379a90f0018bd8438edfcbbe1818887623d3286[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Apr 8 11:03:02 2021 +1000
+
+    Added require login in each courses
+
+[33mcommit 63e0639c9d7375778c3b70abffdc11c0469bb510[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Apr 7 17:52:33 2021 +1000
+
+    added the Carpentry Grading
+
+[33mcommit ff8037ec1af9f80a9d302a6ec6bfcd2339533ab1[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Fri Mar 26 08:47:15 2021 +1000
+
+    create link access
+
+[33mcommit e4e46826ec630166070b3453332154474760cc4a[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Mon Mar 22 16:52:50 2021 +1000
+
+    start to creating diploma
+
+[33mcommit fa1338f336c752c8b5829391f2cc1d8b3bb4685a[m
+Author: Bayartsengel Baatarkhuyag <bayartsengelt@gmail.com>
+Date:   Fri Mar 19 05:51:44 2021 +1000
+
+    added in home
+
+[33mcommit 7395fc1dad9a999554f6bf23affe8bcbb1805b8d[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Mar 18 17:30:38 2021 +1000
+
+    added student id
+
+[33mcommit 699bd4dcc0b83b21d2071981e710ada616abab07[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Mar 18 17:14:25 2021 +1000
+
+    add group selection
+
+[33mcommit 487343a2658b5d22c2b55406390661d6c1f2a427[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Thu Mar 18 16:02:04 2021 +1000
+
+    completed the diploma repor
+
+[33mcommit 3273362fb2fdde5f7653a14f6d416d9105a7cbc9[m
+Author: Bayartsengel Baatarkhuyag <bayartsengelt@gmail.com>
+Date:   Wed Mar 17 20:37:06 2021 +1000
+
+    fixed scroll
+
+[33mcommit b4369c0addce2567dbcbcfa20da529e7a7b407dd[m
+Author: Bayartsengel Baatarkhuyag <bayartsengelt@gmail.com>
+Date:   Wed Mar 17 20:16:02 2021 +1000
+
+    fixed the sql
+
+[33mcommit 356de4a91edbb2cdf10d3b92a5fac801099ee24d[m
+Author: Admin <bayartsengelt@gmail.com>
+Date:   Wed Mar 17 16:57:35 2021 +1000
+
+    first commit
