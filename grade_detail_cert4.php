@@ -75,9 +75,6 @@ $templatecontext = (object)[
 ];
 
 echo $OUTPUT->render_from_template('block_grading_report/report_cert4',$templatecontext);
-
-
-
 //echo $content;
 
 echo $OUTPUT->footer();

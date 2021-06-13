@@ -35,7 +35,6 @@ $PAGE->set_url(new moodle_url('/blocks/grading_report/grade_details_cert4.php'))
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Grade Details');
 
-
 echo $OUTPUT->header();
 $selected_groupid=$_GET['cohortid'];
 

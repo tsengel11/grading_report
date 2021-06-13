@@ -44,7 +44,6 @@ foreach($cohorts as $cohort){
     $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_details_wall_new.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
 }
 
-
 //print_object($cohorts);
 //print_object($users);
 foreach($users as $user){
@@ -57,7 +56,7 @@ foreach($users as $user){
     $user->CPCCOM1015 =get_grade_from_item($user->id, 838,array(3248,3262));
     $user->CPCCCM2006 =get_grade_from_item($user->id, 830,array());
     $user->CPCCCM2008 =get_grade_from_item($user->id, 831,array());
-
+    
     $user->CPCCWF3001 =get_grade_from_item($user->id, 771,array());
     $user->CPCCWF2001 =get_grade_from_item($user->id, 769,array());
     $user->CPCCOM2001 =get_grade_from_item($user->id, 768,array(3280,3281));
@@ -76,7 +75,6 @@ foreach($users as $user){
     // Quizes
     //Term 1
     //$user->cpccwhs1001=convert_grade_quiz($user->cpccwhs1001,$user->userid);
-
 }
 //print_object($users);
 

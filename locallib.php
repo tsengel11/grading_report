@@ -1136,6 +1136,14 @@ function get_cohort_wall_new(){
     $result = $DB->get_records_sql($sql);
     return $result;
 }
+function get_cohort($cohortname){
+    global $DB;
+    $sql = 'SELECT * FROM {cohort} ch
+    where ch.name like :name"%"';
+    $para = ['name'=>$cohortname];
+    $result = $DB->get_records_sql($sql,$para);
+    return $result;
+}
 
 function get_userlist_dip($cohortid)
 {
@@ -2289,18 +2297,15 @@ function get_grade_from_item($userid,$courseid,$items){
                 $manual_grade = grade_get_grades($courseid,'mod','quiz',get_quiz_id($courseid,$item)->iteminstance,$userid)->items[0];
                 if($manual_grade){
                     if($manual_grade->grades[$userid]->grade>0){
+                        if($manual_grade->grades[$userid]->grade==100){
+                            return html_writer::div($grade_letter.$manual_grade->grades[$userid]->str_grade.' (CT)','text-center',array('style'=>"color: green"));
+                        }
                         return $grade_letter.$manual_grade->grades[$userid]->str_grade.' (CT)';
                     }
                     else{
                         $result.=  $grade_letter.'Not Submitted';
                     }
                 }
-
-//
-//                if($manual_grade->grademax==$manual_grade->grades[$userid]->grade){
-//                    return html_writer::div($manual_grade->grades[$userid]->str_grade,'text-center',array('style'=>"color: green"));
-//                }
-//                return $manual_grade->grades[$userid]->str_grade;
 
             }
 

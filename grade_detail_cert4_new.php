@@ -17,8 +17,6 @@ require_login();
 $user_id = $USER->id;
 $url = $CFG->wwwroot;
 
-
-
     // Checking the admin user;
     $user_array=explode(',',get_config('block_grading_report','adminuser'));
     //print_object($user_array);
@@ -37,28 +35,44 @@ $PAGE->set_title('Grade Details');
 
 
 echo $OUTPUT->header();
-$selected_groupid=$_GET['cohortid'];
 
-$users = get_userlist_cert4($selected_groupid);
-$cohorts=get_cohort_cert4();
+$selected_groupid = optional_param('cohortid',NULL, PARAM_INT);
 
-$grading_info = grade_get_grades(381, 'mod', quiz, 897, array('99','129'));
+$users = get_userdata($selected_groupid);
+// Selecting the cohort list from cohorts based on Cohort Name.
+$cohorts=get_cohort('New Cert IV');
+// Creating the Cohort list on Grading report pages.
 
-print_object($grading_info->items[0]);
+$unit_data = $DB->get_records('block_grading_report_units',['course'=>'CertIV']);
+
 foreach($cohorts as $cohort){
-    $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_detail_cert4.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
+    $cohort->drop_downitem='<a class="dropdown-item" href="'.$CFG->wwwroot.'/blocks/grading_report/grade_details_cert4_new.php?cohortid='.$cohort->id.'">'.$cohort->name.'</a>';
 }
 
+foreach($users as $user){
+    $user->userlink=convert_userlink_without_td($user->id,$user->firstname,$user->lastname,$url);
+    foreach ($unit_data as $u){
+        //$user->$u->course_code=get_grade_from_item($user->id,$u->unit_code,explode(',',$u->activities));
+        $temp_coursecode = $u->course_code;
+        $temp_activities = explode(',',$u->activities);
+
+        if($u->activities==''){
+            $user->$temp_coursecode=get_grade_from_item($user->id,$u->unit_code,array());
+        }
+        else{
+            $user->$temp_coursecode=get_grade_from_item($user->id,$u->unit_code,$temp_activities);
+        }
+
+    }
+}
 $templatecontext = (object)[
-    'texttodisplay'=>'Certificate IV in Building and Construction (Building)',
+    'texttodisplay'=>'Certificate IV in Building and Construction',
     'users'=>array_values($users),
     'cohorts'=>array_values($cohorts),
-    'groupname'=>$cohorts[$selected_groupid]->name,
-    'grade_info'=>array_values($grading_info->items)
+    'studentnumber'=>count($users),
+    'groupname'=>$cohorts[$selected_groupid]->name
 ];
-
-echo $OUTPUT->render_from_template('block_grading_report/report_cert4',$templatecontext);
-
+echo $OUTPUT->render_from_template('block_grading_report/report_cert4_new',$templatecontext);
 
 
 //echo $content;

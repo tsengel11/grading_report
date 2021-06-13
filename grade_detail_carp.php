@@ -61,7 +61,7 @@ foreach($users as $user){
     $user->cpccwhs1001=convert_grade_quiz_carp($user->cpccwhs1001,$user->userid);
     $user->cpccohs2001a=convert_grade_quiz_carp($user->cpccohs2001a,$user->userid);
     $user->cpccohs2001a_practical=convert_grade_one_item_carp($user->cpccohs2001a_practical,$user->userid,2868,"PA");
-    $user->cpcccm1012a=convert_grade_quiz_carp($user->cpcccm1012a,$user->userid);
+    $user->cpcccm1012a=convert_grade_carp($user->cpcccm1012a,$user->userid,$user->userid,2512,"Q",2514,"WR");
     $user->cpcccm1012a_practical=convert_grade_one_item_carp($user->cpcccm1012a_practical,$user->userid,2442,"PA");
     $user->cpcccm1013a=convert_grade_quiz_carp($user->cpcccm1013a,$user->userid);
     $user->cpcccm1013a_practical=convert_grade_one_item_carp($user->cpcccm1013a_practical,$user->userid,2803,"PA",2804,"PH");
