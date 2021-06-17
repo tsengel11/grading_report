@@ -50,7 +50,7 @@ foreach($cohorts as $cohort){
 }
 
 foreach($users as $user){
-    $user->userlink=convert_userlink_without_td($user->id,$user->firstname,$user->lastname,$url);
+    $user->userlink=convert_userlink_without_td_general($user->id,$user->firstname,$user->lastname,$url,'grade_cert4_new');
     foreach ($unit_data as $u){
         //$user->$u->course_code=get_grade_from_item($user->id,$u->unit_code,explode(',',$u->activities));
         $temp_coursecode = $u->course_code;

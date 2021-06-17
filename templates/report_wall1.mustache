@@ -1,0 +1,157 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block/student_dashboard
+    Example context (json):
+    {
+    }
+}}
+<h1>Grading Report</h1>
+<p>{{texttodisplay}}</p>
+
+<div class="dropdown show">
+  <input type="button" class="btn btn-primary" value="Back" onclick="location.href='https://moodle.libertycollege.edu.au/'">
+  <a class="custom-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Groups
+  </a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        {{#cohorts}}
+      {{{drop_downitem}}}
+        {{/cohorts}}
+    </div>
+    <th>
+    <div><b>Group Name : </b>{{groupname}}</div>
+    <div><b>Total number of students : </b>{{studentnumber}}</div>
+     
+</div>
+
+<hr>
+  <table class="" style='display: flex;
+   flex-shrink: 0;
+   min-width: min-content;'>
+  <thead style = "display: flex;">
+    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
+    <th style = "display: block; border:1px solid black; width:385px ; height:50px "><b>Student name<b></th>
+    <th style = "display: block; border:1px solid black; ">Start Date</th>
+    <th style = "display: block; border:1px solid black; ">End Date</th>
+    <th style = "display: block; border:1px solid black; ">Student ID</th>
+    <th style = "display: block; border:1px solid black; ">Student Email</th>
+    <th style = "display: block; border:1px solid black; ">Schedule</th>
+    <th style = "display: block; border:1.27px solid black; ">Term 1</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWHS1001</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCOHS2001A(Apply OHS requirements)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCOHS2001A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1012A(Work effectively)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1012A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1013A(Plan and organise work)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1013A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1014A(Conduct workplace)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1014A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">Term 2</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1015A(Carry out measurements)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM1015A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM2001A(Read and interpret)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM2001A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM2006B(Apply basic levelling)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCCM2006B_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF2001A(Handle wall and floor tiling materials)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF2001A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF2002A(Use wall and floor)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF2002A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">Term 3</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3001A(Prepare surfaces)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3001A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWP3002A(Apply waterproofing process)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWP3002A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3003A(Fix wall tiles)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3003A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3002A(Fix floor tiles)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3002A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3004A(Repair wall and floor tiles)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3004A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">Term 4</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3006A(Carry out mosaic tiling)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3006A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3007A(Tile curved surfaces)</th>
+    <th style = "display: block; border:1.27px solid black; ">CPCCWF3007A_Practical</th>
+    <th style = "display: block; border:1.27px solid black; ">BSBSMB406(Manage small business)</th>
+    <th style = "display: block; border:1.27px solid black; ">BSBSMB301(Investigate micro business)</th>
+    <th style = "display: block; border:1.27px solid black; ">BSBSMB301_Practical</th>
+    <th style = "display: block; border:1.27px solid black; height:50px "><b>Student name<b></th>
+
+    
+    </tr>
+  </thead>
+  <tbody style = "display: flex;">
+{{#users}}
+    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
+    {{{userlink}}}
+    <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>
+    <td style = "display: block;border:1px solid black"class="text-center ">{{email}}</td>
+    <td style = "display: block;border:1px solid black">&nbsp</td>
+    <td style = "display: block;border:1px solid black">&nbsp</td>
+    {{{cpccwhs1001}}}
+    {{{cpccohs2001a}}}
+    {{{cpccohs2001a_practical}}}
+    {{{cpcccm1012a}}}
+    {{{cpcccm1012a_practical}}}
+    {{{cpcccm1013a}}}
+    {{{cpcccm1013a_practical}}}
+    {{{cpcccm1014a}}}
+    {{{cpcccm1014a_practical}}}
+    <td style = "display: block;border:1px solid black">&nbsp</td>
+    {{{cpcccm1015a}}}
+    {{{cpcccm1015a_practical}}}
+    {{{cpcccm2001a}}}
+    {{{cpcccm2001a_practical}}}
+    {{{cpcccm2006b}}}
+    {{{cpcccm2006b_practical}}}
+    {{{cpccwf2001a}}}
+    {{{cpccwf2001a_practical}}}
+    {{{cpccwf2002a}}}
+    {{{cpccwf2002a_practical}}}
+    <td style = "display: block;border:1px solid black"> &nbsp</td>
+    {{{cpccwf3001a}}}
+    {{{cpccwf3001a_practical}}}
+    {{{cpccwp3002a}}}
+    {{{cpccwp3002a_practical}}}
+    {{{cpccwf3003a}}}
+    {{{cpccwf3003a_practical}}}
+    {{{cpccwf3002a}}}
+    {{{cpccwf3002a_practical}}}
+    {{{cpccwf3004a}}}
+    {{{cpccwf3004a_practical}}}
+    <td style = "display: block;border:1px solid black"> &nbsp</td>
+    {{{cpccwf3006a}}}
+    {{{cpccwf3006a_practical}}}
+    {{{cpccwf3007a}}}
+    {{{cpccwf3007a_practical}}}
+    {{{bsbsmb406}}}
+    {{{bsbsmb301}}}
+    {{{bsbsmb301_practical}}}
+    {{{userlink}}}
+    </tr>
+{{/users}}
+    </tbody>
+  </table>
+<hr>
+<div class="card">
+  <h5>Description</h5>
+  <div>
+  <b>SW:</b> Practical Assessment - SWMS ; <b>PH:</b>Practical Assessment - Photo ;<b>PA:</b>Practical Assessment <b>Q:</b>Quiz
+  </div>  
+</div>

@@ -9,7 +9,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 global $DB, $USER, $CFG;
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot . '/blocks/grading_report/locallib.php');
@@ -47,7 +46,7 @@ foreach($cohorts as $cohort){
 //print_object($cohorts);
 //print_object($users);
 foreach($users as $user){
-    $user->userlink=convert_userlink_without_td($user->id,$user->firstname,$user->lastname,$url);
+    $user->userlink=convert_userlink_without_td_wall($user->id,$user->firstname,$user->lastname,$url);
     $user->cpccwhs1001 =get_grade_from_item($user->id, 289,array());
     $user->CPCCWHS2001 =get_grade_from_item($user->id, 844,array(3127));
     $user->CPCCOM1012 =get_grade_from_item($user->id, 835,array(3129));

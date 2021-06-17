@@ -3,7 +3,7 @@
     Moodle is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+     (at your option) any later version.
     Moodle is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -13,145 +13,183 @@
 }}
 {{!
     @template block/student_dashboard
-    Example context (json):
+    Example context  (json):
     {
     }
 }}
+<style>
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+.dropdown-content a {
+  color: black;
+  padding: 5px 5px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
 <h1>Grading Report</h1>
 <p>{{texttodisplay}}</p>
 
-<div class="dropdown show">
+<div class="dropdown show" style = "z-index: 4;">
   <input type="button" class="btn btn-primary" value="Back" onclick="location.href='https://moodle.libertycollege.edu.au/'">
-  <a class="custom-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Select Groups
-  </a>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        {{#cohorts}}
-      {{{drop_downitem}}}
-        {{/cohorts}}
-    </div>
+<div class="dropdown">
+  <button class="btn btn-primary">Select Cohort</button>
+  <div class="dropdown-content">
+          {{#cohorts}}
+          {{{drop_downitem}}}
+          {{/cohorts}}
+  </div>
+</div>
     <th>
     <div><b>Group Name : </b>{{groupname}}</div>
     <div><b>Total number of students : </b>{{studentnumber}}</div>
      
 </div>
 
-<hr>
-  <table class="" style='display: flex;
-   flex-shrink: 0;
-   min-width: min-content;'>
-  <thead style = "display: flex;">
-    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    <th style = "display: block; border:1px solid black; width:385px ; height:50px "><b>Student name<b></th>
-    <th style = "display: block; border:1px solid black; ">Start Date</th>
-    <th style = "display: block; border:1px solid black; ">End Date</th>
-    <th style = "display: block; border:1px solid black; ">Student ID</th>
-    <th style = "display: block; border:1px solid black; ">Student Email</th>
-    <th style = "display: block; border:1px solid black; ">Schedule</th>
-    <th style = "display: block; border:1.27px solid black; ">Term 1</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWHS1001</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCOHS2001A(Apply OHS requirements)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCOHS2001A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1012A(Work effectively)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1012A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1013A(Plan and organise work)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1013A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1014A(Conduct workplace)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1014A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">Term 2</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1015A(Carry out measurements)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM1015A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM2001A(Read and interpret)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM2001A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM2006B(Apply basic levelling)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCCM2006B_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF2001A(Handle wall and floor tiling materials)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF2001A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF2002A(Use wall and floor)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF2002A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">Term 3</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3001A(Prepare surfaces)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3001A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWP3002A(Apply waterproofing process)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWP3002A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3003A(Fix wall tiles)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3003A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3002A(Fix floor tiles)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3002A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3004A(Repair wall and floor tiles)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3004A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">Term 4</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3006A(Carry out mosaic tiling)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3006A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3007A(Tile curved surfaces)</th>
-    <th style = "display: block; border:1.27px solid black; ">CPCCWF3007A_Practical</th>
-    <th style = "display: block; border:1.27px solid black; ">BSBSMB406(Manage small business)</th>
-    <th style = "display: block; border:1.27px solid black; ">BSBSMB301(Investigate micro business)</th>
-    <th style = "display: block; border:1.27px solid black; ">BSBSMB301_Practical</th>
-    <th style = "display: block; border:1.27px solid black; height:50px "><b>Student name<b></th>
 
-    
+<hr>
+<div style="  height: 600px;
+  position: relative;">
+  <table  style="min-width: min-content;
+  font-size: 90%;
+  white-space: nowrap;
+  margin: 0;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid black;
+  border-collapse: separate;
+  ">
+  <thead class="thead-light table-bordered" style = "white-space: pre-wrap; 
+  padding:0;">
+    <tr class="thead-light">
+      <th colspan="5" ></th>
+      <th colspan="9"style ="border: 1px solid black;">TERM 1</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 2</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 3</th>
+      <th colspan="10"style ="border: 1px solid black;">TERM 4</th>
+    </tr>
+    <tr>
+    <th class = "bg-secondary" style = " position:sticky; position: -webkit-sticky; left: 0 ;z-index: 0;  "><b>Student name<b></th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2 ">Start Date</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2 ">End Date</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">Student ID</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">Student Email</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWHS1001</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCOHS2001A (Apply OHS requirements)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCOHS2001A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1012A (Work effectively)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1012A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1013A (Plan and organise work)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1013A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1014A (Conduct workplace)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1014A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1015A (Carry out measurements)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM1015A Practical</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM2001A (Read and interpret)</th>
+    <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM2001A Practical</th>
+
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM2006B(Apply basic levelling)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCCM2006B_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF2001A(Handle wall and floor tiling materials)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF2001A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF2002A(Use wall and floor)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF2002A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3001A(Prepare surfaces)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3001A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWP3002A(Apply waterproofing process)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWP3002A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3003A(Fix wall tiles)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3003A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3002A(Fix floor tiles)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3002A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3004A(Repair wall and floor tiles)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3004A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3006A(Carry out mosaic tiling)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3006A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3007A(Tile curved surfaces)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">CPCCWF3007A_Practical</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">BSBSMB406(Manage small business)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">BSBSMB301(Investigate micro business)</th>
+        <th class = "bg-secondary" style = " position:sticky; top: 0; z-index : 2">BSBSMB301_Practical</th>
     </tr>
   </thead>
-  <tbody style = "display: flex;">
-{{#users}}
-    <tr style = "display: flex;flex-direction: column;min-width: min-content;flex-shrink: 0;">
-    {{{userlink}}}
-    <td style = "display: block;border:1px solid black"class="text-center ">{{startdate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{enddate}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{studentid}}</td>
-    <td style = "display: block;border:1px solid black"class="text-center ">{{email}}</td>
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpccwhs1001}}}
-    {{{cpccohs2001a}}}
-    {{{cpccohs2001a_practical}}}
-    {{{cpcccm1012a}}}
-    {{{cpcccm1012a_practical}}}
-    {{{cpcccm1013a}}}
-    {{{cpcccm1013a_practical}}}
-    {{{cpcccm1014a}}}
-    {{{cpcccm1014a_practical}}}
-    <td style = "display: block;border:1px solid black">&nbsp</td>
-    {{{cpcccm1015a}}}
-    {{{cpcccm1015a_practical}}}
-    {{{cpcccm2001a}}}
-    {{{cpcccm2001a_practical}}}
-    {{{cpcccm2006b}}}
-    {{{cpcccm2006b_practical}}}
-    {{{cpccwf2001a}}}
-    {{{cpccwf2001a_practical}}}
-    {{{cpccwf2002a}}}
-    {{{cpccwf2002a_practical}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccwf3001a}}}
-    {{{cpccwf3001a_practical}}}
-    {{{cpccwp3002a}}}
-    {{{cpccwp3002a_practical}}}
-    {{{cpccwf3003a}}}
-    {{{cpccwf3003a_practical}}}
-    {{{cpccwf3002a}}}
-    {{{cpccwf3002a_practical}}}
-    {{{cpccwf3004a}}}
-    {{{cpccwf3004a_practical}}}
-    <td style = "display: block;border:1px solid black"> &nbsp</td>
-    {{{cpccwf3006a}}}
-    {{{cpccwf3006a_practical}}}
-    {{{cpccwf3007a}}}
-    {{{cpccwf3007a_practical}}}
-    {{{bsbsmb406}}}
-    {{{bsbsmb301}}}
-    {{{bsbsmb301_practical}}}
-    {{{userlink}}}
-    </tr>
-{{/users}}
-    </tbody>
+
+  <tbody>
+  {{#users}}
+      <tr>
+      <td style = "position: sticky;left: 0;z-index: 1;" class="bg-light table-bordered" >{{{userlink}}}
+      <td style = "" class="text-center">{{startdate}}</td>
+      <td style = "" class="text-center ">{{enddate}}</td>
+      <td style = "" class="text-center ">{{studentid}}</td>
+      <td style = "" class="text-center ">{{email}}</td>
+          {{{cpccwhs1001}}}
+          {{{cpccohs2001a}}}
+          {{{cpccohs2001a_practical}}}
+          {{{cpcccm1012a}}}
+          {{{cpcccm1012a_practical}}}
+          {{{cpcccm1013a}}}
+          {{{cpcccm1013a_practical}}}
+          {{{cpcccm1014a}}}
+          {{{cpcccm1014a_practical}}}
+          {{{cpcccm1015a}}}
+          {{{cpcccm1015a_practical}}}
+          {{{cpcccm2001a}}}
+          {{{cpcccm2001a_practical}}}
+          {{{cpcccm2006b}}}
+          {{{cpcccm2006b_practical}}}
+          {{{cpccwf2001a}}}
+          {{{cpccwf2001a_practical}}}
+          {{{cpccwf2002a}}}
+          {{{cpccwf2002a_practical}}}
+          {{{cpccwf3001a}}}
+          {{{cpccwf3001a_practical}}}
+          {{{cpccwp3002a}}}
+          {{{cpccwp3002a_practical}}}
+          {{{cpccwf3003a}}}
+          {{{cpccwf3003a_practical}}}
+          {{{cpccwf3002a}}}
+          {{{cpccwf3002a_practical}}}
+          {{{cpccwf3004a}}}
+          {{{cpccwf3004a_practical}}}
+          {{{cpccwf3006a}}}
+          {{{cpccwf3006a_practical}}}
+          {{{cpccwf3007a}}}
+          {{{cpccwf3007a_practical}}}
+          {{{bsbsmb406}}}
+          {{{bsbsmb301}}}
+          {{{bsbsmb301_practical}}}
+      </tr>
+    {{/users}}
+  </tbody>
   </table>
-<hr>
-<div class="card">
-  <h5>Description</h5>
-  <div>
-  <b>SW:</b> Practical Assessment - SWMS ; <b>PH:</b>Practical Assessment - Photo ;<b>PA:</b>Practical Assessment <b>Q:</b>Quiz
-  </div>  
+
+
+    <div class="card">
+      <h5>Description</h5>
+      <div>
+      <b>SW:</b> Practical Assessment - SWMS ; <b>PH:</b>Practical Assessment - Photo ;<b>PA:</b>Practical Assessment <b>Q:</b>Quiz
+      </div>  
+    </div>
+
 </div>
+
+
+

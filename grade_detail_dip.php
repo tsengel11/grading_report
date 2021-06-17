@@ -52,7 +52,7 @@ foreach($dip_cohorts as $cohort){
 }
 //print_object($users);
 foreach($users as $user){
-    $user->userlink=convert_userlink_without_td($user->userid,$user->firstname,$user->lastname,$url);
+    $user->userlink=convert_userlink_dip($user->userid,$user->firstname,$user->lastname,$url);
     $user->cpccwhs1001=convert_grade_one_item($user->cpccwhs1001,$user->userid,0,0);
     $user->cpccbc4001a=convert_grade_cert4_without_td($user->cpccbc4001a,$user->userid,2788,"W",2789,"S",2280,'PA1',2403,'PA2');
     $user->cpccbc4003a=convert_grade_cert4_without_td($user->cpccbc4003a,$user->userid,2449,"W",2448,"S",2423,'PA1',2282,'PA2');

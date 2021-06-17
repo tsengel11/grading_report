@@ -47,6 +47,26 @@ function convert_userlink_without_td($userid,$firstname,$lastname,$url)
     <a href="'.$url.'/blocks/student_dashboard/grade_cert4.php?id='.$userid.'"; 
     target="_blank";
     class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
+    </div>';
+}
+function convert_userlink_without_td_general($userid,$firstname,$lastname,$url,$coures)
+{
+    return '
+    <div>    
+    <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
+    <a href="'.$url.'/blocks/student_dashboard/'.$coures.'.php?id='.$userid.'";
+    target="_blank";
+    class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
+    </div>';
+}
+function convert_userlink_without_td_wall($userid,$firstname,$lastname,$url)
+{
+    return '
+    <div>    
+    <a href='.$url.'/user/profile.php?id='.$userid.'><b> '.$firstname.'<br>'.$lastname.'</b></a>
+    <a href="'.$url.'/blocks/student_dashboard/grade_wall_new.php?id='.$userid.'"; 
+    target="_blank";
+    class="action-icon"><i class="icon fa fa-search-plus fa-fw " title="Grade analysis" aria-label="Grade analysis"></i></a>
     </div>
 
 ';
